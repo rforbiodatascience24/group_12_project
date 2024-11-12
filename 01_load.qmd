@@ -1,0 +1,37 @@
+---
+title: "01_load"
+author: "Group12"
+format: html
+editor: visual
+---
+
+# Load libraries
+
+```{r}
+# | echo: true
+# | eval: true
+
+# Loading relevant packages used in the project
+library(tidyverse)
+library(patchwork)
+library(dplyr)
+
+```
+
+## Load data
+
+Data was subtracted by a study performed by Katrine Wegener Tams, and the study was named "The effects of antibiotic use on the dynamics of the microbiome and resistome in pigs" (2023). Data was kindly given by Mikael Lenz Strube, since the data is no longer available on GitHub.
+
+To begin with, the data is loaded
+
+```{r}
+# | echo: true
+# | eval: true
+
+# raw data directory 
+raw_dir <- "data/_raw/"
+
+
+
+
+```
