@@ -5,6 +5,15 @@ format: html
 editor: visual
 ---
 
+# Clear Environment
+
+```{r}
+# | echo: true
+# | eval: true
+
+rm(list = ls())
+```
+
 # Load libraries
 
 ```{r}
@@ -15,23 +24,15 @@ editor: visual
 library(tidyverse)
 library(patchwork)
 library(dplyr)
+library(readxl)
+library(readr)
 
 ```
 
 ## Load data
 
-Data was subtracted by a study performed by Katrine Wegener Tams, and the study was named "The effects of antibiotic use on the dynamics of the microbiome and resistome in pigs" (2023). Data was kindly given by Mikael Lenz Strube, since the data is no longer available on GitHub.
-
-To begin with, the data is loaded
-
 ```{r}
 # | echo: true
 # | eval: true
-
-# raw data directory 
-raw_dir <- "data/_raw/"
-
-
-
 
 ```
