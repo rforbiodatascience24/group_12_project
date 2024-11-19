@@ -35,4 +35,15 @@ library(readr)
 # | echo: true
 # | eval: true
 
+dir.create(path = "data/_raw", recursive = TRUE)
+
+path_to_file <- "data/_raw/PCOS_data_without_infertility.xlsx"
+
+# List all sheet names to see which sheet to load
+sheet_names <- excel_sheets(path_to_file)
+print(sheet_names)
+
+# Load a specific sheet by name
+data_new <- read_excel(path_to_file, sheet = "Full_new")
+print(head(data_new))  # View the first few rows
 ```
