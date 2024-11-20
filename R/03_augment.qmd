@@ -107,6 +107,15 @@ body_measurements <- body_measurements |>
     cycle_RI == 4 ~ "regular"))
 ```
 
+## Factor values
+
+```{r}
+# | echo: true
+# | eval: true
+
+
+```
+
 ## Save tsv files
 
 ```{r}
