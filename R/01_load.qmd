@@ -52,7 +52,7 @@ print(head(PCOS_data_xlsx))  # View the first few rows
 
 ```{r}
 # Define the output path for the TSV file
-path_to_tsv_file <- "../data/_raw/PCOS_data_without_infertility.tsv"
+path_to_tsv_file <- "../data/PCOS_data_without_infertility.tsv"
 
 # Read the desired sheet from the Excel file
 PCOS_data_tsv <- read_excel(path_to_xlsx_file, sheet = "Full_new")
