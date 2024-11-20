@@ -43,8 +43,74 @@ PCOS <- PCOS |>
 print(PCOS)
 ```
 
-## Another header if we need
+### Rename columns
 
-## Again a header for if we need
+```{r}
+PCOS <- PCOS |> 
+  rename("patient_ID" = "Patient File No.",
+         "PCOS_diagnosis" = "PCOS (Y/N)",
+         "age" = "Age (yrs)",
+         "weight" = "Weight (Kg)",
+         "height" = "Height(Cm)",
+         "blood_type" = "Blood Group",
+         "pulse" = "Pulse rate(bpm)",
+         "breaths_pr_min" = "RR (breaths/min)",
+         "hemaglobin" = "Hb(g/dl)",
+         "cycle_RI" = "Cycle(R/I)",
+         "period_length" = "Cycle length(days)",
+         "pregnant" = "Pregnant(Y/N)",
+         "abortions" = "No. of aborptions",
+         "betaHCG_1" = "I   beta-HCG(mIU/mL)",
+         "betaHCG_2" = "II    beta-HCG(mIU/mL)",
+         "FSH" = "FSH(mIU/mL)",
+         "LH" = "LH(mIU/mL)",
+         "FSH_LH_ratio" = "FSH/LH",
+         "hip" = "Hip(inch)",
+         "waist" = "Waist(inch)",
+         "waist_hip_ratio" = "Waist:Hip Ratio",
+         "TSH" = "TSH (mIU/L)",
+         "AMH" = "AMH(ng/mL)",
+         "PRL" = "PRL(ng/mL)",
+         "vitaminD3" = "Vit D3 (ng/mL)",
+         "PRG" = "PRG(ng/mL)",
+         "RBS" = "RBS(mg/dl)",
+         "weight_gain" = "Weight gain(Y/N)",
+         "hair_growth" = "hair growth(Y/N)",
+         "darker_skin" = "Skin darkening (Y/N)",
+         "hair_loss" = "Hair loss(Y/N)",
+         "pimples" = "Pimples(Y/N)",
+         "exercise" = "Reg.Exercise(Y/N)",
+         "BP_systolic" = "BP _Systolic (mmHg)",
+         "BP_diastolic" = "BP _Diastolic (mmHg)",
+         "follicle_no_R" = "Follicle No. (L)",
+         "follicle_no_L" = "Follicle No. (R)",
+         "avg_fsize_L" = "Avg. F size (L) (mm)",
+         "avg_fsize_R" = "Avg. F size (R) (mm)",
+         "endometrium" = "Endometrium (mm)"
+         ) 
+
+#QC
+print(PCOS)
+```
+
+### Further cleaning of data
+
+```{r}
+#correct misplaced period from betaHCG column and change to NA and remove misplaced character and replace with NA, additionally create the columns betaHCG_2 and AMH into dbl insted of chr:
+PCOS <- PCOS |> 
+  mutate(betaHCG_2 = sub("\\.$", NA, betaHCG_2),
+  AMH = ifelse(substr(AMH, 1, 1) == as.character(0:9), AMH, NA)) |>  
+  mutate(betaHCG_2 = as.numeric(betaHCG_2),
+         AMH = as.numeric(AMH))
+
+
+# QC
+print(PCOS)
+
+PCOS |> 
+  summarise(has_NA = any(is.na(AMH))) |> 
+  pull(has_NA)
+ 
+```
 
 ## Last header if needed
