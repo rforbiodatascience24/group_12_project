@@ -17,6 +17,10 @@ library("tidyverse")
 # | echo: true
 # | eval: true
 
+#Load the file
+body_measurements <- read_tsv(file = "../data/PCOS_body_measurements.tsv")
+blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements.tsv")
+
 ```
 
 # Augmenting data
@@ -26,7 +30,11 @@ library("tidyverse")
 # | eval: true
 
 # Making PCOS diagnosis into yes and no
-
+body_measurements <- body_measurements |> 
+  mutate(PCOS_diagnosis = case_when(
+    PCOS_diagnosis == '0' ~ "No",
+    PCOS_diagnosis == '1' ~ "Yes"
+  ))
 
 ```
 
@@ -37,7 +45,11 @@ library("tidyverse")
 # | eval: true
 
 # Going from inches to cm + new hip/waist ratio
-
+body_measurements <- body_measurements |> 
+  mutate(hip = hip * 2.54)|>
+  mutate(waist = waist * 2.54)|>
+  mutate(waist_hip_ratio = waist_hip_ratio *2.54)
+  
 ```
 
 ## Again a header for if we need
@@ -47,7 +59,15 @@ library("tidyverse")
 # | eval: true
 
 # round of BMI + categories
-
+body_measurements <- body_measurements |>
+  mutate(BMI_class = case_when(
+    BMI < 18.5 ~ "Underweight",
+    BMI <= 18.5 | BMI < 25 ~ "Normal weight",
+    BMI <= 25 | BMI < 30 ~ "Overweight",
+    BMI >= 30 ~ "Obesity")) |>
+  mutate(BMI_class = factor(BMI_class,
+                            levels =  c("Underweight", "Normal weight","Overweight", "Obesity"))) |>
+  relocate(BMI_class, .after = BMI)
 ```
 
 ## Last header if needed
