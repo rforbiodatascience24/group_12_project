@@ -46,6 +46,7 @@ print(PCOS)
 ### Rename columns
 
 ```{r}
+
 PCOS <- PCOS |> 
   rename("patient_ID" = "Patient File No.",
          "PCOS_diagnosis" = "PCOS (Y/N)",

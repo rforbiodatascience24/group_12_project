@@ -14,23 +14,57 @@ library("tidyverse")
 ## Load data
 
 ```{r}
-#some R code
+# | echo: true
+# | eval: true
+
+#Load the file
+body_measurements <- read_tsv(file = "../data/PCOS_body_measurements.tsv")
+blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements.tsv")
+
 ```
 
 # Augmenting data
 
 ```{r}
-#some R code
+# | echo: true
+# | eval: true
+
+# Making PCOS diagnosis into yes and no
+body_measurements <- body_measurements |> 
+  mutate(PCOS_diagnosis = case_when(
+    PCOS_diagnosis == '0' ~ "No",
+    PCOS_diagnosis == '1' ~ "Yes"
+  ))
+
 ```
 
 ## Another header if we need
 
-text
+```{r}
+# | echo: true
+# | eval: true
+
+# Going from inches to cm + new hip/waist ratio
+
+```
 
 ## Again a header for if we need
 
-text
+```{r}
+# | echo: true
+# | eval: true
+
+# round of BMI + categories
+
+```
 
 ## Last header if needed
 
-text
+```{r}
+# | echo: true
+# | eval: true
+
+
+
+
+```
