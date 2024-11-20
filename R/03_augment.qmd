@@ -89,8 +89,8 @@ body_measurements <- body_measurements |>
     blood_type == 15 ~ "O+",
     blood_type == 16 ~ "O-",
     blood_type == 17 ~ "AB+",
-    blood_type == 18 ~ "AB-"))
-
+    blood_type == 18 ~ "AB-")) |> 
+  mutate(blood_type=factor(blood_type, levels= c("A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-")))
 
 ```
 
@@ -104,7 +104,9 @@ body_measurements <- body_measurements |>
 body_measurements <- body_measurements |>
   mutate(cycle_RI = case_when(
     cycle_RI == 2 ~ "irregular",
-    cycle_RI == 4 ~ "regular"))
+    cycle_RI == 4 ~ "regular")) |> 
+  mutate(cycle_RI=factor(cycle_RI, levels= c("irregular", "regular")))
+
 ```
 
 ## Factor values
