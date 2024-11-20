@@ -99,7 +99,7 @@ print(PCOS)
 #correct misplaced period from betaHCG column and change to NA and remove misplaced character and replace with NA, additionally create the columns betaHCG_2 and AMH into dbl insted of chr:
 PCOS <- PCOS |> 
   mutate(betaHCG_2 = sub("\\.$", NA, betaHCG_2),
-  AMH = ifelse(substr(AMH, 1, 1) == as.character(0:9), AMH, NA)) |>  
+  AMH = ifelse(substr(AMH, 1, 1) %in% as.character(0:9), AMH, NA)) |>  
   mutate(betaHCG_2 = as.numeric(betaHCG_2),
          AMH = as.numeric(AMH))
 
@@ -113,4 +113,37 @@ PCOS |>
  
 ```
 
-## Last header if needed
+## Saving and Splitting the Data
+
+```{r}
+# Write the updated dataset into a new data file
+write_tsv(x = PCOS,
+          file = "../data/PCOS_updated.tsv")
+# Check colnames of original dataset
+colnames(PCOS)
+
+## Read the data into separate files
+# Load the dataset, selecting columns from defined ranges 
+blood_measurements <- read_tsv(file = "../data/PCOS_updated.tsv",
+                               col_select = c(1:2,10,15:19,23:28))
+
+# View the column names of the selected data
+colnames(blood_measurements)
+
+
+# Select body measurements using column names (excluding blood measurements)
+body_measurements <- read_tsv(file = "../data/PCOS_updated.tsv",
+                              col_select = -c(10,15:19,23:28))
+
+# View the column names of the selected data
+colnames(body_measurements)
+
+
+# Write the data into two data files
+write_tsv(x = blood_measurements,
+          file = "../data/PCOS_blood_measurements.tsv")
+write_tsv(x = body_measurements,
+          file = "../data/PCOS_body_measurements.tsv")
+
+# Note: Patient No. and PCOS Y/N in both datasets!
+```
