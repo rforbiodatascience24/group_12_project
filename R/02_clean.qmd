@@ -111,6 +111,19 @@ print(PCOS)
 PCOS |> 
   summarise(has_NA = any(is.na(AMH))) |> 
   pull(has_NA)
+
+
+# Factorize columns
+PCOS <- PCOS |> 
+  mutate(pregnant = factor(pregnant, levels = c(0,1), labels = c("No", "Yes")),
+         weight_gain = factor(weight_gain, levels = c(0,1), labels = c("No", "Yes")),
+         hair_growth = factor(hair_growth, levels = c(0,1), labels = c("No", "Yes")),
+         hair_loss = factor(hair_loss, levels = c(0,1), labels = c("No", "Yes")),
+         darker_skin = factor(darker_skin, levels = c(0,1), labels = c("No", "Yes")),
+         pimples = factor(pimples, levels = c(0,1), labels = c("No", "Yes")),
+         exercise = factor(exercise, levels = c(0,1), labels = c("No", "Yes")),
+         )
+
  
 ```
 
