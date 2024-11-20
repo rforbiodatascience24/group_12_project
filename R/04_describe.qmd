@@ -8,29 +8,71 @@ editor: visual
 ## Clear environment
 
 ```{r}
+# | echo: true
+# | eval: true
+
 rm(list = ls())
 ```
 
 ## Load libraries
 
 ```{r}
+# | echo: true
+# | eval: true
+
 library("tidyverse")
 ```
 
 ## Load data
 
 ```{r}
-# R code for loading data
+# | echo: true
+# | eval: true
+
+#Load the file
+body_measurements <- read_tsv(file = "../data/PCOS_body_measurements.tsv")
+blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements.tsv")
 ```
 
-## Another header if we need
+## Data statistics
 
-text
+```{r}
+# | echo: true
+# | eval: true
 
-## Again a header for if we need
+name <- name |>
+  dim() |>
+  tibble()
 
-text
+name <- name |>
+  count(age) |>
+  count(age) |>
+
+
+
+
+
+```
+
+## Plot distributions
+
+```{r}
+# | echo: true
+# | eval: true
+
+
+
+
+
+
+
+```
 
 ## Last header if needed
 
-text
+```{r}
+# | echo: true
+# | eval: true
+
+
+```
