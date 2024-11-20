@@ -22,17 +22,25 @@ library("tidyverse")
 ## Load data
 
 ```{r}
-
-read_tsv(file = "../data/PCOS_data_without_infertility.tsv")
+#Load the file
+PCOS <- read_tsv(file = "../data/PCOS_data_without_infertility.tsv")
 
 ```
 
 ## Data wrangling
 
+### Column removal of non relevant data columns
+
 ```{r}
+#Removal of columns
+PCOS <- PCOS |>
+  select(-"Sl. No") |> 
+  select(-"Marraige Status (Yrs)") |> 
+  select(-"Fast food (Y/N)") |> 
+  select(-"...45")
 
-
-
+#QC
+print(PCOS)
 ```
 
 ## Another header if we need
