@@ -45,5 +45,8 @@ print(sheet_names)
 
 # Load a specific sheet by name
 data_new <- read_excel(path_to_file, sheet = "Full_new")
+
+file.exists(path_to_file)
+
 print(head(data_new))
 ```
