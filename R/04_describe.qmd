@@ -1,0 +1,36 @@
+---
+title: "04_describe"
+author: "Group12"
+format: html
+editor: visual
+---
+
+## Clear environment
+
+```{r}
+rm(list = ls())
+```
+
+## Load libraries
+
+```{r}
+library("tidyverse")
+```
+
+## Load data
+
+```{r}
+# R code for loading data
+```
+
+## Another header if we need
+
+text
+
+## Again a header for if we need
+
+text
+
+## Last header if needed
+
+text

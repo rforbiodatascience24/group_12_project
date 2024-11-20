@@ -1,0 +1,40 @@
+---
+title: "05_analysis_1"
+author: "Group12"
+format: html
+editor: visual
+---
+
+## Clear environment
+
+```{r}
+rm(list = ls())
+```
+
+## Load libraries
+
+```{r}
+library("tidyverse")
+```
+
+## Load data
+
+```{r}
+# R code for loading data
+```
+
+# Analysis 1 - rename later
+
+text
+
+## Another header if we need
+
+text
+
+## Again a header for if we need
+
+text
+
+## Last header if needed
+
+text
