@@ -45,6 +45,7 @@ sheet_names <- excel_sheets(path_to_xlsx_file)
 print(sheet_names)
 
 # Load a specific sheet by name
+<<<<<<< HEAD
 PCOS_data_xlsx <- read_excel(path_to_xlsx_file, sheet = "Full_new")
 print(head(PCOS_data_xlsx))  # View the first few rows
 
@@ -66,4 +67,8 @@ write.table(PCOS_data_tsv, file = path_to_tsv_file, sep = "\t", row.names = FALS
 print(paste("TSV file saved at:", path_to_tsv_file))
 
 
+=======
+data_new <- read_excel(path_to_file, sheet = "Full_new")
+print(head(data_new))
+>>>>>>> 142b405f5576802aa3d0e4f4f7764b24f27c3f4f
 ```
