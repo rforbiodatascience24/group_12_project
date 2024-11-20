@@ -23,7 +23,7 @@ library("tidyverse")
 
 ```{r}
 
-read_tsv(file = "../data/PCOS_data_without_infertility")
+read_tsv(file = "../data/PCOS_data_without_infertility.tsv")
 
 ```
 
