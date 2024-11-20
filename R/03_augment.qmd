@@ -34,9 +34,12 @@ blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements.tsv")
 body_measurements <- body_measurements |> 
   mutate(PCOS_diagnosis = factor(PCOS_diagnosis, levels= c(0,1), labels=c("No", "Yes")))
 
+blood_measurements <- blood_measurements |> 
+  mutate(PCOS_diagnosis = factor(PCOS_diagnosis, levels= c(0,1), labels=c("No", "Yes")))
+
 ```
 
-## Another header if we need
+## Unit changes
 
 ```{r}
 # | echo: true
@@ -46,11 +49,11 @@ body_measurements <- body_measurements |>
 body_measurements <- body_measurements |> 
   mutate(hip = hip * 2.54)|>
   mutate(waist = waist * 2.54)|>
-  mutate(waist_hip_ratio = waist_hip_ratio *2.54)
+  mutate(waist_hip_ratio = round(waist_hip_ratio *2.54, 1))
   
 ```
 
-## Again a header for if we need
+## Rounding BMI and dividing into categories
 
 ```{r}
 # | echo: true
@@ -58,23 +61,25 @@ body_measurements <- body_measurements |>
 
 # round of BMI + categories
 body_measurements <- body_measurements |>
+  mutate(BMI = round(BMI, 1)) |> 
   mutate(BMI_class = case_when(
     BMI < 18.5 ~ "Underweight",
     BMI <= 18.5 | BMI < 25 ~ "Normal weight",
     BMI <= 25 | BMI < 30 ~ "Overweight",
     BMI >= 30 ~ "Obesity")) |>
   mutate(BMI_class = factor(BMI_class,
-                            levels =  c("Underweight", "Normal weight","Overweight", "Obesity"))) |>
+                            levels =  c("Underweight", "Normal weight",
+                                        "Overweight", "Obesity"))) |>
   relocate(BMI_class, .after = BMI)
 ```
 
-## Last header if needed
+## Change blood type numbers into blood indicators
 
 ```{r}
 # | echo: true
 # | eval: true
 
-
+# Change blood type into indicators
 body_measurements <- body_measurements |>
   mutate(blood_type = case_when(
     blood_type == 11 ~ "A+",
@@ -87,4 +92,33 @@ body_measurements <- body_measurements |>
     blood_type == 18 ~ "AB-"))
 
 
+```
+
+## Change cycle status into strings
+
+```{r}
+# | echo: true
+# | eval: true
+
+# Change cycle status from numbers to strings
+body_measurements <- body_measurements |>
+  mutate(cycle_RI = case_when(
+    cycle_RI == 2 ~ "irregular",
+    cycle_RI == 4 ~ "regular"))
+```
+
+## Save tsv files
+
+```{r}
+# Write the data into data files
+write_tsv(x = blood_measurements,
+          file = "../data/PCOS_blood_measurements_aug.tsv")
+write_tsv(x = body_measurements,
+          file = "../data/PCOS_body_measurements_aug.tsv")
+
+PCOS_merged <- inner_join(x = body_measurements,
+                          y = blood_measurements,
+                          by = join_by(patient_ID, PCOS_diagnosis))
+write_tsv(x = PCOS_merged,
+          file = "../data/PCOS_merged.tsv")
 ```
