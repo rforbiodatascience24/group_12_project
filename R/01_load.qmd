@@ -51,6 +51,9 @@ print(head(PCOS_data_xlsx))  # View the first few rows
 #### Write to TSV
 
 ```{r}
+# | echo: true
+# | eval: true
+
 # Define the output path for the TSV file
 path_to_tsv_file <- "../data/PCOS_data_without_infertility.tsv"
 
