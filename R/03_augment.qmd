@@ -109,15 +109,6 @@ body_measurements <- body_measurements |>
 
 ```
 
-## Factor values
-
-```{r}
-# | echo: true
-# | eval: true
-
-
-```
-
 ## Save tsv files
 
 ```{r}
