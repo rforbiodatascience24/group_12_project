@@ -18,7 +18,7 @@ Mille Rask Sander - s203556 - MilleRask
 
 ## Description
 
-Polycystic ovary syndrome, abbreviated PCOS, is a disease documented in women, that affects their hormone and reproductive health. However, it has not been reported what the cause of PCOS is or if there are any health-related triggers. Most individuals suffering from PCOS experience irregular periods, follicles and ovary-related problems, and increased hormone production [1]. Furthermore, has PCOS been correlated with causing a risk of potential complications in regards to pregnancy [2]
+Polycystic ovary syndrome, abbreviated PCOS, is a disease documented in women, that affects their hormone and reproductive health. However, it has not been reported what the cause of PCOS is or if there are any health-related triggers. Most individuals suffering from PCOS experience irregular periods, follicles and ovary-related problems, and increased hormone production [1]. Furthermore, has PCOS been correlated with causing a risk of potential complications in regards to pregnancy [2].
 
 There have been many speculations, as to what causes PCOS. Some of the reported factors that may influence PCOS have been stated to be: increased male-related hormones (e.g. androgens) and increased insulin [2]. As of now, there is no treatment for PCOS, however, most symptoms can be managed to the patient’s need.
 
