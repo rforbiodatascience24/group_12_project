@@ -1,0 +1,29 @@
+---
+title: "PCOS analysis"
+format:
+  revealjs:
+     slide-number: true
+     embed-resources: true
+     theme: solarized
+      
+author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen & Mille Rask Sander"
+---
+
+```{r}
+
+library(tidyverse)
+```
+
+# Introduction
+
+-   PCOS
+
+-   other stuff
+
+# Cleaning
+
+-   steps
+
+# Conclusion
+
+-   no significance
