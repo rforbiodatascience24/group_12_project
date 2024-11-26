@@ -25,7 +25,6 @@ library("tidyverse")
 library(RColorBrewer)
 library(ggplot2)
 library(ggridges)
-library(table1)   
 ```
 
 ## Load data
@@ -98,6 +97,20 @@ There are 364 patients who have not been diagnosed with PCOS and 177 who have be
 # | echo: true
 # | eval: true
 
+body_measurements |>
+  ggplot(mapping = aes(x=period_length, fill = PCOS_diagnosis)) + 
+  geom_density(alpha = 0.45)+
+  labs(x = "Period length (days)", 
+       y = "Density",
+       title = "Density plot of period lengths",
+       fill = "PCOS diagnosis")
+
+```
+
+```{r}
+# | echo: true
+# | eval: true
+
 # Age distribution
 
 
@@ -160,13 +173,4 @@ ggsave(blood_type_plot,
 
 ```
 
-## Easy statistic summary
-
-```{r}
-# | echo: true
-# | eval: true
-
-PCOS |>
-  table1()
-
-```
+## 
