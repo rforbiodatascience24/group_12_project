@@ -20,10 +20,9 @@ rm(list = ls())
 # | echo: true
 # | eval: true
 
-# Loading relevant packages used in the project
+# Loading relevant packages used in this section
+
 library(tidyverse)
-library(patchwork)
-library(dplyr)
 library(readxl)
 library(readr)
 
@@ -35,34 +34,37 @@ library(readr)
 # | echo: true
 # | eval: true
 
-# Define the path to the Excel file
+# Define path to the Excel file
 path_to_xlsx_file <- "../data/_raw/PCOS_data_without_infertility.xlsx"
 
-# List all sheet names to see which sheet to load
+# List sheet names from the excel file
 sheet_names <- excel_sheets(path_to_xlsx_file)
 print(sheet_names)
 
-# Load a specific sheet by name
+# Load the file of interest by sheet name in the file
 PCOS_data_xlsx <- read_excel(path_to_xlsx_file, sheet = "Full_new")
-print(head(PCOS_data_xlsx))  # View the first few rows
+
+### Quality check
+print(head(PCOS_data_xlsx))
+print(paste("Xlsx file saved at:", path_to_xlsx_file))
 
 ```
 
-#### Write to TSV
+#### Write and save to TSV
 
 ```{r}
 # | echo: true
 # | eval: true
 
-# Define the output path for the TSV file
+# Define and create output path
 path_to_tsv_file <- "../data/PCOS_data_without_infertility.tsv"
 
-# Read the desired sheet from the Excel file
+# Read the sheet of interest by sheet name
 PCOS_data_tsv <- read_excel(path_to_xlsx_file, sheet = "Full_new")
 
-# Save the data as a TSV file
+# Save the data to TSV format
 write.table(PCOS_data_tsv, file = path_to_tsv_file, sep = "\t", row.names = FALSE, quote = FALSE)
 
-# Print the path to confirm
+### Quality check
 print(paste("TSV file saved at:", path_to_tsv_file))
 ```
