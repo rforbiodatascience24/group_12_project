@@ -22,6 +22,7 @@ rm(list = ls())
 
 library("tidyverse")
 library(RColorBrewer)
+library(ggplot2)
 ```
 
 ## Load data
@@ -88,23 +89,32 @@ PCOS |>
 
 There are 364 patients who have not been diagnosed with PCOS and 177 who have been diagnosed with PCOS.
 
-```{r}
-# | echo: true
-# | eval: true
-
-
-
-
-```
-
-## Plot distributions of blood values
+## Plot distributions of body values
 
 ```{r}
 # | echo: true
 # | eval: true
 
-# choice of color theme: PiYG
 
+#Creating bar chart of BMI distribution stratified on PCOS diagnosis
+BMI_bar <- body_measurements |> 
+  ggplot(mapping = aes(x = BMI_class,
+                       fill = PCOS_diagnosis)) +
+  geom_bar(position = position_dodge(preserve = "single"),
+           alpha = 0.45,
+           color = "black") +
+  labs(x = "BMI groups", 
+       y = "Count",
+       title = "Barchart over BMI groups stratified PCOS diagnosis",
+       fill = "PCOS diagnosis")
+
+#Saving the plot as a picture
+ggsave(BMI_bar,
+       filename = "../results/04_BMI_bar.png",
+       device = "png",
+       height = 10,
+       width = 20,
+       units = "cm")
 
 ```
 
