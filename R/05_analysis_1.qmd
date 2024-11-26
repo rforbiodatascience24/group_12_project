@@ -8,33 +8,45 @@ editor: visual
 ## Clear environment
 
 ```{r}
+# | echo: true
+# | eval: true
+
 rm(list = ls())
 ```
 
 ## Load libraries
 
 ```{r}
+# | echo: true
+# | eval: true
+
 library("tidyverse")
 ```
 
 ## Load data
 
 ```{r}
-# R code for loading data
+# | echo: true
+# | eval: true
+
+body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
+
 ```
 
-# Analysis 1 - rename later
+# Metadata analysis
 
-text
+First part of this project, is to see if there is a correlation between patients with PCOS using the metadata.
 
-## Another header if we need
+## Symptoms in common for PCOS individuals
 
-text
+```{r}
+# | echo: true
+# | eval: true
 
-## Again a header for if we need
 
-text
+
+```
+
+## Correlation between PCOS and BMI
 
 ## Last header if needed
-
-text

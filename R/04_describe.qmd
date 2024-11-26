@@ -21,6 +21,7 @@ rm(list = ls())
 # | eval: true
 
 library("tidyverse")
+library(RColorBrewer)
 ```
 
 ## Load data
@@ -30,41 +31,59 @@ library("tidyverse")
 # | eval: true
 
 #Load the file
-body_measurements <- read_tsv(file = "../data/PCOS_body_measurements.tsv")
-blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements.tsv")
+body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
+blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements_aug.tsv")
+
+
 ```
 
-## Data statistics
+## Data statistics - body measurements
+
+Checking dimensions of metadata
 
 ```{r}
 # | echo: true
 # | eval: true
 
-name <- name |>
-  dim() |>
-  tibble()
-
-name <- name |>
-  count(age) |>
-  count(age) |>
-
-
-
-
-
 ```
-
-## Plot distributions
 
 ```{r}
 # | echo: true
 # | eval: true
 
 
+```
+
+```{r}
+# | echo: true
+# | eval: true
 
 
 
 
+```
+
+## Plot distributions of blood values
+
+```{r}
+# | echo: true
+# | eval: true
+
+# choice of color theme: PiYG
+
+
+```
+
+```{r}
+# | echo: true
+# | eval: true
+
+
+```
+
+```{r}
+# | echo: true
+# | eval: true
 
 ```
 
