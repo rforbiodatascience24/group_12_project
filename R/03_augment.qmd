@@ -115,7 +115,6 @@ body_measurements <- body_measurements |>
 
 ```
 
-
 ## Change cycle status into strings
 
 ```{r}
@@ -130,7 +129,6 @@ body_measurements <- body_measurements |>
   mutate(cycle_RI=factor(cycle_RI, levels= c("irregular", "regular")))
 
 ```
-
 
 ## Save tsv files
 
