@@ -152,13 +152,13 @@ PCOS <- PCOS |>
 
 # Write the updated dataset into a new data file
 write_tsv(x = PCOS,
-          file = "../data/PCOS_updated.tsv")
+          file = "../data/PCOS_clean.tsv")
 # Check colnames of original dataset
 colnames(PCOS)
 
 ## Read the data into separate files
 # Load the dataset, selecting columns from defined ranges 
-blood_measurements <- read_tsv(file = "../data/PCOS_updated.tsv",
+blood_measurements <- read_tsv(file = "../data/PCOS_clean.tsv",
                                col_select = c(1:2,10,15:19,23:28))
 
 # View the column names of the selected data
@@ -166,7 +166,7 @@ colnames(blood_measurements)
 
 
 # Select body measurements using column names (excluding blood measurements)
-body_measurements <- read_tsv(file = "../data/PCOS_updated.tsv",
+body_measurements <- read_tsv(file = "../data/PCOS_clean.tsv",
                               col_select = -c(10,15:19,23:28))
 
 # View the column names of the selected data
