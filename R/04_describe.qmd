@@ -99,13 +99,15 @@ There are 364 patients who have not been diagnosed with PCOS and 177 who have be
 # | echo: true
 # | eval: true
 
+
 period_plot <- body_measurements |> 
   ggplot(mapping = aes(x=period_length, fill = PCOS_diagnosis)) + 
   geom_density(alpha = 0.45)+
   labs(x = "Period length (days)", 
        y = "Density",
        title = "Density plot of period lengths",
-       fill = "PCOS diagnosis")
+       fill = "PCOS diagnosis")+
+  scale_fill_brewer(palette="Set3") 
 
 # Saving the plot as a picture
 ggsave(period_plot,
@@ -134,7 +136,9 @@ age_plot <- body_measurements |>
   labs(x = "Age (binwidth = 5)", 
        y = "Count",
        title = "Histogram of age distribution stratified for PCOS diagnosis",
-       fill = "PCOS diagnosis")
+       fill = "PCOS diagnosis")+
+  scale_fill_brewer(palette="Set3")+
+  theme_light()
 
 # Saving the plot as a picture
 ggsave(age_plot,
@@ -161,7 +165,9 @@ BMI_bar <- body_measurements |>
   labs(x = "BMI groups", 
        y = "Count",
        title = "Bar chart over BMI groups stratified PCOS diagnosis",
-       fill = "PCOS diagnosis")
+       fill = "PCOS diagnosis")+
+  scale_fill_brewer(palette="Set3")+
+  theme_light()
 
 # Saving the plot as a picture
 ggsave(BMI_bar,
@@ -189,7 +195,9 @@ blood_type_plot <- body_measurements |>
   labs(x = "Blood type", 
        y = "Count",
        title = "Bar chart of blood groups stratified for PCOS diagnosis",
-       fill = "PCOS diagnosis")
+       fill = "PCOS diagnosis")+
+  scale_fill_brewer(palette="Set3")+
+  theme_light()
 
 # Saving the plot as a picture
 ggsave(blood_type_plot,
