@@ -1,0 +1,26 @@
+---
+title: "00_all"
+author: "Group12"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+# Run all scripts
+
+```{r}
+
+#| message: false
+#| results: false
+
+rmarkdown::render(input = '01_load.qmd',
+                  output_dir = '../results')
+rmarkdown::render(input = '02_clean.qmd',
+                  output_dir = '../results')
+rmarkdown::render(input = '03_augment.qmd',
+                  output_dir = '../results')
+rmarkdown::render(input = '04_describe.qmd',
+                  output_dir = '../results')
+
+```
