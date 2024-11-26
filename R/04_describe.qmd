@@ -107,7 +107,8 @@ period_plot <- body_measurements |>
        y = "Density",
        title = "Density plot of period lengths",
        fill = "PCOS diagnosis")+
-  scale_fill_brewer(palette="Set3") 
+  scale_fill_brewer(palette="Set3")+
+  theme_light()
 
 # Saving the plot as a picture
 ggsave(period_plot,
