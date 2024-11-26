@@ -20,9 +20,12 @@ rm(list = ls())
 # | echo: true
 # | eval: true
 
+# load libraries
 library("tidyverse")
 library(RColorBrewer)
 library(ggplot2)
+library(ggridges)
+library(table1)   
 ```
 
 ## Load data
@@ -89,14 +92,23 @@ PCOS |>
 
 There are 364 patients who have not been diagnosed with PCOS and 177 who have been diagnosed with PCOS.
 
-## Plot distributions of body values
+## Plotting distributions of data
 
 ```{r}
 # | echo: true
 # | eval: true
 
+# Age distribution
 
-#Creating bar chart of BMI distribution stratified on PCOS diagnosis
+
+
+```
+
+```{r}
+# | echo: true
+# | eval: true
+
+# Creating bar chart of BMI distribution stratified on PCOS diagnosis
 BMI_bar <- body_measurements |> 
   ggplot(mapping = aes(x = BMI_class,
                        fill = PCOS_diagnosis)) +
@@ -108,11 +120,11 @@ BMI_bar <- body_measurements |>
        title = "Barchart over BMI groups stratified PCOS diagnosis",
        fill = "PCOS diagnosis")
 
-#Saving the plot as a picture
+# Saving the plot as a picture
 ggsave(BMI_bar,
        filename = "../results/04_BMI_bar.png",
        device = "png",
-       height = 10,
+       height = 20,
        width = 20,
        units = "cm")
 
@@ -122,20 +134,39 @@ ggsave(BMI_bar,
 # | echo: true
 # | eval: true
 
+# Creating barplot of blood types present in the dataset
+blood_type_plot <- body_measurements |> 
+  ggplot(mapping = aes(x = blood_type, 
+                       fill = PCOS_diagnosis)) +
+  geom_bar(position = position_dodge(preserve = "single"),
+           alpha = 0.45,
+           color = "black") +
+  labs(x = "Blood type", 
+       y = "Count",
+       title = "Barchart of blood groups stratified for PCOS diagnosis",
+       fill = "PCOS diagnosis")
+
+# QC
+print(blood_type_plot)
+
+# Saving the plot as a picture
+
+ggsave(blood_type_plot,
+       filename = "../results/04_Blood_type_bar.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
 
 ```
+
+## Easy statistic summary
 
 ```{r}
 # | echo: true
 # | eval: true
 
-```
-
-## Last header if needed
-
-```{r}
-# | echo: true
-# | eval: true
-
+PCOS |>
+  table1()
 
 ```
