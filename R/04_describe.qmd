@@ -200,6 +200,7 @@ blood_type_plot <- body_measurements |>
   scale_fill_brewer(palette="Set3")+
   theme_light()
 
+
 # Saving the plot as a picture
 ggsave(blood_type_plot,
        filename = "../results/04_blood_type_bar.png",
