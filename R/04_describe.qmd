@@ -33,17 +33,30 @@ library(RColorBrewer)
 #Load the file
 body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
 blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements_aug.tsv")
-
+PCOS <- read_tsv(file = "../data/PCOS_merged.tsv")
 
 ```
 
-## Data statistics - body measurements
+## Data statistics
 
 Checking dimensions of metadata
 
 ```{r}
 # | echo: true
 # | eval: true
+
+body_measurements_dim <- body_measurements |>
+  dim() |>
+  tibble()|>
+  rename("Body measurments dimensions" = "dim(body_measurements)")|>
+  print()
+
+blood_measurements_dim <- blood_measurements |>
+  dim() |>
+  tibble()|>
+  rename("Blood measurments dimensions" = "dim(blood_measurements)")|>
+  print()
+  
 
 ```
 
