@@ -10,19 +10,28 @@ editor: visual
 ## Clear environment
 
 ```{r}
+# | echo: true
+# | eval: true
+
 rm(list = ls())
 ```
 
 ## Load libraries
 
 ```{r}
+# | echo: true
+# | eval: true
+
 library("tidyverse")
 ```
 
 ## Load data
 
 ```{r}
-#Load the file
+# | echo: true
+# | eval: true
+
+# Load the file
 PCOS <- read_tsv(file = "../data/PCOS_data_without_infertility.tsv")
 
 ```
@@ -32,6 +41,9 @@ PCOS <- read_tsv(file = "../data/PCOS_data_without_infertility.tsv")
 ### Column removal of non relevant data columns
 
 ```{r}
+# | echo: true
+# | eval: true
+
 #Removal of columns
 PCOS <- PCOS |>
   select(-"Sl. No") |> 
@@ -46,6 +58,8 @@ print(PCOS)
 ### Rename columns
 
 ```{r}
+# | echo: true
+# | eval: true
 
 PCOS <- PCOS |> 
   rename("patient_ID" = "Patient File No.",
@@ -97,6 +111,9 @@ print(PCOS)
 ### Further cleaning of data
 
 ```{r}
+# | echo: true
+# | eval: true
+
 #correct misplaced period from betaHCG column and change to NA and remove misplaced character and replace with NA, additionally create the columns betaHCG_2 and AMH into dbl insted of chr:
 PCOS <- PCOS |> 
   mutate(betaHCG_2 = sub("\\.$", NA, betaHCG_2),
@@ -130,6 +147,9 @@ PCOS <- PCOS |>
 ## Saving and Splitting the Data
 
 ```{r}
+# | echo: true
+# | eval: true
+
 # Write the updated dataset into a new data file
 write_tsv(x = PCOS,
           file = "../data/PCOS_updated.tsv")
