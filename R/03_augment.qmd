@@ -76,6 +76,24 @@ body_measurements <- body_measurements |>
   relocate(BMI_class, .after = BMI)
 ```
 
+## Grouping ages
+
+```{r}
+body_measurements <- body_measurements |>
+  mutate(age_group = case_when(
+    age < 20 ~ "]20",
+    age >= 20 & age < 25 ~ "[20;25[",
+    age >= 25 & age < 30 ~ "[25;30[",
+    age >= 30 & age < 35 ~ "[30;35[",
+    age >= 35 & age < 40 ~ "[35;40[",
+    age >= 40 & age < 45 ~ "[40;45[",
+    age >= 45 ~ "[45",)) |>
+  mutate(age_group = factor(age_group,
+                            levels =  c("]20","[20;25[", "[25;30[",
+                                        "[30;35[", "[35;40[","[40;45[", "[45"))) |>
+  relocate(age_group, .after = age)
+```
+
 ## Change blood type numbers into blood indicators
 
 ```{r}
@@ -110,6 +128,28 @@ body_measurements <- body_measurements |>
     cycle_RI == 4 ~ "regular")) |> 
   mutate(cycle_RI=factor(cycle_RI, levels= c("irregular", "regular")))
 
+```
+
+## Creating a cycle or pregnancy stage column
+
+```{r}
+# Create a new column 'cycle_or_pregnancy_stage' based on PRG levels
+blood_measurements_updated <- blood_measurements %>%
+  mutate(cycle_or_pregnancy_stage = case_when(
+    PRG <= 0.7 ~ "Follicular Stage",   
+    PRG > 0.7 & PRG <= 2 ~ "Likely Follicular Stage",                        
+    PRG > 2 & PRG <= 10 ~ "Luteal Stage",                    
+    PRG > 10 & PRG <= 25 ~ "Luteal Stage/Possibly First or Second Trimester Pregnancy",
+    PRG > 25 & PRG <= 44 ~ "First or Second Trimester Pregnancy", 
+    PRG > 44 & PRG <= 65 ~ "Second Trimester Pregnancy",     
+    PRG > 65 & PRG <= 82.5 ~ "Second or Third Trimester Pregnancy",      
+    PRG > 82.5 & PRG <= 290 ~ "Third Trimester Pregnancy",     
+    TRUE ~ "Unknown"                                          # Default case for out-of-range values
+  )) |> 
+  mutate(cycle_or_pregnancy_stage = factor(cycle_or_pregnancy_stage, levels= c("Follicular Stage", "Likely Follicular Stage", "Luteal Stage", "Luteal Stage/Possibly First or Second Trimester Pregnancy", "First or Second Trimester Pregnancy", "Second Trimester Pregnancy", "Second or Third Trimester Pregnancy", "Third Trimester Pregnancy", "Unknown")))
+
+# View the first few rows to check the new column
+head(blood_measurements_updated)
 ```
 
 ## Save tsv files
