@@ -2,8 +2,6 @@
 
 ## Project contributors
 
-All members of the group have equally contributed to the project and data discussions.
-
 *Name - Study number - Github name:*
 
 Agnes Lorenzen - s194692 - AgnesDTU
@@ -16,9 +14,11 @@ Julie Dalgaard Petersen - s204570 - juldp
 
 Mille Rask Sander - s203556 - MilleRask
 
+All group members have contributed equally to the project and data discussions.
+
 ## Description
 
-Polycystic ovary syndrome, abbreviated PCOS, is a disease documented in women, that affects their hormone and reproductive health. However, it has not been reported what the cause of PCOS is or if there are any health-related triggers. Most individuals suffering from PCOS experience irregular periods, follicles and ovary-related problems, and increased hormone production [1]. Furthermore, has PCOS been correlated with causing a risk of potential complications in regards to pregnancy [2].
+Polycystic ovary syndrome, abbreviated PCOS, is a disease documented in women, that affects their hormone and reproductive health. However, it has not been reported what the cause of PCOS is or if there are any health-related triggers. Most individuals suffering from PCOS experience irregular periods, follicles and ovary-related problems, and increased hormone production [1]. Furthermore, PCOS has been correlated with causing a risk of potential complications in regards to pregnancy [2].
 
 There have been many speculations, as to what causes PCOS. Some of the reported factors that may influence PCOS have been stated to be: increased male-related hormones (e.g. androgens) and increased insulin [2]. As of now, there is no treatment for PCOS, however, most symptoms can be managed to the patient’s need.
 
