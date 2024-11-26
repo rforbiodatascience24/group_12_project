@@ -130,7 +130,7 @@ body_measurements <- body_measurements |>
 
 ```
 
-## Creating a cycle or pregnancy stage column
+## Creating a cycle or pregnancy stage column 
 
 ```{r}
 # Create a new column 'cycle_or_pregnancy_stage' based on PRG levels
