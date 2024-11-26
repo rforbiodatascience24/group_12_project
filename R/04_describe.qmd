@@ -45,27 +45,48 @@ Checking dimensions of metadata
 # | echo: true
 # | eval: true
 
+# cheking the dimensions of the body measurements
 body_measurements_dim <- body_measurements |>
   dim() |>
   tibble()|>
   rename("Body measurments dimensions" = "dim(body_measurements)")|>
   print()
 
+# cheking the dimensions of the blood measurements
 blood_measurements_dim <- blood_measurements |>
   dim() |>
   tibble()|>
   rename("Blood measurments dimensions" = "dim(blood_measurements)")|>
   print()
   
+# cheking the dimensions of the blood measurements
+PCOS_dim <- PCOS |>
+  dim() |>
+  tibble()|>
+  rename("PCOS dimensions" = "dim(PCOS)")|>
+  print()
+
 
 ```
+
+Checking column names and patients with and without PCOS diagnosis
 
 ```{r}
 # | echo: true
 # | eval: true
 
+# which column names exist in the merged data set:
+PCOS |> 
+  colnames()
+
+# counting patients with (yes) and without (no PCOS diagnosis)
+PCOS |> 
+  count(PCOS_diagnosis)
+
 
 ```
+
+There are 364 patients who have not been diagnosed with PCOS and 177 who have been diagnosed with PCOS.
 
 ```{r}
 # | echo: true
