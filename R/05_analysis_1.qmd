@@ -50,24 +50,6 @@ First part of this project, is to see if there is a correlation between patients
 # | echo: true
 # | eval: true
 
-body_measurements |>
-  ggplot(mapping = aes(x=patient_ID, y = BMI, color = PCOS_diagnosis)) + 
-  geom_point(alpha = 0.8)+
-  scale_color_brewer(palette = "PuRd")
-  labs(x = "BMI", 
-       y = "",
-       title = "BMI correlation",
-       fill = "PCOS diagnosis")
-
-```
-
-## Correlation between PCOS and cycle category
-
-```{r}
-# | echo: true
-# | eval: true
-
-
 PCOS_BMI_correlation_box <- body_measurements |> 
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = BMI,
@@ -89,8 +71,9 @@ ggsave(PCOS_BMI_correlation_box,
        width = 20,
        units = "cm")
 
-
 ```
+
+## Correlation between PCOS and cycle category
 
 ## Header if needed 1
 
