@@ -1,0 +1,36 @@
+---
+title: "06_analysis_2"
+author: "Group12"
+format: html
+editor: visual
+---
+
+## 
+
+## Clear environment
+
+```{r}
+# | echo: true 
+# | eval: true  
+rm(list = ls())
+```
+
+## Load libraries
+
+```{r}
+# | echo: true 
+# | eval: true  
+library("tidyverse")
+```
+
+## Load data
+
+```{r}
+# | echo: true 
+# | eval: true  
+body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv") 
+```
+
+# Blood data analysis
+
+First part of this project, is to see if there is a correlation between patients with PCOS using the data from the blood samples.
