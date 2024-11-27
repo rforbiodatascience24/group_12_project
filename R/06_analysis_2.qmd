@@ -28,7 +28,7 @@ library("tidyverse")
 ```{r}
 # | echo: true 
 # | eval: true  
-body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv") 
+blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements_aug.tsv") 
 ```
 
 # Blood data analysis
