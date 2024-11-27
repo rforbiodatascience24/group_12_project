@@ -22,6 +22,7 @@ rm(list = ls())
 
 # load libraries
 library("tidyverse")
+library(patchwork)
 library(RColorBrewer)
 library(ggplot2)
 library(ggridges)
@@ -44,12 +45,77 @@ body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
 
 First part of this project, is to see if there is a correlation between patients with PCOS using the metadata.
 
-## Correlation between BMI and PCOS
+## Follicle and PCOS
 
 ```{r}
 # | echo: true
 # | eval: true
 
+
+# Distribution of follicles in both ovaries
+p_follicles_ovaries <- body_measurements |> 
+  ggplot(mapping = aes(x = follicle_no_R,
+                       y = follicle_no_L,
+                       color = PCOS_diagnosis)) + 
+  geom_point() + 
+  scale_color_manual(values = c("Yes" = "Turquoise", 
+                               "No" = "orchid")) + 
+  labs(title = "Distribution of follicles in both ovaries",
+       x = "Follicle No. (R)", 
+       y = "Follicle No. (L)",
+       color = "PCOS Diagnosis")
+
+# printing plot
+p_follicles_ovaries
+
+
+
+
+```
+
+```{r}
+
+# | echo: true
+# | eval: true
+
+
+p1 <- body_measurements |> 
+  ggplot(aes(x = PCOS_diagnosis, 
+             y = follicle_no_L)) + 
+  geom_boxplot(aes(fill = PCOS_diagnosis), 
+               outlier.shape = NA, 
+               alpha = 0.5) + 
+  geom_jitter(width = 0.2, 
+              alpha = 0.8, 
+              size = 1) + 
+  scale_fill_manual(values = c("Yes" = "Turquoise", 
+                               "No" = "orchid")) + 
+  labs(x = "PCOS (Y/N)", 
+       y = "Follicle No. (L)") + 
+  theme_minimal()
+
+p1
+
+
+p2 <- body_measurements |> 
+  ggplot(aes(x = PCOS_diagnosis, 
+             y = follicle_no_R)) + 
+  geom_boxplot(aes(fill = PCOS_diagnosis), 
+               outlier.shape = NA, 
+               alpha = 0.5) + 
+  geom_jitter(width = 0.2, 
+              alpha = 0.8, 
+              size = 1) + 
+  scale_fill_manual(values = c("Yes" = "Turquoise", 
+                               "No" = "orchid")) + 
+  labs(x = "PCOS (Y/N)", 
+       y = "Follicle No. (R)") + 
+  theme_minimal()
+
+p2
+```
+## Correlation between BMI and PCOS
+```{r}
 PCOS_BMI_correlation_box <- body_measurements |> 
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = BMI,
@@ -70,6 +136,7 @@ ggsave(PCOS_BMI_correlation_box,
        height = 20,
        width = 20,
        units = "cm")
+
 
 ```
 
