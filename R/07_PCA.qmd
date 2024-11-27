@@ -5,23 +5,326 @@ format: html
 editor: visual
 ---
 
-## PCA Analysis 
+## PCA Analysis
+
+### Clear environment
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+rm(list = ls())
+```
+
+### Load libraries
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+library("tidyverse")
+library("broom")
+library("cowplot")
+```
+
+### Load data
+
+```{r}
+# | echo: true 
+# | eval: true  
+body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
+blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements_aug.tsv")
+
+# Check column names
+colnames(blood_measurements)
+```
 
 ### For hormone/blood data
 
 ```{r}
-# 
+# | echo: true 
+# | eval: true  
+
+# Remove rows with NAs
+blood_measurements_no_na <- na.omit(blood_measurements)
+
+# Run PCA only numeric columns and scale the data
+pca_fit <- blood_measurements_no_na |> 
+  select(where(is.numeric)) |>
+  select(-patient_ID) |> 
+  prcomp(scale = TRUE) #scale data
+
+# Add PCOS_diagnosis back into the data and plot
+# Color based on PCOS status
+pca_fit |> 
+  augment(blood_measurements_no_na) |>  # add original dataset back in
+  ggplot(aes(.fittedPC1, .fittedPC2, color = PCOS_diagnosis)) +
+  labs(title = "PCA of blood data stratified by PCOS diagnosis",
+       x = "Principal component 1",
+       y = "Principal component 2",
+       color = "PCOS diagnosis") + 
+  geom_point(size = 1.5, alpha = 0.5) +
+  theme_half_open(12) + 
+  background_grid() +
+  xlim(-1, 1) +  
+  ylim(-2.5, 5)    
+
+# Color based on cycle/preg status
+pca_fit |> 
+  augment(blood_measurements_no_na) |>  # add original dataset back in
+  ggplot(aes(.fittedPC1, .fittedPC2, color = cycle_or_pregnancy_stage)) +
+  labs(title = "PCA of blood data stratified by cycle and pregnancy stage",
+       x = "Principal component 1",
+       y = "Principal component 2",
+       color = "Cycle or pregnancy stage") + 
+  geom_point(size = 1.5, alpha = 0.4) +
+  theme_half_open(12) + 
+  background_grid() +
+  xlim(-0.5, 0.5) +  
+  ylim(-2.5, 5) 
 ```
 
-### More PCA
+### Trying just the PCOS diagnosed
 
 ```{r}
-#| echo: false
-2 * 2
+# Augment PCA results and explicitly keep all relevant columns
+pca_augmented <- pca_fit |> 
+  augment(blood_measurements_no_na, 
+          data = blood_measurements_no_na |> select(PCOS_diagnosis,
+                                                    cycle_or_pregnancy_stag
+                                                    ))
+# Filter for PCOS patients only
+pca_augmented_pcos <- pca_augmented |> 
+  filter(PCOS_diagnosis == "Yes")
+pca_augmented_no_pcos <- pca_augmented |> 
+  filter(PCOS_diagnosis == "No")
+
+# Plot PCA for PCOS patients stratified by cycle_or_pregnancy_stage
+ggplot(pca_augmented_pcos, 
+       aes(.fittedPC1, .fittedPC2, color = cycle_or_pregnancy_stage)) +
+  geom_point(size = 1.5, 
+             alpha = 0.5) +
+  labs(title = "PCA of blood data",
+       subtitle = "PCOS+ patients only, stratified by cycle/pregnancy stage",
+       x = "Principal component 1",
+       y = "Principal component 2",
+       color = "Cycle or pregnancy stage") +
+  theme_half_open(12) +
+  background_grid() +
+  xlim(-0.5, 0.5) +  
+  ylim(-2.5, 5)
+
+# Plot PCA for non-PCOS patients stratified by cycle_or_pregnancy_stage
+ggplot(pca_augmented_no_pcos, 
+       aes(.fittedPC1, .fittedPC2, color = cycle_or_pregnancy_stage)) +
+  geom_point(size = 1.5, 
+             alpha = 0.5) +
+  labs(
+    title = "PCA of blood data",
+    subtitle = "PCOS- patients only, stratified by cycle/pregnancy stage",
+    x = "Principal component 1",
+    y = "Principal component 2",
+    color = "Cycle or pregnancy stage") +
+  theme_half_open(12) +
+  background_grid() +
+  xlim(-0.5, 0.5) +  
+  ylim(-2.5, 5)
+
+```
+
+### For just follicular stage patients
+
+```{r}
+
+# Filter for follicular patients only
+pca_augmented_follicular <- pca_augmented |> 
+  filter(cycle_or_pregnancy_stage == "Follicular stage")
+
+# Plot PCA for follicular patients stratified by PCOS stats
+ggplot(pca_augmented_follicular, 
+       aes(.fittedPC1, .fittedPC2, color = PCOS_diagnosis)) +
+  geom_point(size = 1.5, 
+             alpha = 0.5) +
+  labs(
+    title = "PCA of blood data",
+    subtitle = "Follicular stage patients only, stratified by PCOS status",
+    x = "Principal component 1",
+    y = "Principal component 2",
+    color = "PCOS diagnosis") +
+  theme_half_open(12) +
+  background_grid() +
+  xlim(-0.5, 0.5) +  
+  ylim(-2.5, 5)
+```
+
+### Trying without the vitamin D3, hemoglobin, and RBS (random blood sugar) measurements
+
+because these are not hormones
+
+```{r}
+colnames(blood_measurements)
+# Remove rows with NAs
+blood_measurements_no_na <- na.omit(blood_measurements)
+
+# Run PCA only numeric columns and scale the data
+pca_fit <- blood_measurements_no_na |> 
+  select(where(is.numeric)) |>
+  select(-patient_ID, -vitaminD3, -RBS, -hemaglobin) |> 
+  prcomp(scale = TRUE) #scale data
+
+# Add PCOS_diagnosis back into the data and plot
+# Color based on PCOS status
+pca_fit |> 
+  augment(blood_measurements_no_na) |>  # add original dataset back in
+  ggplot(aes(.fittedPC1, .fittedPC2, color = PCOS_diagnosis)) +
+  labs(title = "PCA of blood data stratified by PCOS diagnosis",
+       subtitle = "only hormone measurements",
+       x = "Principal component 1",
+       y = "Principal component 2",
+       color = "PCOS diagnosis") + 
+  geom_point(size = 1.5, alpha = 0.5) +
+  theme_half_open(12) + 
+  background_grid() +
+  xlim(-0.5, 0.5) +  
+  ylim(-1, 1)    
+```
+
+### Rotation matrix
+
+```{r}
+# Extract rotation matrix
+pca_fit |> 
+  tidy(matrix = "rotation")
+
+# Define arrow style for plotting
+arrow_style <- arrow(angle = 20, 
+                     ends = "first", 
+                     type = "closed", 
+                     length = grid::unit(8, "pt")
+                     )
+
+# Plot rotation matrix
+pca_fit |> 
+  tidy(matrix = "rotation") |> 
+  pivot_wider(names_from = "PC", 
+              names_prefix = "PC", 
+              values_from = "value") |> 
+  ggplot(aes(PC1, PC2)) +
+  geom_segment(xend = 0, 
+               yend = 0, 
+               arrow = arrow_style) +
+  geom_text(
+    aes(label = column),
+    hjust = 1, 
+    nudge_x = -0.02,
+    color = "violet") +
+  xlim(-1,0.25) + 
+  ylim(-0.25, 0.25) +
+  coord_fixed() + # fix aspect ratio to 1:1
+  theme_minimal_grid(12)
+```
+
+### Look at the variance explained 
+
+```{r}
+pca_fit %>%
+  tidy(matrix = "eigenvalues")
+
+# Plot
+pca_fit %>%
+  tidy(matrix = "eigenvalues") %>%
+  ggplot(aes(PC, percent)) +
+  geom_col(fill = "#56B4E9", alpha = 0.8) +
+  scale_x_continuous(breaks = 1:9) +
+  scale_y_continuous(
+    labels = scales::percent_format(),
+    expand = expansion(mult = c(0, 0.01))
+  ) +
+  theme_minimal_hgrid(12)
+```
+
+The first component about 22% of the variance -\> not great
+
+### Trying to color by FSH
+
+```{r}
+# NEED TO MAKE FSH BINARY FIRST!!
+pca_fit |> 
+  augment(blood_measurements_no_na) |>  # add original dataset back in
+  ggplot(aes(.fittedPC1, .fittedPC2, color = FSH)) +
+  labs(title = "PCA of blood data stratified by PCOS diagnosis",
+       subtitle = "only hormone measurements",
+       x = "Principal component 1",
+       y = "Principal component 2",
+       color = "FSH") + 
+  geom_point(size = 1.5, alpha = 0.5) +
+  theme_half_open(12) + 
+  background_grid() +
+  xlim(-0.5, 0.5) +  
+  ylim(-1, 1)    
+```
+
+### PCA for body data
+
+```{r}
+# THIS NEED TO BE UPDATED
+# | echo: true 
+# | eval: true  
+
+# Select only numeric columns
+numeric_body_data <- body_measurements %>%
+  select(PCOS_diagnosis, where(is.numeric))
+
+# Check the first few rows of the numeric columns
+head(numeric_body_data)
+
+numeric_body_data_no_na <- na.omit(numeric_body_data)
+pca_result <- numeric_body_data_no_na |> 
+  select(-PCOS_diagnosis, -patient_ID) |> 
+  prcomp(center = TRUE, scale. = TRUE)
+
+pca_data <- bind_cols(
+  as_tibble(pca_result$x), 
+  numeric_body_data_no_na |> select(PCOS_diagnosis)
+)
+
+ggplot(pca_data, aes(x = PC1, y = PC2, color = PCOS_diagnosis)) +
+  geom_point(size = 3, alpha = 0.7) +
+  labs(
+    title = "PCA of Body Data",
+    x = "Principal Component 1",
+    y = "Principal Component 2",
+    color = "PCOS Diagnosis"
+  ) +
+  theme_minimal() +
+  xlim(-5, 5) +  # Set range for x-axis
+  ylim(-5, 5)    # Set range for y-axis
 ```
 
 ### Header
 
 ```{r}
+# Augment PCA results and explicitly keep all relevant columns
+pca_augmented <- pca_fit |> 
+  augment(blood_measurements_no_na, 
+          data = blood_measurements_no_na |> select(PCOS_diagnosis, cycle_or_pregnancy_stage))
+
+# Filter for PCOS patients only
+pca_augmented_pcos <- pca_augmented |> 
+  filter(PCOS_diagnosis == "Yes")
+
+# Plot PCA for PCOS patients stratified by cycle_or_pregnancy_stage
+ggplot(pca_augmented_pcos, aes(.fittedPC1, .fittedPC2, color = cycle_or_pregnancy_stage)) +
+  geom_point(size = 1.5, alpha = 0.5) +
+  labs(
+    title = "PCA of Blood Data (PCOS Patients Only, Colored by Cycle/Pregnancy Stage)",
+    x = "Principal Component 1",
+    y = "Principal Component 2",
+    color = "Cycle or Pregnancy Stage"
+  ) +
+  theme_half_open(12) +
+  background_grid() +
+  xlim(-0.5, 0.5) +  
+  ylim(-2.5, 5)
 
 ```
