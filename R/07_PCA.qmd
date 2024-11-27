@@ -1,0 +1,27 @@
+---
+title: "07_PCA.qmd"
+author: "Group12"
+format: html
+editor: visual
+---
+
+## PCA Analysis 
+
+### For hormone/blood data
+
+```{r}
+# 
+```
+
+### More PCA
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+### Header
+
+```{r}
+
+```

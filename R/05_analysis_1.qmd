@@ -84,6 +84,7 @@ body_measurements |>
 # | echo: true
 # | eval: true
 
+
 body_measurements |>
   ggplot(mapping = aes(y = waist_hip_ratio, color = PCOS_diagnosis)) + 
   geom_boxplot(alpha = 0.8)+
@@ -93,13 +94,42 @@ body_measurements |>
        title = "Waist correlation",
        fill = "PCOS diagnosis")
 
-
 ```
+
+## Header if needed 1
 
 ```{r}
 # | echo: true
 # | eval: true
 
+
+```
+
+## Header if needed 2
+
+```{r}
+# | echo: true
+# | eval: true
+
+
+```
+
+## Header if needed 3
+
+```{r}
+# | echo: true
+# | eval: true
+
+
+
+
+```
+
+## Header if needed 4
+
+```{r}
+# | echo: true
+# | eval: true
 
 
 ```
