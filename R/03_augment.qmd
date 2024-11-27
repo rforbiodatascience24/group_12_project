@@ -124,8 +124,8 @@ body_measurements <- body_measurements |>
 # Change cycle status from numbers to strings
 body_measurements <- body_measurements |>
   mutate(cycle_RI = case_when(
-    cycle_RI == 2 ~ "irregular",
-    cycle_RI == 4 ~ "regular")) |> 
+    cycle_RI == 2 ~ "regular",
+    cycle_RI == 4 ~ "irregular")) |> 
   mutate(cycle_RI=factor(cycle_RI, levels= c("irregular", "regular")))
 
 ```
