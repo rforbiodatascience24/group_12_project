@@ -20,7 +20,13 @@ rm(list = ls())
 # | echo: true
 # | eval: true
 
+# load libraries
 library("tidyverse")
+library(RColorBrewer)
+library(ggplot2)
+library(ggridges)
+library(RColorBrewer)
+
 ```
 
 ## Load data
@@ -29,6 +35,7 @@ library("tidyverse")
 # | echo: true
 # | eval: true
 
+# Loading file
 body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
 
 ```
@@ -37,7 +44,57 @@ body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
 
 First part of this project, is to see if there is a correlation between patients with PCOS using the metadata.
 
-## Symptoms in common for PCOS individuals
+## Correlation between BMI and PCOS
+
+```{r}
+# | echo: true
+# | eval: true
+
+body_measurements |>
+  ggplot(mapping = aes(x=patient_ID, y = BMI, color = PCOS_diagnosis)) + 
+  geom_point(alpha = 0.8)+
+  scale_color_brewer(palette = "PuRd")
+  labs(x = "BMI", 
+       y = "",
+       title = "BMI correlation",
+       fill = "PCOS diagnosis")
+
+```
+
+## Correlation between PCOS and cycle category
+
+```{r}
+# | echo: true
+# | eval: true
+
+body_measurements |>
+  ggplot(mapping = aes(x=age, y = cycle_RI, color = PCOS_diagnosis)) + 
+  geom_point(alpha = 0.9)+
+  scale_color_brewer(palette = "PuRd")
+  labs(x = "BMI", 
+       y = "",
+       title = "Cycle - regular or irregular",
+       fill = "PCOS diagnosis")
+
+```
+
+## Waist-hip ratio and PCOS diagnosis
+
+```{r}
+# | echo: true
+# | eval: true
+
+body_measurements |>
+  ggplot(mapping = aes(y = waist_hip_ratio, color = PCOS_diagnosis)) + 
+  geom_boxplot(alpha = 0.8)+
+  scale_color_brewer(palette = "PuRd")
+  labs(x = "BMI", 
+       y = "",
+       title = "Waist correlation",
+       fill = "PCOS diagnosis")
+
+
+```
 
 ```{r}
 # | echo: true
@@ -46,7 +103,3 @@ First part of this project, is to see if there is a correlation between patients
 
 
 ```
-
-## Correlation between PCOS and BMI
-
-## Last header if needed
