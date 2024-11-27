@@ -114,7 +114,9 @@ p2 <- body_measurements |>
 
 p2
 ```
+
 ## Correlation between BMI and PCOS
+
 ```{r}
 PCOS_BMI_correlation_box <- body_measurements |> 
   ggplot(mapping = aes(x = PCOS_diagnosis,
@@ -122,9 +124,9 @@ PCOS_BMI_correlation_box <- body_measurements |>
                        fill = PCOS_diagnosis)) +
   geom_boxplot() +
   geom_jitter(alpha = 0.20) +
-  labs(x = "BMI", 
-       y = "PCOS diagnosis",
-       title = "Scatterplot over correlation between BMI and PCOS diagnosis",
+  labs(x = "PCOS diagnosis", 
+       y = "BMI",
+       title = "Boxplot over correlation between BMI and PCOS diagnosis",
        fill = "PCOS diagnosis")+
   scale_fill_brewer(palette="Set3")+
   theme_light()
@@ -140,7 +142,33 @@ ggsave(PCOS_BMI_correlation_box,
 
 ```
 
-## Correlation between PCOS and cycle category
+## Correlation between PCOS and endometrium size
+
+```{r}
+PCOS_endometrium_correlation_box <- body_measurements |> 
+  ggplot(mapping = aes(x = PCOS_diagnosis,
+                       y = endometrium,
+                       fill = PCOS_diagnosis)) +
+  geom_boxplot() +
+  geom_jitter(alpha = 0.20) +
+  labs(x = "PCOS diagnosis", 
+       y = "Endometrium size (mm)",
+       title = "Boxplot over correlation between endometrium size and PCOS diagnosis",
+       fill = "PCOS diagnosis")+
+  scale_fill_brewer(palette="Set3")+
+  theme_light()
+
+print(PCOS_endometrium_correlation_box)
+
+# Saving the plot as a picture
+ggsave(PCOS_endometrium_correlation_box,
+       filename = "../results/05_PCOS_endometrium_correlation_box.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+
+```
 
 ## Header if needed 1
 
