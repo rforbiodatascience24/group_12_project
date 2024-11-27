@@ -114,7 +114,9 @@ p2 <- body_measurements |>
 
 p2
 ```
+
 ## Correlation between BMI and PCOS
+
 ```{r}
 PCOS_BMI_correlation_box <- body_measurements |> 
   ggplot(mapping = aes(x = PCOS_diagnosis,
