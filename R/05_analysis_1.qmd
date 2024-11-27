@@ -102,9 +102,13 @@ p_follicle_L <- body_measurements |>
   scale_fill_manual(values = c("Yes" = "Turquoise", 
                                "No" = "orchid")) + 
   labs(x = "PCOS (Y/N)", 
-       y = "Follicle No. (L)") + 
-  theme_minimal()
+       y = "Follicle No. (L)",
+       title = "Follicle number of left ovary and correlation to PCOS diagnosis",
+       fill = "") + 
+  theme_minimal() + 
+  theme(legend.position = "none")
 
+# saving the plot
 ggsave(p_follicle_L,
        filename = "../results/05_follicle_L_box.png",
        device = "png",
@@ -125,12 +129,16 @@ p_follicle_R <- body_measurements |>
   scale_fill_manual(values = c("Yes" = "Turquoise", 
                                "No" = "orchid")) + 
   labs(x = "PCOS (Y/N)", 
-       y = "Follicle No. (R)") + 
-  theme_minimal()
+       y = "Follicle No. (R)",
+       title = "Follicle number of right ovary and correlation to PCOS diagnosis",
+       fill = "") + 
+  theme_minimal()+ 
+  theme(legend.position = "none")
 
-# saving the 
+
+# saving the plot
 ggsave(p_follicle_R,
-       filename = "../results/05_follicle_L_box.png",
+       filename = "../results/05_follicle_R_box.png",
        device = "png",
        height = 20,
        width = 20,
@@ -221,7 +229,6 @@ print(age_cycle_plot)
 
 
 # age mod hair growth stratisfied for PCOS
-
 p_age_hair <- body_measurements |> 
   ggplot(mapping = aes(x = age_group,
                        y = hair_growth,
@@ -229,9 +236,59 @@ p_age_hair <- body_measurements |>
   geom_point() +
   geom_jitter(width = 0.2, 
               alpha = 0.8, 
-              size = 1) 
+              size = 1) +
+  labs(x = "Age groups", 
+       y = "Hair growth (yes/no))",
+       title = "Correlation between age groups and hair growth stratisfied for PCOS diagnosis",
+       color = "PCOS diagnosis") +
+  scale_color_brewer(palette="Set2") +
+  theme_light() + 
+  theme(title = element_text(size = 9),
+        legend.position = "bottom")
 
+# to print plot if needed
 p_age_hair
+
+# Saving the plot as a picture
+ggsave(p_age_hair,
+       filename = "../results/05_age_hair_correlation_plot.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+```
+
+```{r}
+
+# | echo: true
+# | eval: true
+
+
+p_age_pimple <- body_measurements |> 
+  ggplot(mapping = aes(x = age_group,
+                       y = pimples,
+                       color = PCOS_diagnosis)) +
+  geom_point() +
+  geom_jitter(width = 0.2, 
+              alpha = 0.8, 
+              size = 1) +
+  labs(x = "Age groups", 
+       y = "Pimples (yes/no))",
+       title = "Correlation between age groups and experienced pimples",
+       color = "PCOS diagnosis") +
+  scale_color_brewer(palette="Set2") +
+  theme_light()
+
+# to print plot if needed
+p_age_pimple
+
+# Saving the plot as a picture
+ggsave(p_age_pimple,
+       filename = "../results/05_age_pimple_correlation_plot.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
 ```
 
 ## Header if needed 3
