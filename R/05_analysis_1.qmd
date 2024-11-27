@@ -144,6 +144,9 @@ ggsave(p_follicle_R,
 ## Correlation between BMI and PCOS
 
 ```{r}
+# | echo: true
+# | eval: true
+
 PCOS_BMI_correlation_box <- body_measurements |> 
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = BMI,
@@ -175,6 +178,9 @@ ggsave(PCOS_BMI_correlation_box,
 ## Correlation between PCOS and endometrium size
 
 ```{r}
+# | echo: true
+# | eval: true
+
 PCOS_endometrium_correlation_box <- body_measurements |> 
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = endometrium,
