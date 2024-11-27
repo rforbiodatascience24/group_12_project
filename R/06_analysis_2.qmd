@@ -11,7 +11,8 @@ editor: visual
 
 ```{r}
 # | echo: true 
-# | eval: true  
+# | eval: true 
+
 rm(list = ls())
 ```
 
@@ -19,8 +20,10 @@ rm(list = ls())
 
 ```{r}
 # | echo: true 
-# | eval: true  
+# | eval: true
+
 library("tidyverse")
+library(reshape2)
 ```
 
 ## Load data
@@ -28,6 +31,7 @@ library("tidyverse")
 ```{r}
 # | echo: true 
 # | eval: true  
+
 blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements_aug.tsv") 
 ```
 
@@ -63,12 +67,55 @@ ggsave(box_AMH,
 ## header for flere plots
 
 ```{r}
+# | echo: true 
+# | eval: true  
+
+blood_measurements |> 
+  ggplot(mapping = aes(x = PCOS_diagnosis, y=FSH_LH_ratio)) + 
+  geom_point(alpha = 0.90)+
+  labs(x = "Period length (days)", 
+       y = "Density",
+       title = "Density plot of period lengths",
+       fill = "PCOS diagnosis")+
+  theme_light()
+
+blood_measurements |> 
+  ggplot(mapping = aes(x = PCOS_diagnosis, y=PRL, fill = PCOS_diagnosis)) + 
+  geom_violin(alpha = 0.90)+
+  geom_point(position = "jitter")+
+  labs(x = "PCOS diagnosis (", 
+       y = "Density",
+       title = "Density of PCOS patients with PRL values",
+       fill = "PCOS diagnosis")+
+  theme_light()
+
 
 ```
 
 ## Header for endnu flere plots
 
 ```{r}
+# | echo: true 
+# | eval: true  
+
+
+hormones <- c("FSH", "LH", "FSH_LH_ratio", "TSH", "AMH", "PRL", "vitaminD3", "PRG", "RBS")
+
+blood_measurements[hormones] <- lapply(blood_measurements[hormones], as.numeric)
+
+blood_measurements$PCOS_diagnosis <- ifelse(blood_measurements$PCOS_diagnosis == "Yes", 1, 0)
+
+cor_matrix <- cor(blood_measurements[hormones], blood_measurements$PCOS_diagnosis)
+
+cor_long <- melt(cor_matrix)
+
+
+ggplot(cor_long, aes(x = Var1, y = Var2, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0) +
+  labs(title = "Correlation Heatmap: Hormones and PCOS Diagnosis",
+       x = "Hormones", y = "PCOS Diagnosis") +
+  theme_minimal()
 
 ```
 
