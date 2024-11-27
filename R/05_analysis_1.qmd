@@ -148,7 +148,7 @@ PCOS_BMI_correlation_box <- body_measurements |>
   geom_jitter(alpha = 0.20) +
   labs(x = "PCOS diagnosis", 
        y = "BMI",
-       title = "Boxplot over correlation between BMI and PCOS diagnosis",
+       title = "Correlation between BMI and PCOS diagnosis",
        fill = "PCOS diagnosis")+
   scale_fill_brewer(palette="Set3")+
   theme_light()
@@ -175,12 +175,10 @@ PCOS_endometrium_correlation_box <- body_measurements |>
   geom_jitter(alpha = 0.20) +
   labs(x = "PCOS diagnosis", 
        y = "Endometrium size (mm)",
-       title = "Boxplot over correlation between endometrium size and PCOS diagnosis",
+       title = "Correlation between endometrium size and PCOS diagnosis",
        fill = "PCOS diagnosis")+
   scale_fill_brewer(palette="Set3")+
   theme_light()
-
-print(PCOS_endometrium_correlation_box)
 
 # Saving the plot as a picture
 ggsave(PCOS_endometrium_correlation_box,
@@ -198,6 +196,20 @@ ggsave(PCOS_endometrium_correlation_box,
 # | echo: true
 # | eval: true
 
+#Age vs. cycle stratified for PCOS diagnosis
+age_cycle_plot <- na.omit(body_measurements) |> 
+  ggplot(mapping = aes(x = age,
+                       y = cycle_RI,
+                       color = PCOS_diagnosis)) +
+  geom_point() +
+  labs(x = "Age", 
+       y = "Cycle (Irregular / Regular)",
+       title = "Correlation between age and cycle",
+       color = "PCOS diagnosis")+
+  scale_color_brewer(palette="Set3")+
+  theme_light()
+
+print(age_cycle_plot)
 
 ```
 
