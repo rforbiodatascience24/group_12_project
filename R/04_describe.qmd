@@ -107,7 +107,7 @@ period_plot <- body_measurements |>
        y = "Density",
        title = "Density plot of period lengths",
        fill = "PCOS diagnosis") +
-  scale_fill_brewer(palette="Set2") +
+  scale_fill_brewer(palette = "Set2") +
   theme_light()
 
 # Saving the plot as a picture
@@ -138,7 +138,7 @@ age_plot <- body_measurements |>
        y = "Count",
        title = "Histogram of age distribution stratified for PCOS diagnosis",
        fill = "PCOS diagnosis") +
-  scale_fill_brewer(palette="Set2") +
+  scale_fill_brewer(palette = "Set2") +
   theme_light()
 
 # Saving the plot as a picture
@@ -167,7 +167,7 @@ BMI_bar <- body_measurements |>
        y = "Count",
        title = "Bar chart over BMI groups stratified PCOS diagnosis",
        fill = "PCOS diagnosis") +
-  scale_fill_brewer(palette="Set2") +
+  scale_fill_brewer(palette = "Set2") +
   theme_light()
 
 # Saving the plot as a picture
@@ -197,7 +197,7 @@ blood_type_plot <- body_measurements |>
        y = "Count",
        title = "Bar chart of blood groups stratified for PCOS diagnosis",
        fill = "PCOS diagnosis") +
-  scale_fill_brewer(palette="Set2") +
+  scale_fill_brewer(palette = "Set2") +
   theme_light()
 
 
