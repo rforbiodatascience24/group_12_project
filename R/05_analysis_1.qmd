@@ -49,4 +49,46 @@ First part of this project, is to see if there is a correlation between patients
 
 ## Correlation between PCOS and BMI
 
-## Last header if needed
+```{r}
+# | echo: true
+# | eval: true
+
+
+
+```
+
+## Header if needed 1
+
+```{r}
+# | echo: true
+# | eval: true
+
+
+```
+
+## Header if needed 2
+
+```{r}
+# | echo: true
+# | eval: true
+
+
+```
+
+## Header if needed 3
+
+```{r}
+# | echo: true
+# | eval: true
+
+
+```
+
+## Header if needed 4
+
+```{r}
+# | echo: true
+# | eval: true
+
+
+```
