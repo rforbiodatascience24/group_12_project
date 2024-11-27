@@ -28,9 +28,53 @@ library("tidyverse")
 ```{r}
 # | echo: true 
 # | eval: true  
-body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv") 
+blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements_aug.tsv") 
 ```
 
 # Blood data analysis
 
 First part of this project, is to see if there is a correlation between patients with PCOS using the data from the blood samples.
+
+## header for plots
+
+```{r}
+box_AMH <- blood_measurements |> 
+  ggplot(mapping = aes(x = PCOS_diagnosis,
+                       y = AMH,
+                       fill = PCOS_diagnosis)) + 
+  geom_boxplot(outliers = FALSE)+
+  labs(x = "PCOS diagnosis", 
+       y = "AMH level",
+       title = "Boxplot of AMH level and PCOS diagnosis",
+       fill = "PCOS diagnosis")+
+  scale_fill_brewer(palette = "Set3")+
+  theme_light()
+
+
+# Saving the plot as a picture
+ggsave(box_AMH,
+       filename = "../results/06_box_AMH.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+```
+
+## header for flere plots
+
+```{r}
+
+```
+
+## Header for endnu flere plots
+
+```{r}
+
+```
+
+## header for sygt mange plots
+
+```{r}
+
+
+```
