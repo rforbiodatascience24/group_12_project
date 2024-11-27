@@ -23,6 +23,7 @@ rm(list = ls())
 # | eval: true
 
 library("tidyverse")
+library(reshape2)
 ```
 
 ## Load data
@@ -97,6 +98,24 @@ blood_measurements |>
 # | echo: true 
 # | eval: true  
 
+
+hormones <- c("FSH", "LH", "FSH_LH_ratio", "TSH", "AMH", "PRL", "vitaminD3", "PRG", "RBS")
+
+blood_measurements[hormones] <- lapply(blood_measurements[hormones], as.numeric)
+
+blood_measurements$PCOS_diagnosis <- ifelse(blood_measurements$PCOS_diagnosis == "Yes", 1, 0)
+
+cor_matrix <- cor(blood_measurements[hormones], blood_measurements$PCOS_diagnosis)
+
+cor_long <- melt(cor_matrix)
+
+
+ggplot(cor_long, aes(x = Var1, y = Var2, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0) +
+  labs(title = "Correlation Heatmap: Hormones and PCOS Diagnosis",
+       x = "Hormones", y = "PCOS Diagnosis") +
+  theme_minimal()
 
 ```
 
