@@ -302,23 +302,3 @@ ggsave(p_age_pimple,
        width = 20,
        units = "cm")
 ```
-
-## Header if needed 3
-
-```{r}
-# | echo: true
-# | eval: true
-
-
-
-
-```
-
-## Header if needed 4
-
-```{r}
-# | echo: true
-# | eval: true
-
-
-```
