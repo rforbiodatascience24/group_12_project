@@ -101,7 +101,8 @@ There are 364 patients who have not been diagnosed with PCOS and 177 who have be
 
 
 period_plot <- body_measurements |> 
-  ggplot(mapping = aes(x = period_length, fill = PCOS_diagnosis)) + 
+  ggplot(mapping = aes(x = period_length, 
+                       fill = PCOS_diagnosis)) + 
   geom_density(alpha = 0.45) +
   labs(x = "Period length (days)", 
        y = "Density",
