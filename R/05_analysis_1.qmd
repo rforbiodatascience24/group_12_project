@@ -105,7 +105,7 @@ p_follicle_L <- body_measurements |>
        y = "Follicle No. (L)") + 
   theme_minimal()
 
-ggsave(p_follicles_L,
+ggsave(p_follicle_L,
        filename = "../results/05_follicle_L_box.png",
        device = "png",
        height = 20,
@@ -113,7 +113,7 @@ ggsave(p_follicles_L,
        units = "cm")
 
 
-p2 <- body_measurements |> 
+p_follicle_R <- body_measurements |> 
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_R)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
@@ -129,7 +129,7 @@ p2 <- body_measurements |>
   theme_minimal()
 
 # saving the 
-ggsave(p_follicles_L,
+ggsave(p_follicle_R,
        filename = "../results/05_follicle_L_box.png",
        device = "png",
        height = 20,
@@ -150,8 +150,9 @@ PCOS_BMI_correlation_box <- body_measurements |>
        y = "BMI",
        title = "Correlation between BMI and PCOS diagnosis",
        fill = "PCOS diagnosis")+
-  scale_fill_brewer(palette="Set3")+
-  theme_light()
+  scale_fill_brewer(palette="Set2")+
+  theme_light()+
+  theme(title = element_text(size = 10))
 
 # Saving the plot as a picture
 ggsave(PCOS_BMI_correlation_box,
@@ -177,8 +178,9 @@ PCOS_endometrium_correlation_box <- body_measurements |>
        y = "Endometrium size (mm)",
        title = "Correlation between endometrium size and PCOS diagnosis",
        fill = "PCOS diagnosis")+
-  scale_fill_brewer(palette="Set3")+
-  theme_light()
+  scale_fill_brewer(palette="Set2")+
+  theme_light()+
+  theme(title = element_text(size = 10))
 
 # Saving the plot as a picture
 ggsave(PCOS_endometrium_correlation_box,
@@ -190,7 +192,7 @@ ggsave(PCOS_endometrium_correlation_box,
 
 ```
 
-## Header if needed 1
+## Correlation between age and cycle stratified for PCOS
 
 ```{r}
 # | echo: true
@@ -202,14 +204,24 @@ age_cycle_plot <- na.omit(body_measurements) |>
                        y = cycle_RI,
                        color = PCOS_diagnosis)) +
   geom_point() +
+  geom_jitter(width = 0.2, 
+              alpha = 0.8, 
+              size = 1)+
   labs(x = "Age", 
        y = "Cycle (Irregular / Regular)",
-       title = "Correlation between age and cycle",
+       title = "Correlation between age and cycle stratified for PCOS",
        color = "PCOS diagnosis")+
-  scale_color_brewer(palette="Set3")+
-  theme_light()
+  scale_color_brewer(palette="Set2")+
+  theme_light()+
+  theme(title = element_text(size = 10))
 
-print(age_cycle_plot)
+# Saving the plot as a picture
+ggsave(age_cycle_plot,
+       filename = "../results/05_age_cycle_plot.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
 
 ```
 
