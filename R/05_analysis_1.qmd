@@ -61,18 +61,17 @@ p_follicles_ovaries <- body_measurements |>
   geom_smooth(method = "lm", 
               se = TRUE, 
               aes(fill = PCOS_diagnosis), 
-              alpha = 0.3) + 
-  scale_color_manual(values = c("Yes" = "Turquoise", 
-                               "No" = "orchid")) + 
-  scale_fill_manual(values = c("Yes" = "Turquoise", 
-                               "No" = "orchid")) + 
+              alpha = 0.3) +
   labs(title = "Distribution of follicles in both ovaries",
        x = "Follicle No. (R)", 
        y = "Follicle No. (L)",
        color = "PCOS Diagnosis",
        fill = "PCOS Diagnosis") +
-  theme_minimal() + 
-  theme(legend.position = "bottom")
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme_light() +
+  theme(title = element_text(size = 8),
+        legend.position = "bottom")
 
 # Saving the plot as a picture
 ggsave(p_follicles_ovaries,
@@ -94,19 +93,18 @@ p_follicle_L <- body_measurements |>
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_L)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
-               outlier.shape = NA, 
-               alpha = 0.5) + 
+               outlier.shape = NA) + 
   geom_jitter(width = 0.2, 
-              alpha = 0.8, 
-              size = 1) + 
-  scale_fill_manual(values = c("Yes" = "Turquoise", 
-                               "No" = "orchid")) + 
+              alpha = 0.2, 
+              size = 1) +
   labs(x = "PCOS (Y/N)", 
        y = "Follicle No. (L)",
        title = "Follicle number of left ovary and correlation to PCOS diagnosis",
        fill = "") + 
-  theme_minimal() + 
-  theme(legend.position = "none")
+  scale_fill_brewer(palette = "Set2") +
+  theme_light() +
+  theme(title = element_text(size = 8),
+        legend.position = "none")
 
 # saving the plot
 ggsave(p_follicle_L,
@@ -121,20 +119,18 @@ p_follicle_R <- body_measurements |>
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_R)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
-               outlier.shape = NA, 
-               alpha = 0.5) + 
+               outlier.shape = NA) + 
   geom_jitter(width = 0.2, 
-              alpha = 0.8, 
+              alpha = 0.2, 
               size = 1) + 
-  scale_fill_manual(values = c("Yes" = "Turquoise", 
-                               "No" = "orchid")) + 
   labs(x = "PCOS (Y/N)", 
        y = "Follicle No. (R)",
        title = "Follicle number of right ovary and correlation to PCOS diagnosis",
        fill = "") + 
-  theme_minimal()+ 
-  theme(legend.position = "none")
-
+  scale_fill_brewer(palette = "Set2") +
+  theme_light() +
+  theme(title = element_text(size = 8),
+        legend.position = "none")
 
 # saving the plot
 ggsave(p_follicle_R,
@@ -153,14 +149,17 @@ PCOS_BMI_correlation_box <- body_measurements |>
                        y = BMI,
                        fill = PCOS_diagnosis)) +
   geom_boxplot() +
-  geom_jitter(alpha = 0.20) +
+  geom_jitter(width = 0.2, 
+              alpha = 0.2, 
+              size = 1) +
   labs(x = "PCOS diagnosis", 
        y = "BMI",
        title = "Correlation between BMI and PCOS diagnosis",
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
   theme_light() +
-  theme(title = element_text(size = 10))
+  theme(title = element_text(size = 8),
+        legend.position = "bottom")
 
 # Saving the plot as a picture
 ggsave(PCOS_BMI_correlation_box,
@@ -181,14 +180,17 @@ PCOS_endometrium_correlation_box <- body_measurements |>
                        y = endometrium,
                        fill = PCOS_diagnosis)) +
   geom_boxplot() +
-  geom_jitter(alpha = 0.20) +
+  geom_jitter(width = 0.2, 
+              alpha = 0.2, 
+              size = 1) +
   labs(x = "PCOS diagnosis", 
        y = "Endometrium size (mm)",
        title = "Correlation between endometrium size and PCOS diagnosis",
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
   theme_light() +
-  theme(title = element_text(size = 10))
+  theme(title = element_text(size = 8),
+        legend.position = "bottom")
 
 # Saving the plot as a picture
 ggsave(PCOS_endometrium_correlation_box,
@@ -221,7 +223,8 @@ age_cycle_plot <- na.omit(body_measurements) |>
        color = "PCOS diagnosis") +
   scale_color_brewer(palette = "Set2") +
   theme_light() +
-  theme(title = element_text(size = 10))
+  theme(title = element_text(size = 8),
+        legend.position = "bottom")
 
 # Saving the plot as a picture
 ggsave(age_cycle_plot,
@@ -233,7 +236,7 @@ ggsave(age_cycle_plot,
 
 ```
 
-## Header if needed 2
+## Age groups vs. hair growth stratified for PCOS
 
 ```{r}
 # | echo: true
@@ -253,13 +256,10 @@ p_age_hair <- body_measurements |>
        y = "Hair growth (yes/no))",
        title = "Correlation between age groups and hair growth stratisfied for PCOS diagnosis",
        color = "PCOS diagnosis") +
-  scale_color_brewer(palette="Set2") +
+  scale_color_brewer(palette = "Set2") +
   theme_light() + 
-  theme(title = element_text(size = 9),
+  theme(title = element_text(size = 8),
         legend.position = "bottom")
-
-# to print plot if needed
-p_age_hair
 
 # Saving the plot as a picture
 ggsave(p_age_hair,
@@ -270,11 +270,12 @@ ggsave(p_age_hair,
        units = "cm")
 ```
 
+## Age groups vs. pimples stratified for PCOS
+
 ```{r}
 
 # | echo: true
 # | eval: true
-
 
 p_age_pimple <- body_measurements |> 
   ggplot(mapping = aes(x = age_group,
@@ -288,11 +289,10 @@ p_age_pimple <- body_measurements |>
        y = "Pimples (yes/no))",
        title = "Correlation between age groups and experienced pimples",
        color = "PCOS diagnosis") +
-  scale_color_brewer(palette="Set2") +
-  theme_light()
-
-# to print plot if needed
-p_age_pimple
+  scale_color_brewer(palette = "Set2") +
+  theme_light() +
+  theme(title = element_text(size = 8),
+        legend.position = "bottom")
 
 # Saving the plot as a picture
 ggsave(p_age_pimple,
@@ -301,24 +301,4 @@ ggsave(p_age_pimple,
        height = 20,
        width = 20,
        units = "cm")
-```
-
-## Header if needed 3
-
-```{r}
-# | echo: true
-# | eval: true
-
-
-
-
-```
-
-## Header if needed 4
-
-```{r}
-# | echo: true
-# | eval: true
-
-
 ```
