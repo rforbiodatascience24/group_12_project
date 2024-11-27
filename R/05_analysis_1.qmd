@@ -150,7 +150,7 @@ PCOS_BMI_correlation_box <- body_measurements |>
        y = "BMI",
        title = "Correlation between BMI and PCOS diagnosis",
        fill = "PCOS diagnosis")+
-  scale_fill_brewer(palette="Set3")+
+  scale_fill_brewer(palette="Set2")+
   theme_light()+
   theme(title = element_text(size = 10))
 
@@ -178,7 +178,7 @@ PCOS_endometrium_correlation_box <- body_measurements |>
        y = "Endometrium size (mm)",
        title = "Correlation between endometrium size and PCOS diagnosis",
        fill = "PCOS diagnosis")+
-  scale_fill_brewer(palette="Set3")+
+  scale_fill_brewer(palette="Set2")+
   theme_light()+
   theme(title = element_text(size = 10))
 
@@ -211,7 +211,7 @@ age_cycle_plot <- na.omit(body_measurements) |>
        y = "Cycle (Irregular / Regular)",
        title = "Correlation between age and cycle stratified for PCOS",
        color = "PCOS diagnosis")+
-  scale_color_brewer(palette="Set3")+
+  scale_color_brewer(palette="Set2")+
   theme_light()+
   theme(title = element_text(size = 10))
 
