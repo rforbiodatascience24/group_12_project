@@ -76,5 +76,18 @@ ggsave(box_AMH,
 
 ```{r}
 
+library(corrr)
+library(corrplot)
+library(reshape2)
 
+cor_table<-blood_measurements |>  
+  select(hemaglobin, FSH, LH, AMH) |>  
+  correlate()
+
+print(cor_table)
+melted_table <- melt(cor_table)
+head(melted_table)
+
+ggplot(data = melted_table, aes(x=term, y=variable, fill=value)) + 
+  geom_tile()
 ```
