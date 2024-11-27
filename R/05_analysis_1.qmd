@@ -52,24 +52,35 @@ First part of this project, is to see if there is a correlation between patients
 # | eval: true
 
 
-# Distribution of follicles in both ovaries
+# Distribution of follicles in both ovaries with trend lines
 p_follicles_ovaries <- body_measurements |> 
   ggplot(mapping = aes(x = follicle_no_R,
                        y = follicle_no_L,
                        color = PCOS_diagnosis)) + 
-  geom_point() + 
+  geom_point() +  
+  geom_smooth(method = "lm", 
+              se = TRUE, 
+              aes(fill = PCOS_diagnosis), 
+              alpha = 0.3) + 
   scale_color_manual(values = c("Yes" = "Turquoise", 
+                               "No" = "orchid")) + 
+  scale_fill_manual(values = c("Yes" = "Turquoise", 
                                "No" = "orchid")) + 
   labs(title = "Distribution of follicles in both ovaries",
        x = "Follicle No. (R)", 
        y = "Follicle No. (L)",
-       color = "PCOS Diagnosis")
+       color = "PCOS Diagnosis",
+       fill = "PCOS Diagnosis") +
+  theme_minimal() + 
+  theme(legend.position = "bottom")
 
-# printing plot
-p_follicles_ovaries
-
-
-
+# Saving the plot as a picture
+ggsave(p_follicles_ovaries,
+       filename = "../results/05_follicle_correlation.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
 
 ```
 
@@ -79,7 +90,7 @@ p_follicles_ovaries
 # | eval: true
 
 
-p1 <- body_measurements |> 
+p_follicle_L <- body_measurements |> 
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_L)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
@@ -94,7 +105,12 @@ p1 <- body_measurements |>
        y = "Follicle No. (L)") + 
   theme_minimal()
 
-p1
+ggsave(p_follicles_L,
+       filename = "../results/05_follicle_L_box.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
 
 
 p2 <- body_measurements |> 
@@ -112,7 +128,13 @@ p2 <- body_measurements |>
        y = "Follicle No. (R)") + 
   theme_minimal()
 
-p2
+# saving the 
+ggsave(p_follicles_L,
+       filename = "../results/05_follicle_L_box.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
 ```
 
 ## Correlation between BMI and PCOS
@@ -126,7 +148,7 @@ PCOS_BMI_correlation_box <- body_measurements |>
   geom_jitter(alpha = 0.20) +
   labs(x = "PCOS diagnosis", 
        y = "BMI",
-       title = "Boxplot over correlation between BMI and PCOS diagnosis",
+       title = "Correlation between BMI and PCOS diagnosis",
        fill = "PCOS diagnosis")+
   scale_fill_brewer(palette="Set3")+
   theme_light()
@@ -153,12 +175,10 @@ PCOS_endometrium_correlation_box <- body_measurements |>
   geom_jitter(alpha = 0.20) +
   labs(x = "PCOS diagnosis", 
        y = "Endometrium size (mm)",
-       title = "Boxplot over correlation between endometrium size and PCOS diagnosis",
+       title = "Correlation between endometrium size and PCOS diagnosis",
        fill = "PCOS diagnosis")+
   scale_fill_brewer(palette="Set3")+
   theme_light()
-
-print(PCOS_endometrium_correlation_box)
 
 # Saving the plot as a picture
 ggsave(PCOS_endometrium_correlation_box,
@@ -176,6 +196,20 @@ ggsave(PCOS_endometrium_correlation_box,
 # | echo: true
 # | eval: true
 
+#Age vs. cycle stratified for PCOS diagnosis
+age_cycle_plot <- na.omit(body_measurements) |> 
+  ggplot(mapping = aes(x = age,
+                       y = cycle_RI,
+                       color = PCOS_diagnosis)) +
+  geom_point() +
+  labs(x = "Age", 
+       y = "Cycle (Irregular / Regular)",
+       title = "Correlation between age and cycle",
+       color = "PCOS diagnosis")+
+  scale_color_brewer(palette="Set3")+
+  theme_light()
+
+print(age_cycle_plot)
 
 ```
 
@@ -186,6 +220,18 @@ ggsave(PCOS_endometrium_correlation_box,
 # | eval: true
 
 
+# age mod hair growth stratisfied for PCOS
+
+p_age_hair <- body_measurements |> 
+  ggplot(mapping = aes(x = age_group,
+                       y = hair_growth,
+                       color = PCOS_diagnosis)) +
+  geom_point() +
+  geom_jitter(width = 0.2, 
+              alpha = 0.8, 
+              size = 1) 
+
+p_age_hair
 ```
 
 ## Header if needed 3
