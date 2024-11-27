@@ -40,7 +40,7 @@ blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements_aug.tsv")
 
 First part of this project, is to see if there is a correlation between patients with PCOS using the data from the blood samples.
 
-## Boxplot of PCOS diagnosis of Anti-Müllerin hormone (AMH) 
+## Boxplot of PCOS diagnosis of Anti-Müllerin hormone (AMH)
 
 ```{r}
 # | echo: true 
@@ -70,7 +70,7 @@ ggsave(box_AMH,
        units = "cm")
 ```
 
-## Densityplot of prolactin (PRL) 
+## Densityplot of prolactin (PRL)
 
 ```{r}
 # | echo: true 
