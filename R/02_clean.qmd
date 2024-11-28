@@ -5,8 +5,6 @@ format: html
 editor: visual
 ---
 
-# Clean data
-
 ## Clear environment
 
 ```{r}
@@ -23,7 +21,7 @@ rm(list = ls())
 # | echo: true
 # | eval: true
 
-library("tidyverse")
+library(tidyverse)
 ```
 
 ## Load data
@@ -37,9 +35,7 @@ PCOS <- read_tsv(file = "../data/PCOS_data_without_infertility.tsv")
 
 ```
 
-## Data wrangling
-
-### Column removal of non relevant data columns
+## Data wrangling - Column removal of non relevant data columns
 
 ```{r}
 # | echo: true
@@ -56,12 +52,13 @@ PCOS <- PCOS |>
 print(PCOS)
 ```
 
-### Rename columns
+## Rename columns
 
 ```{r}
 # | echo: true
 # | eval: true
 
+#renaming all columns
 PCOS <- PCOS |> 
   rename("patient_ID" = "Patient File No.",
          "PCOS_diagnosis" = "PCOS (Y/N)",
@@ -109,13 +106,15 @@ PCOS <- PCOS |>
 print(PCOS)
 ```
 
-### Further cleaning of data
+## Correcting cells 
+
+Two cells were identified as inconsistent with the format - a misplaced period in betaHCG2 and a character in numeric column AMH. These will be changed to NA
 
 ```{r}
 # | echo: true
 # | eval: true
 
-#correct misplaced period from betaHCG column and change to NA and remove misplaced character and replace with NA, additionally create the columns betaHCG_2 and AMH into dbl insted of chr:
+# Change values to NA
 PCOS <- PCOS |> 
   mutate(betaHCG_2 = sub("\\.$", 
                          NA, 
@@ -132,12 +131,21 @@ PCOS <- PCOS |>
 # QC
 print(PCOS)
 
+# Checking for NA
 PCOS |> 
   summarise(has_NA = any(is.na(AMH))) |> 
   pull(has_NA)
 
 
-# Factorize columns
+```
+
+## Factorising column
+
+```{r}
+# | echo: true
+# | eval: true
+
+# Factorise columns
 PCOS <- PCOS |> 
   mutate(pregnant = factor(pregnant, 
                            levels = c(0,
@@ -176,7 +184,6 @@ PCOS <- PCOS |>
                                       "Yes")),
          )
 
- 
 ```
 
 ## Saving and Splitting the Data
@@ -188,6 +195,7 @@ PCOS <- PCOS |>
 # Write the updated dataset into a new data file
 write_tsv(x = PCOS,
           file = "../data/PCOS_clean.tsv")
+
 # Check colnames of original dataset
 colnames(PCOS)
 
