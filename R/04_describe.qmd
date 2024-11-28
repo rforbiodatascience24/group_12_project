@@ -20,8 +20,7 @@ rm(list = ls())
 # | echo: true
 # | eval: true
 
-# load libraries
-library("tidyverse")
+library(tidyverse)
 library(RColorBrewer)
 library(ggplot2)
 library(ggridges)
@@ -42,27 +41,27 @@ PCOS <- read_tsv(file = "../data/PCOS_merged.tsv")
 
 ## Data statistics
 
-Checking dimensions of metadata
+Checking dimensions of metadata tible
 
 ```{r}
 # | echo: true
 # | eval: true
 
-# cheking the dimensions of the body measurements
+# Cheking the dimensions of the body measurements
 body_measurements_dim <- body_measurements |>
   dim() |>
   tibble()|>
   rename("Body measurments dimensions" = "dim(body_measurements)")|>
   print()
 
-# cheking the dimensions of the blood measurements
+# Cheking the dimensions of the blood measurements
 blood_measurements_dim <- blood_measurements |>
   dim() |>
   tibble()|>
   rename("Blood measurments dimensions" = "dim(blood_measurements)")|>
   print()
   
-# cheking the dimensions of the blood measurements
+# Cheking the dimensions of the blood measurements
 PCOS_dim <- PCOS |>
   dim() |>
   tibble()|>
@@ -72,7 +71,7 @@ PCOS_dim <- PCOS |>
 
 ```
 
-Checking column names and patients with and without PCOS diagnosis
+Checking column names and count patients with and without PCOS diagnosis
 
 ```{r}
 # | echo: true
@@ -89,37 +88,9 @@ PCOS |>
 
 ```
 
-There are 364 patients who have not been diagnosed with PCOS and 177 who have been diagnosed with PCOS.
+There are 364 patients without PCOS diagnosis and 177 who have been diagnosed with PCOS. There is an over representation of people without the diagnosis this will effects the results of the analysis, but this will not be taken into account.
 
 ## Plotting distributions of data
-
-### Density plot of period length
-
-```{r}
-# | echo: true
-# | eval: true
-
-
-period_plot <- body_measurements |> 
-  ggplot(mapping = aes(x = period_length, 
-                       fill = PCOS_diagnosis)) + 
-  geom_density(alpha = 0.45) +
-  labs(x = "Period length (days)", 
-       y = "Density",
-       title = "Density plot of period lengths",
-       fill = "PCOS diagnosis") +
-  scale_fill_brewer(palette = "Set2") +
-  theme_light()
-
-# Saving the plot as a picture
-ggsave(period_plot,
-       filename = "../results/04_period_dens.png",
-       device = "png",
-       height = 20,
-       width = 20,
-       units = "cm")
-
-```
 
 ### Histogram of age distribution
 
@@ -140,7 +111,10 @@ age_plot <- body_measurements |>
        title = "Histogram of age distribution stratified for PCOS diagnosis",
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
-  theme_light()
+  theme_light()+
+  theme(title = element_text(size = 8),
+        legend.position = "bottom")
+
 
 # Saving the plot as a picture
 ggsave(age_plot,
@@ -151,14 +125,17 @@ ggsave(age_plot,
        units = "cm")
 ```
 
-### Bar chart of BMI groups
+The age looks normally distributed
+
+## Bar chart of BMI groups
 
 ```{r}
 # | echo: true
 # | eval: true
 
 # Creating bar chart of BMI distribution stratified on PCOS diagnosis
-BMI_bar <- body_measurements |> 
+BMI_bar <- body_measurements |>
+  mutate(BMI_class = fct_relevel(BMI_class, "Underweight", "Normal weight", "Overweight","Obesity")) |> 
   ggplot(mapping = aes(x = BMI_class,
                        fill = PCOS_diagnosis)) +
   geom_bar(position = position_dodge(preserve = "single"),
@@ -166,10 +143,12 @@ BMI_bar <- body_measurements |>
            color = "black") +
   labs(x = "BMI groups", 
        y = "Count",
-       title = "Bar chart over BMI groups stratified PCOS diagnosis",
+       title = "Bar chart over BMI groups stratified for PCOS diagnosis",
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
-  theme_light()
+  theme_light()+
+  theme(title = element_text(size = 8),
+        legend.position = "bottom")
 
 # Saving the plot as a picture
 ggsave(BMI_bar,
@@ -180,6 +159,8 @@ ggsave(BMI_bar,
        units = "cm")
 
 ```
+
+There is an over representation of data points in the Normal weight category and a scewed proportion of PCOS diagnoses in the normal weight category.
 
 ### Bar chart of blood groups
 
@@ -199,7 +180,10 @@ blood_type_plot <- body_measurements |>
        title = "Bar chart of blood groups stratified for PCOS diagnosis",
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
-  theme_light()
+  theme_light()+
+  theme(title = element_text(size = 8),
+        legend.position = "bottom")
+
 
 
 # Saving the plot as a picture
@@ -212,4 +196,37 @@ ggsave(blood_type_plot,
 
 ```
 
-## 
+There is not an equal distribution of the data points between different blood groups.
+
+### Density plot of period length
+
+```{r}
+
+# | echo: true
+# | eval: true
+
+
+period_plot <- body_measurements |> 
+  ggplot(mapping = aes(x = period_length, 
+                       fill = PCOS_diagnosis)) + 
+  geom_density(alpha = 0.45) +
+  labs(x = "Period length (days)", 
+       y = "Density",
+       title = "Density plot of period lengths",
+       fill = "PCOS diagnosis") +
+  scale_fill_brewer(palette = "Set2") +
+  theme_light()+
+  theme(title = element_text(size = 8),
+        legend.position = "bottom")
+
+# Saving the plot as a picture
+ggsave(period_plot,
+       filename = "../results/04_period_dens.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+
+```
+
+The period length of people with PCOS diagnosis is more scattered then the lengths of people with no diagnosis.
