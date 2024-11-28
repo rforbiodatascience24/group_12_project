@@ -12,7 +12,7 @@
 <meta name="author" content="Group12" />
 
 
-<title>01_load</title>
+<title>03_augment</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -349,69 +349,194 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">01_load</h1>
+<h1 class="title toc-ignore">03_augment</h1>
 <h4 class="author">Group12</h4>
 
 </div>
 
 
-<div id="clear-environment" class="section level2">
-<h2>Clear Environment</h2>
-<pre class="r"><code># | echo: true
-# | eval: true
-
-rm(list = ls())</code></pre>
-</div>
 <div id="load-libraries" class="section level2">
 <h2>Load libraries</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# Loading relevant packages used in this section
-
-library(tidyverse)
-library(readxl)
-library(readr)</code></pre>
+library(&quot;tidyverse&quot;)
+library(&quot;dplyr&quot;)</code></pre>
 </div>
 <div id="load-data" class="section level2">
 <h2>Load data</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# define path to to the excel file
-path_to_xlsx_file &lt;- &quot;../data/_raw/PCOS_data_without_infertility.xlsx&quot;
-
-# list excel sheet names
-sheet_names &lt;- excel_sheets(path_to_xlsx_file)
-
-# load file of interest by sheet name
-PCOS_data_xlsx &lt;- read_excel(path_to_xlsx_file, sheet = &quot;Full_new&quot;)</code></pre>
-<pre><code>## New names:
-## • `` -&gt; `...45`</code></pre>
-<pre class="r"><code>### quality check
-print(head(PCOS_data_xlsx))
-
-print(paste(&quot;Xlsx file saved at:&quot;, path_to_xlsx_file))</code></pre>
-<pre><code>## [1] &quot;Xlsx file saved at: ../data/_raw/PCOS_data_without_infertility.xlsx&quot;</code></pre>
+#Load the file
+body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements.tsv&quot;)</code></pre>
+<pre><code>## Rows: 541 Columns: 29
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;\t&quot;
+## chr  (7): pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimples, exercise
+## dbl (22): patient_ID, PCOS_diagnosis, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_blood_measurements.tsv&quot;)</code></pre>
+<pre><code>## Rows: 541 Columns: 14
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;\t&quot;
+## dbl (14): patient_ID, PCOS_diagnosis, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, ...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div id="write-and-save-to-tsv" class="section level2">
-<h2>Write and save to TSV</h2>
+<div id="augmenting-data" class="section level1">
+<h1>Augmenting data</h1>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# defining output path
-path_to_tsv_file &lt;- &quot;../data/PCOS_data_without_infertility.tsv&quot;
+# Making PCOS diagnosis into yes and no
+body_measurements &lt;- body_measurements |&gt; 
+  mutate(PCOS_diagnosis = factor(PCOS_diagnosis,
+                                 levels = c(0, 1),
+                                 labels =c(&quot;No&quot;, &quot;Yes&quot;))) 
 
-# read sheet of interest by sheet name
-PCOS_data_tsv &lt;- read_excel(path_to_xlsx_file, sheet = &quot;Full_new&quot;)</code></pre>
-<pre><code>## New names:
-## • `` -&gt; `...45`</code></pre>
-<pre class="r"><code># save the data to TSV format
-write.table(PCOS_data_tsv, file = path_to_tsv_file, sep = &quot;\t&quot;, row.names = FALSE, quote = FALSE)
+blood_measurements &lt;- blood_measurements |&gt; 
+  mutate(PCOS_diagnosis = factor(PCOS_diagnosis,
+                                 levels = c(0, 1),
+                                 labels = c(&quot;No&quot;, &quot;Yes&quot;)))</code></pre>
+<div id="unit-changes" class="section level2">
+<h2>Unit changes</h2>
+<pre class="r"><code># | echo: true
+# | eval: true
 
-# quality check
-print(paste(&quot;TSV file saved at:&quot;, path_to_tsv_file))</code></pre>
-<pre><code>## [1] &quot;TSV file saved at: ../data/PCOS_data_without_infertility.tsv&quot;</code></pre>
+# Going from inches to cm + new hip/waist ratio
+body_measurements &lt;- body_measurements |&gt; 
+  mutate(hip = hip * 2.54)|&gt;
+  mutate(waist = waist * 2.54)|&gt;
+  mutate(waist_hip_ratio = round(waist_hip_ratio * 2.54, 1))</code></pre>
+</div>
+<div id="rounding-bmi-and-dividing-into-categories" class="section level2">
+<h2>Rounding BMI and dividing into categories</h2>
+<pre class="r"><code># | echo: true
+# | eval: true
+
+# round of BMI + categories
+body_measurements &lt;- body_measurements |&gt;
+  mutate(BMI = round(BMI, 1)) |&gt; 
+  mutate(BMI_class = case_when(
+    BMI &lt; 18.5 ~ &quot;Underweight&quot;,
+    BMI &lt;= 18.5 | BMI &lt; 25 ~ &quot;Normal weight&quot;,
+    BMI &lt;= 25 | BMI &lt; 30 ~ &quot;Overweight&quot;,
+    BMI &gt;= 30 ~ &quot;Obesity&quot;)) |&gt;
+  mutate(BMI_class = factor(BMI_class,
+                            levels =  c(&quot;Underweight&quot;, 
+                                        &quot;Normal weight&quot;,
+                                        &quot;Overweight&quot;, 
+                                        &quot;Obesity&quot;))) |&gt;
+  relocate(BMI_class, .after = BMI)</code></pre>
+</div>
+<div id="grouping-ages" class="section level2">
+<h2>Grouping ages</h2>
+<pre class="r"><code>body_measurements &lt;- body_measurements |&gt;
+  mutate(age_group = case_when(
+    age &lt; 20 ~ &quot;]20&quot;,
+    age &gt;= 20 &amp; age &lt; 25 ~ &quot;[20;25[&quot;,
+    age &gt;= 25 &amp; age &lt; 30 ~ &quot;[25;30[&quot;,
+    age &gt;= 30 &amp; age &lt; 35 ~ &quot;[30;35[&quot;,
+    age &gt;= 35 &amp; age &lt; 40 ~ &quot;[35;40[&quot;,
+    age &gt;= 40 &amp; age &lt; 45 ~ &quot;[40;45[&quot;,
+    age &gt;= 45 ~ &quot;[45&quot;,)) |&gt;
+  mutate(age_group = factor(age_group,
+                            levels =  c(&quot;]20&quot;,
+                                        &quot;[20;25[&quot;, 
+                                        &quot;[25;30[&quot;,
+                                        &quot;[30;35[&quot;, 
+                                        &quot;[35;40[&quot;,
+                                        &quot;[40;45[&quot;,
+                                        &quot;[45&quot;))) |&gt;
+  relocate(age_group, .after = age)</code></pre>
+</div>
+<div id="change-blood-type-numbers-into-blood-indicators" class="section level2">
+<h2>Change blood type numbers into blood indicators</h2>
+<pre class="r"><code># | echo: true
+# | eval: true
+
+# Change blood type into indicators
+body_measurements &lt;- body_measurements |&gt;
+  mutate(blood_type = case_when(
+    blood_type == 11 ~ &quot;A+&quot;,
+    blood_type == 12 ~ &quot;A-&quot;,
+    blood_type == 13 ~ &quot;B+&quot;,
+    blood_type == 14 ~ &quot;B-&quot;,
+    blood_type == 15 ~ &quot;O+&quot;,
+    blood_type == 16 ~ &quot;O-&quot;,
+    blood_type == 17 ~ &quot;AB+&quot;,
+    blood_type == 18 ~ &quot;AB-&quot;)) |&gt; 
+  mutate(blood_type = factor(blood_type, 
+                             levels = c(&quot;A+&quot;, 
+                                        &quot;A-&quot;, 
+                                        &quot;B+&quot;,
+                                        &quot;B-&quot;, 
+                                        &quot;O+&quot;, 
+                                        &quot;O-&quot;,
+                                        &quot;AB+&quot;,
+                                        &quot;AB-&quot;)))</code></pre>
+</div>
+<div id="change-cycle-status-into-strings" class="section level2">
+<h2>Change cycle status into strings</h2>
+<pre class="r"><code># | echo: true
+# | eval: true
+
+# Change cycle status from numbers to strings
+body_measurements &lt;- body_measurements |&gt;
+  mutate(cycle_RI = case_when(
+    cycle_RI == 2 ~ &quot;regular&quot;,
+    cycle_RI == 4 ~ &quot;irregular&quot;)) |&gt; 
+  mutate(cycle_RI = factor(cycle_RI, 
+                           levels = c(&quot;irregular&quot;, 
+                                      &quot;regular&quot;)))</code></pre>
+</div>
+<div id="creating-a-cycle-or-pregnancy-stage-column" class="section level2">
+<h2>Creating a cycle or pregnancy stage column</h2>
+<pre class="r"><code># Create a new column &#39;cycle_or_pregnancy_stage&#39; based on PRG levels
+blood_measurements &lt;- blood_measurements %&gt;%
+  mutate(cycle_or_pregnancy_stage = case_when(
+    PRG &lt;= 0.7 ~ &quot;Follicular stage&quot;,   
+    PRG &gt; 0.7 &amp; PRG &lt;= 2 ~ &quot;Likely follicular stage&quot;,                     
+    PRG &gt; 2 &amp; PRG &lt;= 10 ~ &quot;Luteal stage&quot;,                    
+    PRG &gt; 10 &amp; PRG &lt;= 25 ~ &quot;Luteal stage/possibly first or second trimester pregnancy&quot;,
+    PRG &gt; 25 &amp; PRG &lt;= 44 ~ &quot;First or second trimester pregnancy&quot;, 
+    PRG &gt; 44 &amp; PRG &lt;= 65 ~ &quot;Second trimester pregnancy&quot;,     
+    PRG &gt; 65 &amp; PRG &lt;= 82.5 ~ &quot;Second or third trimester pregnancy&quot;,      
+    PRG &gt; 82.5 &amp; PRG &lt;= 290 ~ &quot;Third trimester pregnancy&quot;,     
+    TRUE ~ &quot;Unknown&quot; )) |&gt; 
+  mutate(cycle_or_pregnancy_stage = factor(cycle_or_pregnancy_stage, 
+                                           levels= c(&quot;Follicular stage&quot;, 
+                                                     &quot;Likely follicular stage&quot;, 
+                                                     &quot;Luteal stage&quot;,
+                                                     &quot;Luteal stage/possibly first or second trimester pregnancy&quot;,
+                                                     &quot;First or second trimester pregnancy&quot;, 
+                                                     &quot;Second trimester pregnancy&quot;,
+                                                     &quot;Second or third trimester pregnancy&quot;, 
+                                                     &quot;Third trimester pregnancy&quot;,
+                                                     &quot;Unknown&quot;)))
+
+# View the first few rows to check the new column
+head(blood_measurements)</code></pre>
+</div>
+<div id="save-tsv-files" class="section level2">
+<h2>Save tsv files</h2>
+<pre class="r"><code># Write the data into data files and joining the dataframes (for educational purposes)
+write_tsv(x = blood_measurements,
+          file = &quot;../data/PCOS_blood_measurements_aug.tsv&quot;)
+write_tsv(x = body_measurements,
+          file = &quot;../data/PCOS_body_measurements_aug.tsv&quot;)
+
+PCOS_merged &lt;- inner_join(x = body_measurements,
+                          y = blood_measurements,
+                          by = join_by(patient_ID, 
+                                       PCOS_diagnosis))
+write_tsv(x = PCOS_merged,
+          file = &quot;../data/PCOS_merged.tsv&quot;)</code></pre>
+</div>
 </div>
 
 

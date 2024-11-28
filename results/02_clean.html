@@ -12,7 +12,7 @@
 <meta name="author" content="Group12" />
 
 
-<title>01_load</title>
+<title>02_clean</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -349,14 +349,16 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">01_load</h1>
+<h1 class="title toc-ignore">02_clean</h1>
 <h4 class="author">Group12</h4>
 
 </div>
 
 
+<div id="clean-data" class="section level1">
+<h1>Clean data</h1>
 <div id="clear-environment" class="section level2">
-<h2>Clear Environment</h2>
+<h2>Clear environment</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
@@ -367,51 +369,225 @@ rm(list = ls())</code></pre>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# Loading relevant packages used in this section
-
-library(tidyverse)
-library(readxl)
-library(readr)</code></pre>
+library(&quot;tidyverse&quot;)</code></pre>
 </div>
 <div id="load-data" class="section level2">
 <h2>Load data</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# define path to to the excel file
-path_to_xlsx_file &lt;- &quot;../data/_raw/PCOS_data_without_infertility.xlsx&quot;
-
-# list excel sheet names
-sheet_names &lt;- excel_sheets(path_to_xlsx_file)
-
-# load file of interest by sheet name
-PCOS_data_xlsx &lt;- read_excel(path_to_xlsx_file, sheet = &quot;Full_new&quot;)</code></pre>
-<pre><code>## New names:
-## • `` -&gt; `...45`</code></pre>
-<pre class="r"><code>### quality check
-print(head(PCOS_data_xlsx))
-
-print(paste(&quot;Xlsx file saved at:&quot;, path_to_xlsx_file))</code></pre>
-<pre><code>## [1] &quot;Xlsx file saved at: ../data/_raw/PCOS_data_without_infertility.xlsx&quot;</code></pre>
+# Load the file
+PCOS &lt;- read_tsv(file = &quot;../data/PCOS_data_without_infertility.tsv&quot;)</code></pre>
+<pre><code>## Rows: 541 Columns: 45
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;\t&quot;
+## chr  (3): II    beta-HCG(mIU/mL), AMH(ng/mL), ...45
+## dbl (42): Sl. No, Patient File No., PCOS (Y/N), Age (yrs), Weight (Kg), Height(Cm), BMI, Blood Group, Pul...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div id="write-and-save-to-tsv" class="section level2">
-<h2>Write and save to TSV</h2>
+<div id="data-wrangling" class="section level2">
+<h2>Data wrangling</h2>
+<div id="column-removal-of-non-relevant-data-columns" class="section level3">
+<h3>Column removal of non relevant data columns</h3>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# defining output path
-path_to_tsv_file &lt;- &quot;../data/PCOS_data_without_infertility.tsv&quot;
+#Removal of columns
+PCOS &lt;- PCOS |&gt;
+  select(-&quot;Sl. No&quot;) |&gt; 
+  select(-&quot;Marraige Status (Yrs)&quot;) |&gt; 
+  select(-&quot;Fast food (Y/N)&quot;) |&gt; 
+  select(-&quot;...45&quot;)
 
-# read sheet of interest by sheet name
-PCOS_data_tsv &lt;- read_excel(path_to_xlsx_file, sheet = &quot;Full_new&quot;)</code></pre>
-<pre><code>## New names:
-## • `` -&gt; `...45`</code></pre>
-<pre class="r"><code># save the data to TSV format
-write.table(PCOS_data_tsv, file = path_to_tsv_file, sep = &quot;\t&quot;, row.names = FALSE, quote = FALSE)
+#QC
+print(PCOS)</code></pre>
+</div>
+<div id="rename-columns" class="section level3">
+<h3>Rename columns</h3>
+<pre class="r"><code># | echo: true
+# | eval: true
 
-# quality check
-print(paste(&quot;TSV file saved at:&quot;, path_to_tsv_file))</code></pre>
-<pre><code>## [1] &quot;TSV file saved at: ../data/PCOS_data_without_infertility.tsv&quot;</code></pre>
+PCOS &lt;- PCOS |&gt; 
+  rename(&quot;patient_ID&quot; = &quot;Patient File No.&quot;,
+         &quot;PCOS_diagnosis&quot; = &quot;PCOS (Y/N)&quot;,
+         &quot;age&quot; = &quot;Age (yrs)&quot;,
+         &quot;weight&quot; = &quot;Weight (Kg)&quot;,
+         &quot;height&quot; = &quot;Height(Cm)&quot;,
+         &quot;blood_type&quot; = &quot;Blood Group&quot;,
+         &quot;pulse&quot; = &quot;Pulse rate(bpm)&quot;,
+         &quot;breaths_pr_min&quot; = &quot;RR (breaths/min)&quot;,
+         &quot;hemaglobin&quot; = &quot;Hb(g/dl)&quot;,
+         &quot;cycle_RI&quot; = &quot;Cycle(R/I)&quot;,
+         &quot;period_length&quot; = &quot;Cycle length(days)&quot;,
+         &quot;pregnant&quot; = &quot;Pregnant(Y/N)&quot;,
+         &quot;abortions&quot; = &quot;No. of aborptions&quot;,
+         &quot;betaHCG_1&quot; = &quot;I   beta-HCG(mIU/mL)&quot;,
+         &quot;betaHCG_2&quot; = &quot;II    beta-HCG(mIU/mL)&quot;,
+         &quot;FSH&quot; = &quot;FSH(mIU/mL)&quot;,
+         &quot;LH&quot; = &quot;LH(mIU/mL)&quot;,
+         &quot;FSH_LH_ratio&quot; = &quot;FSH/LH&quot;,
+         &quot;hip&quot; = &quot;Hip(inch)&quot;,
+         &quot;waist&quot; = &quot;Waist(inch)&quot;,
+         &quot;waist_hip_ratio&quot; = &quot;Waist:Hip Ratio&quot;,
+         &quot;TSH&quot; = &quot;TSH (mIU/L)&quot;,
+         &quot;AMH&quot; = &quot;AMH(ng/mL)&quot;,
+         &quot;PRL&quot; = &quot;PRL(ng/mL)&quot;,
+         &quot;vitaminD3&quot; = &quot;Vit D3 (ng/mL)&quot;,
+         &quot;PRG&quot; = &quot;PRG(ng/mL)&quot;,
+         &quot;RBS&quot; = &quot;RBS(mg/dl)&quot;,
+         &quot;weight_gain&quot; = &quot;Weight gain(Y/N)&quot;,
+         &quot;hair_growth&quot; = &quot;hair growth(Y/N)&quot;,
+         &quot;darker_skin&quot; = &quot;Skin darkening (Y/N)&quot;,
+         &quot;hair_loss&quot; = &quot;Hair loss(Y/N)&quot;,
+         &quot;pimples&quot; = &quot;Pimples(Y/N)&quot;,
+         &quot;exercise&quot; = &quot;Reg.Exercise(Y/N)&quot;,
+         &quot;BP_systolic&quot; = &quot;BP _Systolic (mmHg)&quot;,
+         &quot;BP_diastolic&quot; = &quot;BP _Diastolic (mmHg)&quot;,
+         &quot;follicle_no_R&quot; = &quot;Follicle No. (L)&quot;,
+         &quot;follicle_no_L&quot; = &quot;Follicle No. (R)&quot;,
+         &quot;avg_fsize_L&quot; = &quot;Avg. F size (L) (mm)&quot;,
+         &quot;avg_fsize_R&quot; = &quot;Avg. F size (R) (mm)&quot;,
+         &quot;endometrium&quot; = &quot;Endometrium (mm)&quot;
+         ) 
+
+#QC
+print(PCOS)</code></pre>
+</div>
+<div id="further-cleaning-of-data" class="section level3">
+<h3>Further cleaning of data</h3>
+<pre class="r"><code># | echo: true
+# | eval: true
+
+#correct misplaced period from betaHCG column and change to NA and remove misplaced character and replace with NA, additionally create the columns betaHCG_2 and AMH into dbl insted of chr:
+PCOS &lt;- PCOS |&gt; 
+  mutate(betaHCG_2 = sub(&quot;\\.$&quot;, 
+                         NA, 
+                         betaHCG_2),
+  AMH = ifelse(substr(AMH, 
+                      1, 
+                      1) %in% as.character(0:9), 
+               AMH, 
+               NA)) |&gt;  
+  mutate(betaHCG_2 = as.numeric(betaHCG_2),
+         AMH = as.numeric(AMH))
+
+
+# QC
+print(PCOS)
+
+PCOS |&gt; 
+  summarise(has_NA = any(is.na(AMH))) |&gt; 
+  pull(has_NA)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># Factorize columns
+PCOS &lt;- PCOS |&gt; 
+  mutate(pregnant = factor(pregnant, 
+                           levels = c(0,
+                                      1), 
+                           labels = c(&quot;No&quot;,
+                                      &quot;Yes&quot;)),
+         weight_gain = factor(weight_gain, 
+                              levels = c(0,
+                                         1), 
+                              labels = c(&quot;No&quot;, 
+                                         &quot;Yes&quot;)),
+         hair_growth = factor(hair_growth, 
+                              levels = c(0,
+                                         1), 
+                              labels = c(&quot;No&quot;, 
+                                         &quot;Yes&quot;)),
+         hair_loss = factor(hair_loss, 
+                            levels = c(0,
+                                       1), 
+                            labels = c(&quot;No&quot;, 
+                                       &quot;Yes&quot;)),
+         darker_skin = factor(darker_skin, 
+                              levels = c(0,
+                                         1), 
+                              labels = c(&quot;No&quot;,
+                                         &quot;Yes&quot;)),
+         pimples = factor(pimples, 
+                          levels = c(0,
+                                     1), 
+                          labels = c(&quot;No&quot;, 
+                                     &quot;Yes&quot;)),
+         exercise = factor(exercise, 
+                           levels = c(0,
+                                      1), 
+                           labels = c(&quot;No&quot;, 
+                                      &quot;Yes&quot;)),
+         )</code></pre>
+</div>
+</div>
+<div id="saving-and-splitting-the-data" class="section level2">
+<h2>Saving and Splitting the Data</h2>
+<pre class="r"><code># | echo: true
+# | eval: true
+
+# Write the updated dataset into a new data file
+write_tsv(x = PCOS,
+          file = &quot;../data/PCOS_clean.tsv&quot;)
+# Check colnames of original dataset
+colnames(PCOS)</code></pre>
+<pre><code>##  [1] &quot;patient_ID&quot;      &quot;PCOS_diagnosis&quot;  &quot;age&quot;             &quot;weight&quot;          &quot;height&quot;         
+##  [6] &quot;BMI&quot;             &quot;blood_type&quot;      &quot;pulse&quot;           &quot;breaths_pr_min&quot;  &quot;hemaglobin&quot;     
+## [11] &quot;cycle_RI&quot;        &quot;period_length&quot;   &quot;pregnant&quot;        &quot;abortions&quot;       &quot;betaHCG_1&quot;      
+## [16] &quot;betaHCG_2&quot;       &quot;FSH&quot;             &quot;LH&quot;              &quot;FSH_LH_ratio&quot;    &quot;hip&quot;            
+## [21] &quot;waist&quot;           &quot;waist_hip_ratio&quot; &quot;TSH&quot;             &quot;AMH&quot;             &quot;PRL&quot;            
+## [26] &quot;vitaminD3&quot;       &quot;PRG&quot;             &quot;RBS&quot;             &quot;weight_gain&quot;     &quot;hair_growth&quot;    
+## [31] &quot;darker_skin&quot;     &quot;hair_loss&quot;       &quot;pimples&quot;         &quot;exercise&quot;        &quot;BP_systolic&quot;    
+## [36] &quot;BP_diastolic&quot;    &quot;follicle_no_R&quot;   &quot;follicle_no_L&quot;   &quot;avg_fsize_L&quot;     &quot;avg_fsize_R&quot;    
+## [41] &quot;endometrium&quot;</code></pre>
+<pre class="r"><code>## Read the data into separate files
+# Load the dataset, selecting columns from defined ranges 
+blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_clean.tsv&quot;,
+                               col_select = c(1:2,
+                                              10,
+                                              15:19,
+                                              23:28))</code></pre>
+<pre><code>## Rows: 541 Columns: 14
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;\t&quot;
+## dbl (14): patient_ID, PCOS_diagnosis, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, ...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code># View the column names of the selected data
+colnames(blood_measurements)</code></pre>
+<pre><code>##  [1] &quot;patient_ID&quot;     &quot;PCOS_diagnosis&quot; &quot;hemaglobin&quot;     &quot;betaHCG_1&quot;      &quot;betaHCG_2&quot;      &quot;FSH&quot;           
+##  [7] &quot;LH&quot;             &quot;FSH_LH_ratio&quot;   &quot;TSH&quot;            &quot;AMH&quot;            &quot;PRL&quot;            &quot;vitaminD3&quot;     
+## [13] &quot;PRG&quot;            &quot;RBS&quot;</code></pre>
+<pre class="r"><code># Select body measurements using column names (excluding blood measurements)
+body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_clean.tsv&quot;,
+                              col_select = -c(10,
+                                              15:19,
+                                              23:28))</code></pre>
+<pre><code>## Rows: 541 Columns: 29
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;\t&quot;
+## chr  (7): pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimples, exercise
+## dbl (22): patient_ID, PCOS_diagnosis, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code># View the column names of the selected data
+colnames(body_measurements)</code></pre>
+<pre><code>##  [1] &quot;patient_ID&quot;      &quot;PCOS_diagnosis&quot;  &quot;age&quot;             &quot;weight&quot;          &quot;height&quot;         
+##  [6] &quot;BMI&quot;             &quot;blood_type&quot;      &quot;pulse&quot;           &quot;breaths_pr_min&quot;  &quot;cycle_RI&quot;       
+## [11] &quot;period_length&quot;   &quot;pregnant&quot;        &quot;abortions&quot;       &quot;hip&quot;             &quot;waist&quot;          
+## [16] &quot;waist_hip_ratio&quot; &quot;weight_gain&quot;     &quot;hair_growth&quot;     &quot;darker_skin&quot;     &quot;hair_loss&quot;      
+## [21] &quot;pimples&quot;         &quot;exercise&quot;        &quot;BP_systolic&quot;     &quot;BP_diastolic&quot;    &quot;follicle_no_R&quot;  
+## [26] &quot;follicle_no_L&quot;   &quot;avg_fsize_L&quot;     &quot;avg_fsize_R&quot;     &quot;endometrium&quot;</code></pre>
+<pre class="r"><code># Write the data into two data files
+write_tsv(x = blood_measurements,
+          file = &quot;../data/PCOS_blood_measurements.tsv&quot;)
+write_tsv(x = body_measurements,
+          file = &quot;../data/PCOS_body_measurements.tsv&quot;)
+
+# Note: Patient No. and PCOS Y/N in both datasets!</code></pre>
+</div>
 </div>
 
 

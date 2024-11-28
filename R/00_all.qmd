@@ -7,7 +7,7 @@ format:
 editor: visual
 ---
 
-# Run all scripts
+## Run all scripts
 
 ```{r}
 
@@ -21,6 +21,12 @@ rmarkdown::render(input = '02_clean.qmd',
 rmarkdown::render(input = '03_augment.qmd',
                   output_dir = '../results')
 rmarkdown::render(input = '04_describe.qmd',
+                  output_dir = '../results')
+rmarkdown::render(input = '05_analysis_1.qmd',
+                  output_dir = '../results')
+rmarkdown::render(input = '06_analysis_2.qmd',
+                  output_dir = '../results')
+rmarkdown::render(input = '07_PCA.qmd',
                   output_dir = '../results')
 
 ```
