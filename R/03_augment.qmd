@@ -11,8 +11,9 @@ editor: visual
 # | echo: true
 # | eval: true
 
-library("tidyverse")
-library("dplyr")
+library(tidyverse)
+library(dplyr)
+
 ```
 
 ## Load data
@@ -21,28 +22,9 @@ library("dplyr")
 # | echo: true
 # | eval: true
 
-#Load the file
+# Load the file
 body_measurements <- read_tsv(file = "../data/PCOS_body_measurements.tsv")
 blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements.tsv")
-
-```
-
-# Augmenting data
-
-```{r}
-# | echo: true
-# | eval: true
-
-# Making PCOS diagnosis into yes and no
-body_measurements <- body_measurements |> 
-  mutate(PCOS_diagnosis = factor(PCOS_diagnosis,
-                                 levels = c(0, 1),
-                                 labels =c("No", "Yes"))) 
-
-blood_measurements <- blood_measurements |> 
-  mutate(PCOS_diagnosis = factor(PCOS_diagnosis,
-                                 levels = c(0, 1),
-                                 labels = c("No", "Yes")))
 
 ```
 
@@ -66,7 +48,7 @@ body_measurements <- body_measurements |>
 # | echo: true
 # | eval: true
 
-# round of BMI + categories
+# Rounding of BMI and dividing into categories
 body_measurements <- body_measurements |>
   mutate(BMI = round(BMI, 1)) |> 
   mutate(BMI_class = case_when(
@@ -85,6 +67,10 @@ body_measurements <- body_measurements |>
 ## Grouping ages
 
 ```{r}
+# | echo: true
+# | eval: true
+
+# Grouping into different age groups
 body_measurements <- body_measurements |>
   mutate(age_group = case_when(
     age < 20 ~ "]20",
@@ -105,7 +91,7 @@ body_measurements <- body_measurements |>
   relocate(age_group, .after = age)
 ```
 
-## Change blood type numbers into blood indicators
+## Change blood type
 
 ```{r}
 # | echo: true
@@ -151,11 +137,14 @@ body_measurements <- body_measurements |>
 
 ```
 
-## Creating a cycle or pregnancy stage column
+## Creating a cycle/pregnancy stage column
 
 ```{r}
-# Create a new column 'cycle_or_pregnancy_stage' based on PRG levels
-blood_measurements <- blood_measurements %>%
+# | echo: true
+# | eval: true
+
+# create column with cycle/pregnancy stages  
+blood_measurements <- blood_measurements |>
   mutate(cycle_or_pregnancy_stage = case_when(
     PRG <= 0.7 ~ "Follicular stage",   
     PRG > 0.7 & PRG <= 2 ~ "Likely follicular stage",                     
@@ -177,23 +166,28 @@ blood_measurements <- blood_measurements %>%
                                                      "Third trimester pregnancy",
                                                      "Unknown")))
 
-# View the first few rows to check the new column
+# QC
 head(blood_measurements)
 ```
 
-## Save tsv files
+## Save to tsv files
 
 ```{r}
-# Write the data into data files and joining the dataframes (for educational purposes)
+# | echo: true
+# | eval: true
+
+# write data into data files
 write_tsv(x = blood_measurements,
           file = "../data/PCOS_blood_measurements_aug.tsv")
 write_tsv(x = body_measurements,
           file = "../data/PCOS_body_measurements_aug.tsv")
 
+# joining the dataframes (for educational purposes)
 PCOS_merged <- inner_join(x = body_measurements,
                           y = blood_measurements,
                           by = join_by(patient_ID, 
                                        PCOS_diagnosis))
 write_tsv(x = PCOS_merged,
           file = "../data/PCOS_merged.tsv")
+
 ```

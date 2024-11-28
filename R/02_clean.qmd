@@ -106,7 +106,7 @@ PCOS <- PCOS |>
 print(PCOS)
 ```
 
-## Correcting cells 
+## Correcting cells
 
 Two cells were identified as inconsistent with the format - a misplaced period in betaHCG2 and a character in numeric column AMH. These will be changed to NA
 
@@ -145,6 +145,7 @@ PCOS |>
 # | echo: true
 # | eval: true
 
+
 # Factorise columns
 PCOS <- PCOS |> 
   mutate(pregnant = factor(pregnant, 
@@ -182,6 +183,10 @@ PCOS <- PCOS |>
                                       1), 
                            labels = c("No", 
                                       "Yes")),
+         PCOS_diagnosis = factor(PCOS_diagnosis,
+                                 levels = c(0, 1),
+                                 labels = c("No", "Yes")), 
+
          )
 
 ```
