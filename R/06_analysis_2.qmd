@@ -5,8 +5,6 @@ format: html
 editor: visual
 ---
 
-## 
-
 ## Clear environment
 
 ```{r}
@@ -22,7 +20,7 @@ rm(list = ls())
 # | echo: true 
 # | eval: true
 
-library("tidyverse")
+library(tidyverse)
 library(reshape2)
 library(corrr)
 ```
@@ -46,6 +44,7 @@ First part of this project, is to see if there is a correlation between patients
 # | echo: true 
 # | eval: true 
 
+#Creating boxplot 
 box_AMH <- blood_measurements |> 
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = AMH,
@@ -60,8 +59,7 @@ box_AMH <- blood_measurements |>
   theme(title = element_text(size = 8),
         legend.position = "bottom")
 
-
-# Saving the plot as a picture
+# Saving plot
 ggsave(box_AMH,
        filename = "../results/06_box_AMH.png",
        device = "png",
@@ -69,6 +67,8 @@ ggsave(box_AMH,
        width = 20,
        units = "cm")
 ```
+
+The box plot shows elevated AMH level for people with PCOS diagnosis compared to no diagnosis. One extreme outlier from "yes PCOS diagnosis" has been removed to show the boxplots better.
 
 ## Densityplot of prolactin (PRL)
 
@@ -100,34 +100,9 @@ ggsave(PRL_density,
        units = "cm")
 ```
 
-## Header for endnu flere plots
+The density plot shows a similar distribution of PRL values and PCOS diagnosis.
 
-```{r}
-# | echo: true 
-# | eval: true  
-
-
-hormones <- c("FSH", "LH", "FSH_LH_ratio", "TSH", "AMH", "PRL", "vitaminD3", "PRG", "RBS")
-
-blood_measurements[hormones] <- lapply(blood_measurements[hormones], as.numeric)
-
-blood_measurements$PCOS_diagnosis <- ifelse(blood_measurements$PCOS_diagnosis == "Yes", 1, 0)
-
-cor_matrix <- cor(blood_measurements[hormones], blood_measurements$PCOS_diagnosis)
-
-cor_long <- melt(cor_matrix)
-
-
-ggplot(cor_long, aes(x = Var1, y = Var2, fill = value)) +
-  geom_tile() +
-  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0) +
-  labs(title = "Correlation Heatmap: Hormones and PCOS Diagnosis",
-       x = "Hormones", y = "PCOS Diagnosis") +
-  theme_light()
-
-```
-
-## Correlation plot of the variables from the blood measurments
+## Correlation plot of the variables from the blood measurements
 
 ```{r}
 # Make a correlation table of the variables
