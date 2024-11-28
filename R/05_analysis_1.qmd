@@ -21,7 +21,7 @@ rm(list = ls())
 # | eval: true
 
 # load libraries
-library("tidyverse")
+library(tidyverse)
 library(patchwork)
 library(RColorBrewer)
 library(ggplot2)
@@ -41,9 +41,9 @@ body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
 
 ```
 
-# Metadata analysis
+# Analysis of body measurement data
 
-First part of this project, is to see if there is a correlation between patients with PCOS using the metadata.
+First part of this project, will be to test if there is a correlation between patients with PCOS using the body measurments data.
 
 ## Follicle and PCOS
 
@@ -51,8 +51,7 @@ First part of this project, is to see if there is a correlation between patients
 # | echo: true
 # | eval: true
 
-
-# Distribution of follicles in both ovaries with trend lines
+# distribution of follicles in both ovaries
 p_follicles_ovaries <- body_measurements |> 
   ggplot(mapping = aes(x = follicle_no_R,
                        y = follicle_no_L,
@@ -67,8 +66,8 @@ p_follicles_ovaries <- body_measurements |>
        y = "Follicle No. (L)",
        color = "PCOS Diagnosis",
        fill = "PCOS Diagnosis") +
-  scale_fill_brewer(palette = "Set2") +
   scale_color_brewer(palette = "Set2") +
+  scale_fill_brewer(palette = "Set2") +
   theme_light() +
   theme(title = element_text(size = 8),
         legend.position = "bottom")
@@ -84,11 +83,10 @@ ggsave(p_follicles_ovaries,
 ```
 
 ```{r}
-
 # | echo: true
 # | eval: true
 
-
+# distribution of follicles to the left
 p_follicle_L <- body_measurements |> 
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_L)) + 
@@ -114,7 +112,7 @@ ggsave(p_follicle_L,
        width = 20,
        units = "cm")
 
-
+# distribution of follicles to the right
 p_follicle_R <- body_measurements |> 
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_R)) + 
@@ -139,6 +137,7 @@ ggsave(p_follicle_R,
        height = 20,
        width = 20,
        units = "cm")
+
 ```
 
 ## Correlation between BMI and PCOS
@@ -147,6 +146,7 @@ ggsave(p_follicle_R,
 # | echo: true
 # | eval: true
 
+# boxplot of BMI and PCOS diagnosis
 PCOS_BMI_correlation_box <- body_measurements |> 
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = BMI,
@@ -181,6 +181,7 @@ ggsave(PCOS_BMI_correlation_box,
 # | echo: true
 # | eval: true
 
+# plotting the distribution of endometrium and PCOS diagnosis
 PCOS_endometrium_correlation_box <- body_measurements |> 
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = endometrium,
@@ -214,12 +215,12 @@ ggsave(PCOS_endometrium_correlation_box,
 # | echo: true
 # | eval: true
 
-#Age vs. cycle stratified for PCOS diagnosis
+# age vs. cycle stratified for PCOS diagnosis
 age_cycle_plot <- na.omit(body_measurements) |> 
   ggplot(mapping = aes(x = age,
                        y = cycle_RI,
                        color = PCOS_diagnosis)) +
-  geom_point() +
+  geom_violin() +
   geom_jitter(width = 0.2, 
               alpha = 0.8, 
               size = 1) +
@@ -232,6 +233,8 @@ age_cycle_plot <- na.omit(body_measurements) |>
   theme(title = element_text(size = 8),
         legend.position = "bottom")
 
+print(age_cycle_plot)
+
 # Saving the plot as a picture
 ggsave(age_cycle_plot,
        filename = "../results/05_age_cycle_plot.png",
@@ -242,22 +245,21 @@ ggsave(age_cycle_plot,
 
 ```
 
+Unable to conclude if there is a similarity between people with PCOS, and what their ages is and if their cycle is regular/irregular
+
 ## Age groups vs. hair growth stratified for PCOS
 
 ```{r}
 # | echo: true
 # | eval: true
 
+# FIX JULIE AND MILLE
 
-# age mod hair growth stratisfied for PCOS
-p_age_hair <- body_measurements |> 
-  ggplot(mapping = aes(x = age_group,
-                       y = hair_growth,
-                       color = PCOS_diagnosis)) +
-  geom_point() +
-  geom_jitter(width = 0.2, 
-              alpha = 0.8, 
-              size = 1) +
+body_measurements %>% 
+  ggplot(aes(x=hair_growth,
+             fill = PCOS_diagnosis))+
+  geom_bar(position = position_dodge())+
+  facet_wrap(~ age_group)+
   labs(x = "Age groups", 
        y = "Hair growth (yes/no))",
        title = "Correlation between age groups and hair growth stratisfied for PCOS diagnosis",
@@ -266,6 +268,22 @@ p_age_hair <- body_measurements |>
   theme_light() + 
   theme(title = element_text(size = 8),
         legend.position = "bottom")
+
+# age mod hair growth stratisfied for PCOS
+p_age_hair <- body_measurements |> 
+  ggplot(mapping = aes(x = hair_growth)) +
+  geom_bar() +
+  facet_wrap(vars(age_group))+
+  labs(x = "Age groups", 
+       y = "Hair growth (yes/no))",
+       title = "Correlation between age groups and hair growth stratisfied for PCOS diagnosis",
+       color = "PCOS diagnosis") +
+  scale_color_brewer(palette = "Set2") +
+  theme_light() + 
+  theme(title = element_text(size = 8),
+        legend.position = "bottom")
+
+print(p_age_hair)
 
 # Saving the plot as a picture
 ggsave(p_age_hair,
@@ -279,9 +297,10 @@ ggsave(p_age_hair,
 ## Age groups vs. pimples stratified for PCOS
 
 ```{r}
-
 # | echo: true
 # | eval: true
+
+# FIX JULIE AND MILLE + tjek mille noter for et sejt plot (PRG values in a box plot stratisfied for PCOS and facet wrap it with something)
 
 p_age_pimple <- body_measurements |> 
   ggplot(mapping = aes(x = age_group,
@@ -299,6 +318,8 @@ p_age_pimple <- body_measurements |>
   theme_light() +
   theme(title = element_text(size = 8),
         legend.position = "bottom")
+
+print(p_age_pimple)
 
 # Saving the plot as a picture
 ggsave(p_age_pimple,
