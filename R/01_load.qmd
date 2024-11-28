@@ -5,7 +5,7 @@ format: html
 editor: visual
 ---
 
-# Clear Environment
+## Clear Environment
 
 ```{r}
 # | echo: true
@@ -14,7 +14,7 @@ editor: visual
 rm(list = ls())
 ```
 
-# Load libraries
+## Load libraries
 
 ```{r}
 # | echo: true
@@ -34,37 +34,37 @@ library(readr)
 # | echo: true
 # | eval: true
 
-# Define path to the Excel file
+# define path to to the excel file
 path_to_xlsx_file <- "../data/_raw/PCOS_data_without_infertility.xlsx"
 
-# List sheet names from the excel file
+# list excel sheet names
 sheet_names <- excel_sheets(path_to_xlsx_file)
-print(sheet_names)
 
-# Load the file of interest by sheet name in the file
+# load file of interest by sheet name
 PCOS_data_xlsx <- read_excel(path_to_xlsx_file, sheet = "Full_new")
 
-### Quality check
+### quality check
 print(head(PCOS_data_xlsx))
+
 print(paste("Xlsx file saved at:", path_to_xlsx_file))
 
 ```
 
-#### Write and save to TSV
+## Write and save to TSV
 
 ```{r}
 # | echo: true
 # | eval: true
 
-# Define and create output path
+# defining output path
 path_to_tsv_file <- "../data/PCOS_data_without_infertility.tsv"
 
-# Read the sheet of interest by sheet name
+# read sheet of interest by sheet name
 PCOS_data_tsv <- read_excel(path_to_xlsx_file, sheet = "Full_new")
 
-# Save the data to TSV format
+# save the data to TSV format
 write.table(PCOS_data_tsv, file = path_to_tsv_file, sep = "\t", row.names = FALSE, quote = FALSE)
 
-### Quality check
+# quality check
 print(paste("TSV file saved at:", path_to_tsv_file))
 ```
