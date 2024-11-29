@@ -149,13 +149,7 @@ her
 
 ## PCA of blood measurements
 
-\![PCA\](../results/07_blood_PCA.png){width=50%}
-
-\![Rotation matrix\](../results/07_rotation_matrix_blood.png){width=50%}
-
-\![\](../results/07_blood_PCA.png){width=50%}
-
-\![\](../results/07_rotation_matrix_blood.png){width=50%}
+her
 
 ## PCA of body measurements
 
