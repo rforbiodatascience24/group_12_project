@@ -30,26 +30,26 @@ library(tidyverse)
 
 ### Aim
 
-The aim of this study is to examine a dataset (found on Kaggle) of patients with and without PCOS. The data set has been made in India and data comes from 10 different hospitals.
+The aim of this study is to examine a data set (found on Kaggle) of patients with and without PCOS. The data set has been made in India and data comes from 10 different hospitals.
 
 ## Data handling approach
 
-+------------------------------------------------------------------------+-----------------+
-| -   02_clean:                                                          | -   04_describe |
-|                                                                        |                 |
-|     -   Fixing random cells and replacing them with NA                 |     -           |
-|     -   Rename & factorising columns                                   |                 |
-|     -   Split data frame into body and blood measurements              |                 |
-|                                                                        |                 |
-| -   03_augment:                                                        |                 |
-|                                                                        |                 |
-|     -   Unit changes ( inch to cm)                                     |                 |
-|     -   Rounding BMI                                                   |                 |
-|     -   Grouping & BMI                                                 |                 |
-|     -   Change Blood type and cycles from numeric values to characters |                 |
-|     -   Create new column for cycle/ pregnancy stage                   |                 |
-|     -   Merging data frame into one file                               |                 |
-+------------------------------------------------------------------------+-----------------+
+The raw data we received contained:
+
++-------------------------------------------------------+--------------------------------------------------------------------+
+| 02 Clean data                                         | 03 Augment data                                                    |
++=======================================================+====================================================================+
+| -   Fixing random cells and replacing them with NA    | -   Unit changes ( inch to cm)                                     |
+| -   Rename & factorizing columns                      | -   Rounding BMI                                                   |
+| -   Split data frame into body and blood measurements | -   Grouping & BMI                                                 |
+|                                                       | -   Change Blood type and cycles from numeric values to characters |
+|                                                       | -   Create new column for cycle/ pregnancy stage                   |
+|                                                       | -   Merging data frame into one file                               |
++-------------------------------------------------------+--------------------------------------------------------------------+
+
+## Descriptive analysis of data
+
+\[![Caption](../results/04_age_hist.png)\]
 
 ## Analysis 1
 
