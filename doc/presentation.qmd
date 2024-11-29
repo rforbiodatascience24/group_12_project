@@ -20,7 +20,7 @@ library(tidyverse)
 
 ### Background
 
--   Polycystic ovary syndrome (PCOS) is a syndrome documented in women in their menustruating ages
+-   Polycystic ovary syndrome (PCOS) is a syndrome documented in women in their menstruating ages
 
 -   Documented symptoms are often; period pains, irregular periods, ovary related problems and hormone imbalance
 
@@ -91,7 +91,7 @@ body_measurements <- body_measurements |>
 | 02 Clean data                                           | 03 Augment data                                                      |
 +=========================================================+======================================================================+
 | -   ~Fixing random cells and replacing them with NA~    | -   ~Unit changes ( inch to cm)~                                     |
-| -   ~Rename & factorizing columns~                      | -   ~Rounding and\ grouping BMI~                                     |
+| -   ~Rename & factorizing columns~                      | -   ~Rounding and grouping BMI~                                      |
 | -   ~Split data frame into body and blood measurements~ | -   ~Change Blood type and cycles from numeric values to characters~ |
 | -   ~Removed empty column~                              | -   ~Create new column for cycle/ pregnancy stage~                   |
 |                                                         | -   ~Merging data frame into one file~                               |
@@ -127,23 +127,21 @@ PCOS |>
 :::
 :::
 
-## Analysis 1
+## Body measurement data analysis
+
+In this analysis, we have been looking at the correlation between PCOS diagnosed patients, and what factors they potentially have in common from the body measurements data.
 
 ::: {.column width="50%"}
-hh
-
-hh
+\![BMI plot\](../results/05_PCOS_BMI_correlation_box.png)
 :::
 
-## Analysis 2
+## Blood measurement data analysis
 
-her
+Next, we are looking at the blood data to examine what parameters that seems related to PCOS.
 
 ## PCA of blood measurements
 
-```{r echo=FALSE, out.width="800x"}
-knitr::include_graphics("../results/07_blood_PCA.png")
-```
+her
 
 ## PCA of body measurements
 
