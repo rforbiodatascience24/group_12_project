@@ -1,5 +1,5 @@
 ---
-title: "PCOS Analysis!!"
+title: "PCOS Analysis"
 format:
   revealjs:
      slide-number: true
@@ -124,7 +124,17 @@ PCOS |>
 :::
 :::
 
-## Body measurement - Follicle number
+## Descriptive analysis of data {style=".smaller"}
+
+<div>
+
+|                            |                                |
+|----------------------------|--------------------------------|
+| ![](images/04_BMI_bar.png) | ![](images/04_period_dens.png) |
+
+</div>
+
+## Body measurement data analysis
 
 ::: {style=".smaller, font-size: 0.8em"}
 <div>
@@ -146,6 +156,22 @@ Follicle number and PCOS diagnosis:
 :::
 :::
 
+## PCA of body measurements
+
+::: {style="font-size: 0.8em"}
+<div>
+
+::: {style="font-size: 0.8em"}
+Slight divergance of PCOS and non-PCOS in body measurements.
+:::
+
+</div>
+
+|                                           |                                                          |
+|------------------------------------|------------------------------------|
+| ![](images/07_body_PCA.png){width="13cm"} | ![](images/07_rotation_matrix_body-01.png){width="13cm"} |
+:::
+
 ## Blood measurement data analysis
 
 <div>
@@ -164,31 +190,13 @@ Follicle number and PCOS diagnosis:
 No diverging of PCOS diagnosed individuals compared to non-PCOS diagnosed individuals.
 :::
 
-|                                            |                                                          |
+|                                            |                                                              |
 |---------------------------------------|---------------------------------|
-| ![](images/07_blood_PCA.png){width="12cm"} | ![](images/07_explained_variance_blood.png){width="500"} |
+| ![](images/07_blood_PCA.png){width="12cm"} | ![](images/07_explained_variance_blood-01.png){width="14cm"} |
 
 </div>
 
-## PCA of body measurements
-
-::: {style="font-size: 0.8em"}
-<div>
-
-::: {style="font-size: 0.8em"}
-Slight divergance of PCOS and non-PCOS in body measurements.
-:::
-
-</div>
-
-|                                           |                                            |
-|-------------------------------------------|--------------------------------------------|
-| ![](images/07_body_PCA.png){width="13cm"} | ![](images/07_rotation_matrix_body-01.png) |
-:::
-
-## Discussion
-
--   
+## Discussion and Conclusion
 
 -   Distribution between women diagnosed with and without PCOS
 
@@ -196,11 +204,4 @@ Slight divergance of PCOS and non-PCOS in body measurements.
 
 -   Body parameters show little clustering (BMI)
 
--   
-
-## Conclusion
-
 -   Not an optimal data set for significant conclutions
--   ...
--   ...
--   ...
