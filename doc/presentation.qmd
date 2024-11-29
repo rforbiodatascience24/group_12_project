@@ -161,27 +161,21 @@ Plot of the ages:
 
 ## Analysis 1
 
-## Body measurement data analysis
+## Body measurement data analysis - Follicle number
 
 In this analysis, we have been looking at the correlation between PCOS diagnosed patients, and what factors they potentially have in common from the body measurements data.
 
 <div>
 
-![BMI and PCOS](images/05_PCOS_BMI_correlation_box-01.png)
+![L](images/05_follicle_L_box-01.png)
 
 <div>
 
-![Follicle_L](images/05_follicle_L_box.png)
-
-![Follicle_R](images/05_follicle_R_box.png)
+![R](images/05_follicle_R_box-01.png)
 
 </div>
 
 </div>
-
-## Blood measurement data analysis
-
-Next, we are looking at the blood data to examine what parameters that seems related to PCOS.
 
 ## PCA of blood measurements
 
