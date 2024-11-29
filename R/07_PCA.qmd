@@ -7,7 +7,7 @@ editor: visual
 
 ## PCA Analysis
 
-### Clear environment
+## Clear environment
 
 ```{r}
 # | echo: true 
@@ -16,22 +16,25 @@ editor: visual
 rm(list = ls())
 ```
 
-### Load libraries
+## Load libraries
 
 ```{r}
 # | echo: true 
 # | eval: true  
 
-library("tidyverse")
-library("broom")
-library("cowplot")
+library(tidyverse)
+library(broom)
+library(cowplot)
+library(ggforce)
+
 ```
 
-### Load data
+## Load data
 
 ```{r}
 # | echo: true 
-# | eval: true  
+# | eval: true 
+
 body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
 blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements_aug.tsv")
 
@@ -39,9 +42,9 @@ blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements_aug.tsv")
 colnames(blood_measurements)
 ```
 
-### PCA analysis with blood measurements and hormones
+## PCA analysis with blood measurements
 
-For the first analysis, all values that are numeric values in the blood measurements will be tested in regards to individuals PCOS (PCA1) and which stages in their cycle/pregnancy stages (PCA2).
+For the first analysis, all values that are numeric values in the blood measurements will be tested in regards to individuals with PCOS (PCA1) and which stages in their cycle/pregnancy stages (PCA2).
 
 Here we have filtered out all values that are NA.
 
@@ -59,7 +62,7 @@ pca_fit <- blood_measurements_no_na |>
   prcomp(scale = TRUE)
 
 # Add PCOS_diagnosis to the data and plot it
-PCA1 <- pca_fit |> 
+blood_PCA <- pca_fit |> 
   augment(blood_measurements_no_na) |>
   ggplot(aes(.fittedPC1, .fittedPC2, color = PCOS_diagnosis)) +
   labs(title = "PCA of blood data stratified by PCOS diagnosis",
@@ -72,15 +75,413 @@ PCA1 <- pca_fit |>
   xlim(-1, 1) +  
   ylim(-2.5, 5)
 
+blood_PCA
+
 # Saving the plot as a picture
-ggsave(PCA1,
-       filename = "../results/07_PCA1.png",
+ggsave(blood_PCA,
+       filename = "../results/07_blood_PCA.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+
+```
+
+### Rotation matrix in blood measurements
+
+Testing what influences the components in the PCA plot, a rotation matrix is performed.
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+# subtracting the rotation matrix
+pca_fit |> 
+  tidy(matrix = "rotation")
+
+# Make arrow style to be plotted
+arrow_style <- arrow(angle = 20, 
+                     ends = "first", 
+                     type = "closed", 
+                     length = grid::unit(8, "pt")
+                     )
+
+# plot rotation matrix
+rotation_matrix_blood <- pca_fit |> 
+  tidy(matrix = "rotation") |> 
+  pivot_wider(names_from = "PC", 
+              names_prefix = "PC", 
+              values_from = "value") |> 
+  ggplot(aes(PC1, PC2)) +
+  geom_segment(xend = 0, 
+               yend = 0, 
+               arrow = arrow_style) +
+  geom_text(aes(label = column), hjust = 0.8, color = "purple4") +
+  xlim(-1,0.25) + 
+  ylim(-0.25, 0.25) +
+  theme_minimal_grid(12)+
+  labs(title = "Rotation matrix")
+
+rotation_matrix_blood
+
+# Saving the plot as a picture
+ggsave(rotation_matrix_blood,
+       filename = "../results/07_rotation_matrix_blood.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+
+```
+
+### Explaining variance in blood measurements
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+eigenvalues <- pca_fit |>
+  tidy(matrix = "eigenvalues")
+
+max_cumulative <- max(eigenvalues$cumulative)
+max_percent <- max(eigenvalues$percent)
+transformation_co <- max_cumulative / max_percent
+
+eigenvalues <- pca_fit |>
+  tidy(matrix = "eigenvalues") |>
+  select(cumulative) |> 
+  print()
+
+# plotting
+explained_variance_blood <- pca_fit |>
+  tidy(matrix = "eigenvalues") |>
+  ggplot(aes(PC, percent)) +
+  geom_line(aes(y = cumulative / transformation_co), color = "purple1") +
+  geom_point(aes(y = cumulative / transformation_co), color = "purple4") +
+  geom_col(fill = "pink2", alpha = 0.8) +
+  geom_text(aes(label = scales::percent(percent, accuracy = 0.1), y = percent+0.01), 
+            color = "black", 
+            size = 2.5) +
+  scale_x_continuous(breaks = 1:9) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.01)),
+                     labels = scales::percent_format(),
+                     sec.axis = sec_axis(trans = ~.*transformation_co, 
+                        name = "% Cumulative Variance Explained",
+                        labels = scales::percent_format())) +
+  theme_minimal_hgrid(12)+
+  labs(y = "% Variance Explaining each PC",
+       x = "Principal Components (PC)",
+       title = "Explained variance by Principal Components (PC)")
+
+explained_variance_blood
+
+# Saving the plot as a picture
+ggsave(explained_variance_blood,
+       filename = "../results/07_explained_variance_blood.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+
+```
+
+### PCA analysis with FSH
+
+Based on the rotation matrix, FSH may be interesting to test. Therefore we will investigate this further.
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+# making FSH binary
+blood_measurements_no_na <- blood_measurements_no_na |>
+  mutate(FSH_binary = ifelse(FSH > median(FSH, na.rm = TRUE), "High", "Low"))
+
+# make PCA plot with FSH
+FSH_PCA <- pca_fit |> 
+  augment(blood_measurements_no_na) |>
+  ggplot(aes(.fittedPC1, .fittedPC2, color = FSH_binary)) +
+  labs(title = "PCA of blood data stratified by FSH values",
+       x = "Principal component 1",
+       y = "Principal component 2",
+       color = "FSH") + 
+  geom_point(size = 1.5, alpha = 0.5) +
+  theme_half_open(12) + 
+  background_grid() +
+  xlim(-0.5, 0.5) +  
+  ylim(-1, 1)   
+
+FSH_PCA
+
+# Saving the plot as a picture
+ggsave(FSH_PCA,
+       filename = "../results/07_FSH_PCA.png",
        device = "png",
        height = 20,
        width = 20,
        units = "cm")
 
 
+```
+
+### PCA analysis with values not being hormones
+
+Now we will zoom in on all measurements from the blood measurement dataset, that are not belonging to any hormone values, which means that vitamin D3, hemoglobin and RBS (random blood sugar).
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+# removing rows containing NAs
+blood_measurements_no_na <- na.omit(blood_measurements)
+
+# PCA plot for numeric columns and scale the data
+pca_fit <- blood_measurements_no_na |> 
+  select(where(is.numeric)) |>
+  select(-patient_ID, -vitaminD3, -RBS, -hemaglobin) |> 
+  prcomp(scale = TRUE)
+
+# adding PCOS diagnosis to the data and plotting the PCA
+blood_not_hormes_PCA <- pca_fit |> 
+  augment(blood_measurements_no_na) |>
+  ggplot(aes(.fittedPC1, .fittedPC2, color = PCOS_diagnosis)) +
+  labs(title = "PCA of blood data stratified by PCOS diagnosis",
+       subtitle = "only hormone measurements",
+       x = "Principal component 1",
+       y = "Principal component 2",
+       color = "PCOS diagnosis") + 
+  geom_point(size = 1.5, alpha = 0.5) +
+  theme_half_open(12) + 
+  background_grid() +
+  xlim(-0.5, 0.5) +  
+  ylim(-1, 1)    
+
+blood_not_hormes_PCA
+
+# Saving the plot as a picture
+ggsave(blood_not_hormes_PCA,
+       filename = "../results/07_blood_not_hormes_PCA.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+```
+
+## PCA analysis with body measurements
+
+Next analysis, all values that are numeric values in the body measurements data set will be tested
+
+Here we have filtered out all values that are NA.
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+# Remove rows with NAs
+body_measurements_no_na <- na.omit(body_measurements)
+
+# PCA plot for all numeric columns and scale the data
+pca_fit_2 <- body_measurements_no_na |> 
+  select(where(is.numeric)) |>
+  select(-patient_ID) |> 
+  prcomp(scale = TRUE)
+
+# Add PCOS_diagnosis to the data and plot it
+body_PCA <- pca_fit_2 |> 
+  augment(body_measurements_no_na) |>
+  ggplot(aes(.fittedPC1, .fittedPC2, color = PCOS_diagnosis)) +
+  labs(title = "PCA of body data stratified by PCOS diagnosis",
+       x = "Principal component 1",
+       y = "Principal component 2",
+       color = "PCOS diagnosis") + 
+  geom_point(size = 1.5, alpha = 0.5) +
+  theme_half_open(12) + 
+  background_grid()
+
+body_PCA
+
+# Saving the plot as a picture
+ggsave(body_PCA,
+       filename = "../results/07_body_PCA.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+
+```
+
+### Rotation matrix for body measurements
+
+Testing what influences the components in the PCA plot, a rotation matrix is performed.
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+# subtracting the rotation matrix
+pca_fit_2 |> 
+  tidy(matrix = "rotation")
+
+# Make arrow style to be plotted
+arrow_style <- arrow(angle = 20, 
+                     ends = "first", 
+                     type = "closed", 
+                     length = grid::unit(8, "pt")
+                     )
+
+# plot rotation matrix
+rotation_matrix_body <- pca_fit_2 |> 
+  tidy(matrix = "rotation") |> 
+  pivot_wider(names_from = "PC", 
+              names_prefix = "PC", 
+              values_from = "value") |> 
+  ggplot(aes(PC1, PC2)) +
+  geom_segment(xend = 0, 
+               yend = 0, 
+               arrow = arrow_style) +
+  geom_text(aes(label = column), hjust = 0.8, color = "purple4") +
+  theme_minimal_grid(12)+
+  labs(title = "Rotation matrix for body measurments")
+
+rotation_matrix_body
+
+# Saving the plot as a picture
+ggsave(rotation_matrix_body,
+       filename = "../results/07_rotation_matrix_body.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+
+```
+
+### Explaining variance in body measurements
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+eigenvalues_BM <- pca_fit_2 |>
+  tidy(matrix = "eigenvalues")
+
+max_cumulative_BM <- max(eigenvalues_BM$cumulative)
+max_percent_BM <- max(eigenvalues_BM$percent)
+transformation_co_BM <- max_cumulative_BM / max_percent_BM
+
+eigenvalues_BM <- pca_fit_2 |>
+  tidy(matrix = "eigenvalues") |>
+  select(cumulative) |> 
+  print()
+
+# plotting
+explained_variance_body <- pca_fit_2 |>
+  tidy(matrix = "eigenvalues") |>
+  ggplot(aes(PC, percent)) +
+  geom_line(aes(y = cumulative / transformation_co_BM), color = "purple1") +
+  geom_point(aes(y = cumulative / transformation_co_BM), color = "purple4") +
+  geom_col(fill = "pink2", alpha = 0.8) +
+  geom_text(aes(label = scales::percent(percent, accuracy = 0.1), y = percent+0.01), 
+            color = "black", 
+            size = 2.5) +
+    scale_x_continuous(breaks = 1:18) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.01)),
+                     labels = scales::percent_format(),
+                     sec.axis = sec_axis(trans = ~.*transformation_co, 
+                        name = "% Cumulative Variance Explained",
+                        labels = scales::percent_format())) +
+  theme_minimal_hgrid(12)+
+  labs(y = "% Variance Explaining each PC",
+       x = "Principal Components (PC)",
+       title = "Explained variance by Principal Components (PC) for body measurments")
+
+explained_variance_body
+
+# Saving the plot as a picture
+ggsave(explained_variance_body,
+       filename = "../results/07_explained_variance_body.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+```
+
+### PCA analysis with follicles
+
+From the rotation matrix plot, follicles seems to be important. Therefore we will zoom in on this even further.
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+# PCA plot for all numeric columns and scale the data
+pca_fit_3 <- body_measurements_no_na |> 
+  select(where(is.numeric)) |>
+  select(follicle_no_R, follicle_no_L, avg_fsize_R, avg_fsize_L) |> 
+  prcomp(scale = TRUE)
+
+# Add PCOS_diagnosis to the data and plot it
+follicle_PCA <- pca_fit_3 |> 
+  augment(body_measurements_no_na) |>
+  ggplot(aes(.fittedPC1, .fittedPC2, color = PCOS_diagnosis)) +
+  labs(title = "PCA of follicle number and size stratified by PCOS diagnosis",
+       x = "Principal component 1",
+       y = "Principal component 2",
+       color = "PCOS diagnosis") + 
+  geom_point(size = 1.5, alpha = 0.5) +
+  theme_half_open(12) + 
+  background_grid()
+
+follicle_PCA
+
+# Saving the plot as a picture
+ggsave(follicle_PCA,
+       filename = "../results/07_follicle_PCA.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+```
+
+### PCA analysis with obesity factor
+
+Furthermore, we want to examine the impact of obesity factors, such as BMI, weight and so.
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+# PCA plot for obisity factor
+pca_fit_4 <- body_measurements_no_na |> 
+  select(where(is.numeric)) |>
+  select(weight, BMI, hip, waist) |> 
+  prcomp(scale = TRUE)
+
+# Add PCOS_diagnosis to the data and plot it
+obs_PCA <- pca_fit_4 |> 
+  augment(body_measurements_no_na) |>
+  ggplot(aes(.fittedPC1, .fittedPC2, color = PCOS_diagnosis)) +
+  labs(title = "PCA of obisity assosiated factors stratified by PCOS diagnosis",
+       x = "Principal component 1",
+       y = "Principal component 2",
+       color = "PCOS diagnosis") + 
+  geom_point(size = 1.5, alpha = 0.5) +
+  theme_half_open(12) + 
+  background_grid()
+
+obs_PCA
+
+# Saving the plot as a picture
+ggsave(obs_PCA,
+       filename = "../results/07_obs_PCA.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+```
+
+\######################################################################
+
+```{r}
 # Makes plot based on cycle and pregancy stage
 PCA2 <- pca_fit |> 
   augment(blood_measurements_no_na) |>
@@ -94,22 +495,17 @@ PCA2 <- pca_fit |>
   background_grid() +
   xlim(-0.5, 0.5) +  
   ylim(-2.5, 5) 
+PCA2
 
 # Saving the plot as a picture
-ggsave(PCA1,
+ggsave(PCA2,
        filename = "../results/07_PCA2.png",
        device = "png",
        height = 20,
        width = 20,
        units = "cm")
 
-```
 
-### PCA analysis with only PCOS diagnosis and cycle/pregnancy status
-
-Next, PCOS diagnosis and cycle/pregnancy stages is selected, and this is plotted in regards to if the patients has PCOS (PCA3) or not (PCA4).
-
-```{r}
 # | echo: true 
 # | eval: true  
 
@@ -128,7 +524,7 @@ pca_augmented_no_pcos <- pca_augmented |>
 
 # PCA analysis with PCOS individuals stratified for pregnancy stages
 PCA3 <- ggplot(pca_augmented_pcos, 
-       aes(.fittedPC1, .fittedPC2, color = cycle_or_pregnancy_stage)) +
+       aes(.fittedPC8, .fittedPC9, color = cycle_or_pregnancy_stage)) +
   geom_point(size = 1.5, 
              alpha = 0.5) +
   labs(title = "PCA of blood data",
@@ -140,6 +536,8 @@ PCA3 <- ggplot(pca_augmented_pcos,
   background_grid() +
   xlim(-0.5, 0.5) +  
   ylim(-2.5, 5)
+
+PCA3
 
 # Saving the plot as a picture
 ggsave(PCA3,
@@ -166,6 +564,8 @@ PCA4 <- ggplot(pca_augmented_no_pcos,
   xlim(-0.5, 0.5) +  
   ylim(-2.5, 5)
 
+PCA4
+
 # Saving the plot as a picture
 ggsave(PCA4,
        filename = "../results/07_PCA4.png",
@@ -174,13 +574,9 @@ ggsave(PCA4,
        width = 20,
        units = "cm")
 
-```
 
-### PCA analysis filtering for follicular stage only
 
-To narrow it further down, a PCA analysis has been made, there there is filtered for individuals that is positive for "Follicular stage" (PCA5).
 
-```{r}
 # | echo: true 
 # | eval: true  
 
@@ -204,6 +600,8 @@ PCA5 <- ggplot(pca_augmented_follicular,
   xlim(-0.5, 0.5) +  
   ylim(-2.5, 5)
 
+PCA5
+
 # Saving the plot as a picture
 ggsave(PCA5,
        filename = "../results/07_PCA5.png",
@@ -212,309 +610,10 @@ ggsave(PCA5,
        width = 20,
        units = "cm")
 
-```
 
-### PCA analysis with values not being hormones
 
-Testing measurements that are not belonging to any hormone values, which means that vitamin D3, hemoglobin and RBS (random blood sugar) measurements will be tested.
 
-```{r}
-# | echo: true 
-# | eval: true  
 
-# removing rows containing NAs
-blood_measurements_no_na <- na.omit(blood_measurements)
-
-# PCA plot for numeric columns and scale the data
-pca_fit <- blood_measurements_no_na |> 
-  select(where(is.numeric)) |>
-  select(-patient_ID, -vitaminD3, -RBS, -hemaglobin) |> 
-  prcomp(scale = TRUE)
-
-# adding PCOS diagnosis to the data and plotting the PCA
-PCA6 <- pca_fit |> 
-  augment(blood_measurements_no_na) |>
-  ggplot(aes(.fittedPC1, .fittedPC2, color = PCOS_diagnosis)) +
-  labs(title = "PCA of blood data stratified by PCOS diagnosis",
-       subtitle = "only hormone measurements",
-       x = "Principal component 1",
-       y = "Principal component 2",
-       color = "PCOS diagnosis") + 
-  geom_point(size = 1.5, alpha = 0.5) +
-  theme_half_open(12) + 
-  background_grid() +
-  xlim(-0.5, 0.5) +  
-  ylim(-1, 1)    
-
-# Saving the plot as a picture
-ggsave(PCA6,
-       filename = "../results/07_PCA6.png",
-       device = "png",
-       height = 20,
-       width = 20,
-       units = "cm")
-
-```
-
-### Rotation matrix
-
-Testing what influences the components in the PCA plot, a rotation matrix is performed.
-
-```{r}
-# | echo: true 
-# | eval: true  
-
-# subtracting the rotation matrix
-pca_fit |> 
-  tidy(matrix = "rotation")
-
-# Make arrow style to be plotted
-arrow_style <- arrow(angle = 20, 
-                     ends = "first", 
-                     type = "closed", 
-                     length = grid::unit(8, "pt")
-                     )
-
-# plot rotation matrix
-PCA7 <- pca_fit |> 
-  tidy(matrix = "rotation") |> 
-  pivot_wider(names_from = "PC", 
-              names_prefix = "PC", 
-              values_from = "value") |> 
-  ggplot(aes(PC1, PC2)) +
-  geom_segment(xend = 0, 
-               yend = 0, 
-               arrow = arrow_style) +
-  geom_text(aes(label = column), hjust = 0.8, color = "purple4") +
-  xlim(-1,0.25) + 
-  ylim(-0.25, 0.25) +
-  theme_minimal_grid(12)+
-  labs(title = "Rotation matrix")
-
-PCA7
-# Saving the plot as a picture
-ggsave(PCA7,
-       filename = "../results/07_PCA7.png",
-       device = "png",
-       height = 20,
-       width = 20,
-       units = "cm")
-
-```
-
-### Explaining variance
-
-```{r}
-# | echo: true 
-# | eval: true  
-
-eigenvalues <- pca_fit |>
-  tidy(matrix = "eigenvalues")
-
-max_cumulative <- max(eigenvalues$cumulative)
-max_percent <- max(eigenvalues$percent)
-transformation_co <- max_cumulative / max_percent
-
-eigenvalues <- pca_fit |>
-  tidy(matrix = "eigenvalues") |>
-  select(cumulative) |> 
-  print()
-
-# plotting
-PCA8 <- pca_fit |>
-  tidy(matrix = "eigenvalues") |>
-  ggplot(aes(PC, percent)) +
-  geom_line(aes(y = cumulative / transformation_coefficient), color = "purple1") +
-  geom_point(aes(y = cumulative / transformation_coefficient), color = "purple4") +
-  geom_col(fill = "pink2", alpha = 0.8) +
-  geom_text(aes(label = scales::percent(percent, accuracy = 0.1), y = percent+0.01), 
-            color = "black", 
-            size = 2.5) +
-  scale_x_continuous(breaks = 1:9) +
-  scale_y_continuous(
-    labels = scales::percent_format(),
-    expand = expansion(mult = c(0, 0.01))
-  ) +
-  theme_minimal_hgrid(12)+
-  labs(y = "% Variance Explaining each PC",
-       x = "Principal Components (PC)",
-       title = "Explained variance by Principal Components (PC)")
-
-# Saving the plot as a picture
-ggsave(PCA8,
-       filename = "../results/07_PCA8.png",
-       device = "png",
-       height = 20,
-       width = 20,
-       units = "cm")
-
-```
-
-### Trying to color by FSH
-
-```{r}
-# | echo: true 
-# | eval: true  
-
-# making it binary
-blood_measurements_no_na <- blood_measurements_no_na |>
-  mutate(FSH_binary = ifelse(FSH > median(FSH, na.rm = TRUE), "High", "Low"))
-
-# make PCA plot with FSH
-PCA9 <- pca_fit |> 
-  augment(blood_measurements_no_na) |>
-  ggplot(aes(.fittedPC1, .fittedPC2, color = FSH_binary)) +
-  labs(title = "PCA of blood data stratified by PCOS diagnosis",
-       subtitle = "only hormone measurements",
-       x = "Principal component 1",
-       y = "Principal component 2",
-       color = "FSH") + 
-  geom_point(size = 1.5, alpha = 0.5) +
-  theme_half_open(12) + 
-  background_grid() +
-  xlim(-0.5, 0.5) +  
-  ylim(-1, 1)   
-
-# Saving the plot as a picture
-ggsave(PCA9,
-       filename = "../results/07_PCA9.png",
-       device = "png",
-       height = 20,
-       width = 20,
-       units = "cm")
 
 
 ```
-
-### PCA for body measurments
-
-```{r}
-# | echo: true 
-# | eval: true  
-
-# selecting numerical values from body measurments dataframe
-numeric_body_data <- body_measurements |>
-  select(PCOS_diagnosis, where(is.numeric)) |>
-  na.omit()
-
-# removes values that are not numerical along with center and scalling of the data
-pca_result <- numeric_body_data_no_na |> 
-  select(-PCOS_diagnosis, -patient_ID) |> 
-  prcomp(center = TRUE, scale. = TRUE)
-  
-# makes table with score of PC to plot
-pca_data <- bind_cols(as_tibble(pca_result$x), 
-  numeric_body_data_no_na |> select(PCOS_diagnosis))
-
-# plotting the PCA in regards to individuals with PCOS
-PCA10 <- ggplot(pca_data, aes(x = PC1, y = PC2, color = PCOS_diagnosis)) +
-  geom_point(size = 3, alpha = 0.4) +
-  labs(
-    title = "PCA analysis with of metadata",
-    x = "Principal Component 1 (PC1)",
-    y = "Principal Component 2 (PC2)",
-    color = "PCOS Diagnosis") +
-  xlim(-7, 7) + 
-  ylim(-7, 7)   
-
-# Saving the plot as a picture
-ggsave(PCA10,
-       filename = "../results/07_PCA19.png",
-       device = "png",
-       height = 20,
-       width = 20,
-       units = "cm")
-
-```
-
-```{r}
-# | echo: true 
-# | eval: true  
-
-# subtracting the rotation matrix
-pca_result |> 
-  tidy(matrix = "rotation")
-
-# Make arrow style to be plotted
-arrow_style <- arrow(angle = 20, 
-                     ends = "first", 
-                     type = "closed", 
-                     length = grid::unit(8, "pt")
-                     )
-
-# plot rotation matrix
-PCA11 <- pca_result |> 
-  tidy(matrix = "rotation") |> 
-  pivot_wider(names_from = "PC", 
-              names_prefix = "PC", 
-              values_from = "value") |> 
-  ggplot(aes(PC1, PC2)) +
-  geom_segment(xend = 0, 
-               yend = 0, 
-               arrow = arrow_style) +
-  geom_text(aes(label = column), hjust = 0.8, color = "purple4") +
-  xlim(-1,0.25) + 
-  ylim(-0.25, 0.25) +
-  theme_minimal_grid(12)+
-  labs(title = "Rotation matrix for body measurments")
-
-PCA11
-
-# Saving the plot as a picture
-ggsave(PCA11,
-       filename = "../results/07_PCA11.png",
-       device = "png",
-       height = 20,
-       width = 20,
-       units = "cm")
-
-```
-
-```{r}
-# | echo: true 
-# | eval: true  
-
-eigenvalues_BM <- pca_result |>
-  tidy(matrix = "eigenvalues")
-
-max_cumulative_BM <- max(eigenvalues_BM$cumulative)
-max_percent_BM <- max(eigenvalues_BM$percent)
-transformation_co_BM <- max_cumulative_BM / max_percent_BM
-
-eigenvalues_BM <- pca_result |>
-  tidy(matrix = "eigenvalues") |>
-  select(cumulative) |> 
-  print()
-
-# plotting
-PCA12 <- pca_result |>
-  tidy(matrix = "eigenvalues") |>
-  ggplot(aes(PC, percent)) +
-  geom_line(aes(y = cumulative / transformation_co_BM), color = "purple1") +
-  geom_point(aes(y = cumulative / transformation_co_BM), color = "purple4") +
-  geom_col(fill = "pink2", alpha = 0.8) +
-  geom_text(aes(label = scales::percent(percent, accuracy = 0.1), y = percent+0.01), 
-            color = "black", 
-            size = 2.5) +
-    scale_x_continuous(breaks = 1:18) +
-  scale_y_continuous(
-    labels = scales::percent_format(),
-    expand = expansion(mult = c(0, 0.01))
-  ) +
-  theme_minimal_hgrid(12)+
-  labs(y = "% Variance Explaining each PC",
-       x = "Principal Components (PC)",
-       title = "Explained variance by Principal Components (PC) for body measurments")
-
-PCA12
-
-# Saving the plot as a picture
-ggsave(PCA12,
-       filename = "../results/07_PCA12.png",
-       device = "png",
-       height = 20,
-       width = 20,
-       units = "cm")
-```
-
-### 
