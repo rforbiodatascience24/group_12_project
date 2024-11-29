@@ -175,7 +175,7 @@ In this analysis, we have been looking at the correlation between PCOS diagnosed
 ![](images/05_follicle_R_box-01.png){style=".smaller"}
 :::
 
-Look at these plots!
+Look at these plots!!!
 :::
 :::
 
