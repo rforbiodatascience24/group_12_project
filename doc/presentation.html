@@ -1238,7 +1238,7 @@ Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen &amp;
 <div style="font-size: 0.7em">
 <ul>
 <li><strong>Raw data</strong>:<br>541 observation divided into 45 variables.<br></li>
-<li><strong>01_load_data</strong>:<br>Data is loaded.<br></li>
+<li><strong>01_load_data</strong>:<br>Simply loads the data.<br></li>
 <li><strong>02_clean_data</strong>:<br>
 <ul>
 <li>Fixing random cells and replacing them with NA</li>
@@ -1254,8 +1254,7 @@ Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen &amp;
 <li><strong>03_augment</strong>:<br>
 <ul>
 <li><p>Unit changes ( inch to cm)</p></li>
-<li><p>Rounding BMI</p></li>
-<li><p>Grouping &amp; BMI</p></li>
+<li><p>Rounding &amp; grouping BMI</p></li>
 <li><p>Change Blood type and cycles from numeric values to characters</p></li>
 <li><p>Create new column for cycle/ pregnancy stage</p></li>
 <li><p>Merging data frame into one file<br></p>
@@ -1282,13 +1281,12 @@ Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen &amp;
 </div>
 </div>
 </section>
-<section>
-<section id="attempt-2-on-data-handling" class="title-slide slide level1 center">
-<h1>Attempt 2 on data handling</h1>
+<section id="data-handling-approach-1" class="slide level2" style=".smaller">
+<h2>Data handling approach</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 45%">
-<col style="width: 54%">
+<col style="width: 44%">
+<col style="width: 55%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1299,26 +1297,17 @@ Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen &amp;
 <tbody>
 <tr class="odd">
 <td><ul>
-<li><div style="font-size: 0.8 em">
-<ul>
-<li><p><sub>Fixing random cells and replacing them with NA</sub></p></li>
-<li><p><sub>Rename &amp; factorizing columns</sub></p></li>
-<li><p><sub>Split data frame into body and blood measurements</sub></p></li>
-<li><p><sub>Removed empty column</sub></p></li>
-</ul>
-</div></li>
+<li><sub>Fixing random cells and replacing them with NA</sub></li>
+<li><sub>Rename &amp; factorizing columns</sub></li>
+<li><sub>Split data frame into body and blood measurements</sub></li>
+<li><sub>Removed empty column</sub></li>
 </ul></td>
 <td><ul>
-<li><div style="font-size: 0.8 em">
-<ul>
-<li><p><sub>Unit changes ( inch to cm)</sub></p></li>
-<li><p><sub>Rounding BMI</sub></p></li>
-<li><p><sub>Grouping &amp; BMI</sub></p></li>
-<li><p><sub>Change Blood type and cycles from numeric values to characters</sub></p></li>
-<li><p><sub>Create new column for cycle/ pregnancy stage</sub></p></li>
-<li><p><sub>Merging data frame into one file</sub></p></li>
-</ul>
-</div></li>
+<li><sub>Unit changes ( inch to cm)</sub></li>
+<li><sub>Rounding and grouping BMI</sub></li>
+<li><sub>Change Blood type and cycles from numeric values to characters</sub></li>
+<li><sub>Create new column for cycle/ pregnancy stage</sub></li>
+<li><sub>Merging data frame into one file</sub></li>
 </ul></td>
 </tr>
 </tbody>
@@ -1381,7 +1370,7 @@ Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen &amp;
 
 </div>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
