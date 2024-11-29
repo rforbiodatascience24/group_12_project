@@ -4,11 +4,7 @@ format:
   revealjs:
      slide-number: true
      embed-resources: true
-<<<<<<< HEAD
      theme: moon
-=======
-     theme: solarized
->>>>>>> 6d4aa6c822632c08a60067431b8468b2ad185861
       
 author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen & Mille Rask Sander"
 ---
@@ -159,21 +155,9 @@ her
 
 ## PCA of blood measurements
 
-<div>
-
 \![\](../results/07_blood_PCA.png){width=50%}
 
-<div>
-
-<div>
-
 \![\](../results/07_rotation_matrix_blood.png){width=50%}
-
-</div>
-
-</div>
-
-</div>
 
 ## PCA of body measurements
 
