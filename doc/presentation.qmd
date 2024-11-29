@@ -37,9 +37,10 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
 ::: columns
 ::: {.column width="50%"}
 ::: {style="font-size: 0.6em"}
--   <strong>Raw data</strong>:<br />541 observation divided into 45 variables.<br />
+::: incremental
+-   <strong>Raw data</strong>:<br />541 observations divided into 45 variables<br />
 
--   <strong>01_load_data</strong>:<br />Simply loads the data.<br />
+-   <strong>01_load_data</strong>:<br />Simply loads the data<br />
 
 -   <strong>02_clean_data</strong>:<br />
 
@@ -47,8 +48,9 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
     -   Fixing random cells and replacing them with NA
     -   Rename & factorizing columns
     -   Split dataframe into body and blood measurements
-    -   Removed empty column.<br />
+    -   Removed empty column<br />
     :::
+:::
 :::
 :::
 
@@ -87,29 +89,16 @@ body_measurements <- body_measurements |>
 :::
 :::
 
-## Data handling approach {style=".smaller"}
-
-::: {style=".smaller"}
-+---------------------------------------------------------+----------------------------------------------------------------------+
-| 02 Clean data                                           | 03 Augment data                                                      |
-+=========================================================+======================================================================+
-| -   ~Fixing random cells and replacing them with NA~    | -   ~Unit changes ( inch to cm)~                                     |
-| -   ~Rename & factorizing columns~                      | -   ~Rounding and grouping BMI~                                      |
-| -   ~Split data frame into body and blood measurements~ | -   ~Change Blood type and cycles from numeric values to characters~ |
-| -   ~Removed empty column~                              | -   ~Create new column for cycle/ pregnancy stage~                   |
-|                                                         | -   ~Merging data frame into one file~                               |
-+---------------------------------------------------------+----------------------------------------------------------------------+
-:::
-
 ## Descriptive analysis of data
 
 ::: columns
-### Left Column
+### Information on the PCOS dataset:
 
-```{r}
-# | echo: true 
-# | eval: true  
+::: column
+Dimensions:
 
+``` r
+::: {.r}
 PCOS <- read_tsv(file = "../data/PCOS_merged.tsv")
 
 PCOS_dim <- PCOS |>
@@ -117,16 +106,25 @@ PCOS_dim <- PCOS |>
   tibble()|>
   rename("PCOS dimensions" = "dim(PCOS)")|>
   print()
+:::
+```
 
+Count of how many have PCOS:
+
+``` r
+::: {.r}
 PCOS |> 
   count(PCOS_diagnosis) |>
   as.tibble() |>
   print()
-
+:::
 ```
 
-::: {.column width="50%"}
-### Right Column
+::: column
+Plot of the ages:
+
+![Age plot](../results/04_age_hist.png)
+:::
 :::
 :::
 
