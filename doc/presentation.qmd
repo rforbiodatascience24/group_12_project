@@ -165,9 +165,19 @@ Plot of the ages:
 
 In this analysis, we have been looking at the correlation between PCOS diagnosed patients, and what factors they potentially have in common from the body measurements data.
 
-::: {.column width="50%"}
-\![BMI plot\](../results/05_PCOS_BMI_correlation_box.png)
-:::
+<div>
+
+![BMI and PCOS](images/05_PCOS_BMI_correlation_box-01.png)
+
+<div>
+
+![Follicle_L](images/05_follicle_L_box.png)
+
+![Follicle_R](images/05_follicle_R_box.png)
+
+</div>
+
+</div>
 
 ## Blood measurement data analysis
 
