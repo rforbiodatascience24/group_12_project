@@ -86,6 +86,7 @@ body_measurements <- body_measurements |>
 
 ## Data handling approach {style=".smaller"}
 
+::: {style=".smaller"}
 +---------------------------------------------------------+----------------------------------------------------------------------+
 | 02 Clean data                                           | 03 Augment data                                                      |
 +=========================================================+======================================================================+
@@ -95,6 +96,7 @@ body_measurements <- body_measurements |>
 | -   ~Removed empty column~                              | -   ~Create new column for cycle/ pregnancy stage~                   |
 |                                                         | -   ~Merging data frame into one file~                               |
 +---------------------------------------------------------+----------------------------------------------------------------------+
+:::
 
 ## Descriptive analysis of data
 
