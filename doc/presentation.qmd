@@ -36,19 +36,27 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
 
 ::: columns
 ::: {.column width="50%"}
-::: {style="font-size: 0.7em"}
--   <strong>Raw data</strong>:<br />541 observation divided into 45 variables.<br />
--   <strong>01_load_data</strong>:<br />Simply loads the data.<br />
+::: {style="font-size: 0.6em"}
+::: incremental
+-   <strong>Raw data</strong>:<br />541 observations divided into 45 variables<br />
+
+-   <strong>01_load_data</strong>:<br />Simply loads the data<br />
+
 -   <strong>02_clean_data</strong>:<br />
+
+    ::: incremental
     -   Fixing random cells and replacing them with NA
     -   Rename & factorizing columns
     -   Split dataframe into body and blood measurements
-    -   Removed empty column.<br />
+    -   Removed empty column<br />
+    :::
+:::
 :::
 :::
 
 ::: {.column width="50%"}
-::: {style="font-size: 0.7em"}
+::: {style="font-size: 0.6em"}
+::: incremental
 -   <strong>03_augment</strong>:<br />
     -   Unit changes ( inch to cm)
 
@@ -59,12 +67,9 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
     -   Create new column for cycle/ pregnancy stage
 
     -   Merging data frame into one file<br />
+:::
 
-        </div>
-
-        <div style="font-size: 0.6em">
-
-``` r
+``` {.r style=".smaller"}
 # Rounding of BMI and dividing into categories
 body_measurements <- body_measurements |>
   mutate(BMI = round(BMI, 1)) |> 
@@ -84,8 +89,39 @@ body_measurements <- body_measurements |>
 :::
 :::
 
-## Data handling approach {style=".smaller"}
+## Descriptive analysis of data {style=".smaller"}
 
+::: columns
+::: {.column width="50%"}
+::: {style="font-size: 0.6em"}
+::: incremental
+::: {.column width="50%"}
+Dimensions:
+
+``` r
+PCOS <- read_tsv(file = "../data/PCOS_merged.tsv")
+
+PCOS_dim <- PCOS |>
+  dim() |>
+  tibble()|>
+  rename("PCOS dimensions" = "dim(PCOS)")|>
+  print()
+```
+
+Count of how many have PCOS:
+
+``` r
+PCOS |> 
+  count(PCOS_diagnosis) |>
+  as.tibble() |>
+  print()
+```
+:::
+:::
+:::
+:::
+
+<<<<<<< HEAD
 ::: {style=".smaller"}
 +---------------------------------------------------------+----------------------------------------------------------------------+
 | 02 Clean data                                           | 03 Augment data                                                      |
@@ -96,17 +132,22 @@ body_measurements <- body_measurements |>
 | -   ~Removed empty column~                              | -   ~Create new column for cycle/ pregnancy stage~                   |
 |                                                         | -   ~Merging data frame into one file~                               |
 +---------------------------------------------------------+----------------------------------------------------------------------+
+=======
+::: {.column width="50%"}
+\![Age distribution\](../results/04_age_hist.png)
+:::
+>>>>>>> 8740252bb12b8e1ae7fb06f8f32187cd67e22541
 :::
 
 ## Descriptive analysis of data
 
-::: columns
-### Left Column
+::: {.columns style=".smaller"}
+### Information on the PCOS dataset:
 
-```{r}
-# | echo: true 
-# | eval: true  
+::: {.column width="50%" style=".smaller, font-size: 0.8em"}
+Dimensions:
 
+``` r
 PCOS <- read_tsv(file = "../data/PCOS_merged.tsv")
 
 PCOS_dim <- PCOS |>
@@ -114,16 +155,26 @@ PCOS_dim <- PCOS |>
   tibble()|>
   rename("PCOS dimensions" = "dim(PCOS)")|>
   print()
+```
 
+Count of how many have PCOS:
+
+``` {.r style=".smaller"}
 PCOS |> 
   count(PCOS_diagnosis) |>
   as.tibble() |>
   print()
-
 ```
 
-::: {.column width="50%"}
-### Right Column
+as
+
+::: {.column width="50%" style=".smaller, font-size: 0.8em"}
+Plot of the ages:
+
+![Age plot](../results/04_age_hist.png)
+:::
+
+lsksd
 :::
 :::
 
