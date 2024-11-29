@@ -56,7 +56,8 @@ The raw data we received contained: 541 observation divided into 45 variables
 
 ## Descriptive analysis of data
 
-The data analysed consists of 541 observation in 44 variables.
+::: columns
+### Left Column
 
 ```{r}
 # | echo: true 
@@ -77,11 +78,24 @@ PCOS |>
 
 ```
 
-\[![Caption](../results/04_age_hist.png)\]
+::: {.column width="50%"}
+### Right Column
+
+knitr::include_graphics("../results/04_age_hist.png", out.width = "50%")
+:::
+:::
 
 ## Analysis 1
 
-her
+::: {.column width="50%"}
+hh
+
+hh
+
+<div>
+
+</div>
+:::
 
 ## Analysis 2
 
