@@ -148,6 +148,8 @@ In this analysis, we have been looking at the correlation between PCOS diagnosed
 
 ![](../results/07_blood_PCA.png){fig-align="center"}
 
+Here we see....
+
 ## PCA of body measurements
 
 ![](../results/07_body_PCA.png){fig-align="center"}
