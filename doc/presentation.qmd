@@ -1,5 +1,5 @@
 ---
-title: "PCOS Analysis!"
+title: "PCOS Analysis!!"
 format:
   revealjs:
      slide-number: true
@@ -56,7 +56,7 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
 
 ::: {.column width="50%"}
 ::: {style="font-size: 0.6em"}
-::: nonincremental
+::: incremental
 -   <strong>03_augment</strong>:<br />
 
     <div>
