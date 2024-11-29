@@ -1235,35 +1235,36 @@ Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen &amp;
 <h2>Data handling approach</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div style="font-size: 0.7em">
+<div style="font-size: 0.6em">
 <ul>
-<li><strong>Raw data</strong>:<br>541 observation divided into 45 variables.<br></li>
-<li><strong>01_load_data</strong>:<br>Simply loads the data.<br></li>
-<li><strong>02_clean_data</strong>:<br>
+<li><p><strong>Raw data</strong>:<br>541 observation divided into 45 variables.<br></p></li>
+<li><p><strong>01_load_data</strong>:<br>Simply loads the data.<br></p></li>
+<li><p><strong>02_clean_data</strong>:<br></p>
+<div>
 <ul>
-<li>Fixing random cells and replacing them with NA</li>
-<li>Rename &amp; factorizing columns</li>
-<li>Split dataframe into body and blood measurements</li>
-<li>Removed empty column.<br></li>
-</ul></li>
+<li class="fragment">Fixing random cells and replacing them with NA</li>
+<li class="fragment">Rename &amp; factorizing columns</li>
+<li class="fragment">Split dataframe into body and blood measurements</li>
+<li class="fragment">Removed empty column.<br></li>
+</ul>
+</div></li>
 </ul>
 </div>
 </div><div class="column" style="width:50%;">
-<div style="font-size: 0.7em">
-<ul>
-<li><strong>03_augment</strong>:<br>
-<ul>
-<li><p>Unit changes ( inch to cm)</p></li>
-<li><p>Rounding &amp; grouping BMI</p></li>
-<li><p>Change Blood type and cycles from numeric values to characters</p></li>
-<li><p>Create new column for cycle/ pregnancy stage</p></li>
-<li><p>Merging data frame into one file<br></p>
-</li></ul></li></ul></div>
 <div style="font-size: 0.6em">
-
-
-
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href></a><span class="co"># Rounding of BMI and dividing into categories</span></span>
+<div>
+<ul>
+<li class="fragment"><strong>03_augment</strong>:<br>
+<ul>
+<li class="fragment"><p>Unit changes ( inch to cm)</p></li>
+<li class="fragment"><p>Rounding &amp; grouping BMI</p></li>
+<li class="fragment"><p>Change Blood type and cycles from numeric values to characters</p></li>
+<li class="fragment"><p>Create new column for cycle/ pregnancy stage</p></li>
+<li class="fragment"><p>Merging data frame into one file<br></p></li>
+</ul></li>
+</ul>
+</div>
+<div class="sourceCode" id="cb1" style=".smaller"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href></a><span class="co"># Rounding of BMI and dividing into categories</span></span>
 <span id="cb1-2"><a href></a>body_measurements <span class="ot">&lt;-</span> body_measurements <span class="sc">|&gt;</span></span>
 <span id="cb1-3"><a href></a>  <span class="fu">mutate</span>(<span class="at">BMI =</span> <span class="fu">round</span>(BMI, <span class="dv">1</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb1-4"><a href></a>  <span class="fu">mutate</span>(<span class="at">BMI_class =</span> <span class="fu">case_when</span>(</span>
