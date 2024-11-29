@@ -37,21 +37,21 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
 The raw data we received contained: 541 observation divided into 45 variables
 
 ::: {.slide title="attempt1"}
-+---------------------------------------------------------+----------------------------------------------------------------------+
-| 02 Clean data                                           | 03 Augment data                                                      |
-+=========================================================+======================================================================+
-| -   ~Fixing random cells and replacing them with NA~    | -   ~Unit changes ( inch to cm)~                                     |
-|                                                         |                                                                      |
-| <!-- -->                                                | -   ~Rounding BMI~                                                   |
-|                                                         |                                                                      |
-| -   ~Rename & factorizing columns~                      | -   ~Grouping & BMI~                                                 |
-|                                                         |                                                                      |
-| -   ~Split data frame into body and blood measurements~ | -   ~Change Blood type and cycles from numeric values to characters~ |
-|                                                         |                                                                      |
-| -   ~Removed empty column~                              | -   ~Create new column for cycle/ pregnancy stage~                   |
-|                                                         |                                                                      |
-|                                                         | -   ~Merging data frame into one file~                               |
-+---------------------------------------------------------+----------------------------------------------------------------------+
++----------------------------------------------------------------+------------------------------------------------------------------------------------+
+| 02 Clean data                                                  | 03 Augment data                                                                    |
++================================================================+====================================================================================+
+| -   ~Fixing random cells and~ <br> ~replacing them with NA~    | -   ~Unit changes ( inch to cm)~                                                   |
+| -   ~Rename & factorizing columns~                             |                                                                                    |
+| -   ~Split data frame into body~ <br> ~and blood measurements~ | -   ~Rounding BMI~                                                                 |
+| -   ~Removed empty column~                                     |                                                                                    |
+|                                                                | -   ~Grouping & BMI~                                                               |
+|                                                                |                                                                                    |
+|                                                                | -   ~Change Blood type and~ <br> ~cycles from numeric values to~ <br> ~characters~ |
+|                                                                |                                                                                    |
+|                                                                | -   ~Create new column for~ <br> ~cycle/ pregnancy stage~                          |
+|                                                                |                                                                                    |
+|                                                                | -   ~Merging data frame into~ <br> ~one file~                                      |
++----------------------------------------------------------------+------------------------------------------------------------------------------------+
 :::
 
 # Attempt 2 on data handling
