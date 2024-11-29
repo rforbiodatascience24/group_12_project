@@ -144,7 +144,9 @@ her
 
 ## PCA of blood measurements
 
-her
+```{r echo=FALSE, out.width="800x"}
+knitr::include_graphics("../results/07_blood_PCA.png")
+```
 
 ## PCA of body measurements
 
