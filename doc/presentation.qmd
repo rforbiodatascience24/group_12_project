@@ -38,7 +38,7 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
 ::: {.column width="50%"}
 ::: {style="font-size: 0.7em"}
 -   <strong>Raw data</strong>:<br />541 observation divided into 45 variables.<br />
--   <strong>01_load_data</strong>:<br />Data is loaded.<br />
+-   <strong>01_load_data</strong>:<br />Simply loads the data.<br />
 -   <strong>02_clean_data</strong>:<br />
     -   Fixing random cells and replacing them with NA
     -   Rename & factorizing columns
@@ -52,9 +52,7 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
 -   <strong>03_augment</strong>:<br />
     -   Unit changes ( inch to cm)
 
-    -   Rounding BMI
-
-    -   Grouping & BMI
+    -   Rounding & grouping BMI
 
     -   Change Blood type and cycles from numeric values to characters
 
@@ -86,25 +84,19 @@ body_measurements <- body_measurements |>
 :::
 :::
 
-# Attempt 2 on data handling
+## Data handling approach {style=".smaller"}
 
-+-------------------------------------------------------------+--------------------------------------------------------------------------+
-| 02 Clean data                                               | 03 Augment data                                                          |
-+=============================================================+==========================================================================+
-| -   ::: {style="font-size: 0.8 em"}                         | -   ::: {style="font-size: 0.8 em"}                                      |
-|     -   ~Fixing random cells and replacing them with NA~    |     -   ~Unit changes ( inch to cm)~                                     |
-|                                                             |                                                                          |
-|     -   ~Rename & factorizing columns~                      |     -   ~Rounding BMI~                                                   |
-|                                                             |                                                                          |
-|     -   ~Split data frame into body and blood measurements~ |     -   ~Grouping & BMI~                                                 |
-|                                                             |                                                                          |
-|     -   ~Removed empty column~                              |     -   ~Change Blood type and cycles from numeric values to characters~ |
-|     :::                                                     |                                                                          |
-|                                                             |     -   ~Create new column for cycle/ pregnancy stage~                   |
-|                                                             |                                                                          |
-|                                                             |     -   ~Merging data frame into one file~                               |
-|                                                             |     :::                                                                  |
-+-------------------------------------------------------------+--------------------------------------------------------------------------+
+::: {style=".smaller"}
++---------------------------------------------------------+----------------------------------------------------------------------+
+| 02 Clean data                                           | 03 Augment data                                                      |
++=========================================================+======================================================================+
+| -   ~Fixing random cells and replacing them with NA~    | -   ~Unit changes ( inch to cm)~                                     |
+| -   ~Rename & factorizing columns~                      | -   ~Rounding and\ grouping BMI~                                     |
+| -   ~Split data frame into body and blood measurements~ | -   ~Change Blood type and cycles from numeric values to characters~ |
+| -   ~Removed empty column~                              | -   ~Create new column for cycle/ pregnancy stage~                   |
+|                                                         | -   ~Merging data frame into one file~                               |
++---------------------------------------------------------+----------------------------------------------------------------------+
+:::
 
 ## Descriptive analysis of data
 
