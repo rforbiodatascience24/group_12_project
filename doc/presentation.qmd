@@ -181,17 +181,15 @@ her
 
 <div>
 
-\![\](../results/07_blood_PCA.png){.absolute bottom=0 left=0 width="500" height="330}
+\![\](../results/07_blood_PCA.png){.absolute bottom=0 left=0 width="500" height="330"}
+
+<div>
+
+<div>
+
+\![\](../results/07_rotation_matrix_blood.png){.absolute bottom =0 left=0 width="500, height="330"}
 
 </div>
-
-<div>
-
-<div>
-
-```{r Blood measurments rotation matrix, echo=FALSE, out.width='50%'}
-knitr::include_graphics("../results/07_rotation_matrix_blood.png")
-```
 
 </div>
 
