@@ -4,7 +4,7 @@ format:
   revealjs:
      slide-number: true
      embed-resources: true
-     theme: solarized
+     theme: dracula
       
 author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen & Mille Rask Sander"
 ---
@@ -31,6 +31,62 @@ library(tidyverse)
 ### Aim
 
 The aim of this study is to examine a data set (found on Kaggle) of patients with and without PCOS. The data set has been made in India and data comes from 10 different hospitals.
+
+## Data handling approach (attempt 0)
+
+::: columns
+::: {.column width="50%"}
+::: {style="font-size: 0.8em"}
+-   <strong>Raw data</strong>:<br />541 observation divided into 45 variables.<br />
+-   <strong>01_load_data</strong>:<br />Data is loaded.<br />
+-   <strong>02_clean_data</strong>:<br />
+    -   Fixing random cells and replacing them with NA
+    -   Rename & factorizing columns
+    -   Split dataframe into body and blood measurements
+    -   Removed empty column.<br />
+:::
+:::
+
+::: {.column width="50%"}
+::: {style="font-size: 0.8em"}
+-   <strong>03_augment</strong>:<br />
+    -   Unit changes ( inch to cm)
+
+    -   Rounding BMI
+
+    -   Grouping & BMI
+
+    -   Change Blood type and cycles from numeric values to characters
+
+    -   Create new column for cycle/ pregnancy stage
+
+    -   Merging data frame into one file<br />
+
+        </div>
+
+        <div style="font-size: 0.6em">
+
+``` r
+# Rounding of BMI and dividing into categories
+body_measurements <- body_measurements |>
+  mutate(BMI = round(BMI, 1)) |> 
+  mutate(BMI_class = case_when(
+    BMI < 18.5 ~ "Underweight",
+    BMI <= 18.5 | BMI < 25 ~ "Normal weight",
+    BMI <= 25 | BMI < 30 ~ "Overweight",
+    BMI >= 30 ~ "Obesity")) |>
+  mutate(BMI_class = factor(BMI_class,
+                            levels =  c("Underweight", 
+                                        "Normal weight",
+                                        "Overweight", 
+                                        "Obesity"))) |>
+  relocate(BMI_class, .after = BMI)
+```
+:::
+:::
+:::
+
+## Descriptive analysis
 
 ## Data handling approach (attempt 1)
 
