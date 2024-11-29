@@ -181,13 +181,13 @@ her
 
 <div>
 
-\![\](../results/07_blood_PCA.png){.absolute bottom=0 left=0 width="500" height="330"}
+\![\](../results/07_blood_PCA.png){width=50%}
 
 <div>
 
 <div>
 
-\![\](../results/07_rotation_matrix_blood.png){.absolute bottom =0 left=0 width="500, height="330"}
+\![\](../results/07_rotation_matrix_blood.png){width=50%}
 
 </div>
 
