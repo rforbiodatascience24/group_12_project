@@ -93,7 +93,6 @@ body_measurements <- body_measurements |>
 
 ::: columns
 ::: {.column width="50%" style=".smaller"}
-
 ::: {style="font-size: 1em"}
 Dimensions:
 
@@ -155,7 +154,13 @@ In this analysis, we have been looking at the correlation between PCOS diagnosed
 
 ## Discussion
 
-her
+blah blah blah
+
+-   hdsjkdhs
+
+-   ndsjkandlas
+
+-   sajlda
 
 ## Conclusion
 
