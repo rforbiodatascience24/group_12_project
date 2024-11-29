@@ -10,6 +10,8 @@ author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Peter
 ---
 
 ```{r}
+# | echo: true 
+# | eval: true  
 
 library(tidyverse)
 ```
