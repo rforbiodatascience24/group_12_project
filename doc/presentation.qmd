@@ -4,7 +4,7 @@ format:
   revealjs:
      slide-number: true
      embed-resources: true
-     theme: moon
+     theme: league
       
 author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen & Mille Rask Sander"
 ---
@@ -89,13 +89,12 @@ body_measurements <- body_measurements |>
 :::
 :::
 
-## Descriptive analysis of data 1 {style=".smaller"}
+## Descriptive analysis of data {style=".smaller"}
 
 ::: columns
 ::: {.column width="50%" style=".smaller"}
-Information on the PCOS dataset
 
-::: {style="font-size: 0.8em"}
+::: {style="font-size: 1em"}
 Dimensions:
 
 ```{r}
@@ -121,48 +120,21 @@ PCOS |>
 
 ::: {.column width="50%" style=".smaller"}
 ![](../results/04_age_hist.png)
-:::
-:::
-
-## Descriptive analysis of data 2
-
-::: {.columns style=".smaller"}
-### Information on the PCOS dataset:
-
-::: {.column width="50%" style=".smaller, font-size: 0.8em"}
-Dimensions:
-
-``` r
-PCOS <- read_tsv(file = "../data/PCOS_merged.tsv")
-
-PCOS_dim <- PCOS |>
-  dim() |>
-  tibble()|>
-  rename("PCOS dimensions" = "dim(PCOS)")|>
-  print()
-```
-
-Count of how many have PCOS:
-
-``` {.r style=".smaller"}
-PCOS |> 
-  count(PCOS_diagnosis) |>
-  as.tibble() |>
-  print()
-```
-
-::: {.column width="50%" style=".smaller, font-size: 0.8em"}
-Plot of the ages:
-
-![](../results/04_age_hist.png)
-:::
 :::
 :::
 
 ## Body measurement data analysis - Follicle number
 
 ::: {style=".smaller, font-size: 0.8em"}
+<div>
+
+<div>
+
 In this analysis, we have been looking at the correlation between PCOS diagnosed patients, and what factors they potentially have in common from the body measurements data.
+
+</div>
+
+</div>
 
 ::: columns
 ::: {.column width="50%"}
@@ -181,7 +153,7 @@ In this analysis, we have been looking at the correlation between PCOS diagnosed
 
 ## PCA of body measurements
 
-her
+![](../results/07_body_PCA.png){fig-align="center"}
 
 ## Discussion
 
