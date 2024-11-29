@@ -121,7 +121,6 @@ PCOS |>
 :::
 :::
 
-<<<<<<< HEAD
 ::: {style=".smaller"}
 +---------------------------------------------------------+----------------------------------------------------------------------+
 | 02 Clean data                                           | 03 Augment data                                                      |
@@ -132,11 +131,9 @@ PCOS |>
 | -   ~Removed empty column~                              | -   ~Create new column for cycle/ pregnancy stage~                   |
 |                                                         | -   ~Merging data frame into one file~                               |
 +---------------------------------------------------------+----------------------------------------------------------------------+
-=======
-::: {.column width="50%"}
-\![Age distribution\](../results/04_age_hist.png)
+
+======= ::: {.column width="50%"} \![Age distribution\](../results/04_age_hist.png)
 :::
->>>>>>> 8740252bb12b8e1ae7fb06f8f32187cd67e22541
 :::
 
 ## Descriptive analysis of data
@@ -165,8 +162,6 @@ PCOS |>
   as.tibble() |>
   print()
 ```
-
-as
 
 ::: {.column width="50%" style=".smaller, font-size: 0.8em"}
 Plot of the ages:
