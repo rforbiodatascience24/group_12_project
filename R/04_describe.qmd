@@ -90,6 +90,17 @@ PCOS |>
 
 There are 364 patients without PCOS diagnosis and 177 who have been diagnosed with PCOS. There is an over representation of people without the diagnosis this will effects the results of the analysis, but this will not be taken into account.
 
+### Count of distribution in cycle or pregnancy stages
+
+```{r}
+# | echo: true
+# | eval: true   
+blood_measurements |>    
+  count(cycle_or_pregnancy_stage)
+```
+
+The cycle or pregnancy stage groups created earlier have a very skewed distribution between the groups.
+
 ## Plotting distributions of data
 
 ### Histogram of age distribution

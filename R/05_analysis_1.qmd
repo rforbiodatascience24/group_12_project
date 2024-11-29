@@ -82,6 +82,8 @@ ggsave(p_follicles_ovaries,
 
 ```
 
+The number of follicles in the left and right ovaries are increased for people with the PCOs diagnosis. We look further into the number of follicles in each ovary:
+
 ```{r}
 # | echo: true
 # | eval: true
@@ -103,6 +105,7 @@ p_follicle_L <- body_measurements |>
   theme_light() +
   theme(title = element_text(size = 8),
         legend.position = "none")
+
 
 # saving the plot
 ggsave(p_follicle_L,
@@ -130,6 +133,7 @@ p_follicle_R <- body_measurements |>
   theme(title = element_text(size = 8),
         legend.position = "none")
 
+
 # saving the plot
 ggsave(p_follicle_R,
        filename = "../results/05_follicle_R_box.png",
@@ -139,6 +143,8 @@ ggsave(p_follicle_R,
        units = "cm")
 
 ```
+
+In the two boxplots a significant increase in the number of follicles for both sides for people diagnosed with PCOS.
 
 ## Correlation between BMI and PCOS
 
@@ -175,6 +181,8 @@ ggsave(PCOS_BMI_correlation_box,
 
 ```
 
+A slight difference can be seen between diagnosis and BMI.
+
 ## Correlation between PCOS and endometrium size
 
 ```{r}
@@ -199,6 +207,7 @@ PCOS_endometrium_correlation_box <- body_measurements |>
   theme(title = element_text(size = 8),
         legend.position = "bottom")
 
+
 # Saving the plot as a picture
 ggsave(PCOS_endometrium_correlation_box,
        filename = "../results/05_PCOS_endometrium_correlation_box.png",
@@ -208,6 +217,8 @@ ggsave(PCOS_endometrium_correlation_box,
        units = "cm")
 
 ```
+
+No difference can be seen in the endometrium size and PCIS diagnosis.
 
 ## Correlation between age and cycle stratified for PCOS
 
@@ -233,7 +244,6 @@ age_cycle_plot <- na.omit(body_measurements) |>
   theme(title = element_text(size = 8),
         legend.position = "bottom")
 
-print(age_cycle_plot)
 
 # Saving the plot as a picture
 ggsave(age_cycle_plot,
@@ -245,7 +255,7 @@ ggsave(age_cycle_plot,
 
 ```
 
-Unable to conclude if there is a similarity between people with PCOS, and what their ages is and if their cycle is regular/irregular
+Unable to conclude if there is a similarity between people with PCOS, and what their ages is and if their cycle is regular/irregular.
 
 ## Age groups vs. hair growth stratified for PCOS
 
@@ -253,37 +263,22 @@ Unable to conclude if there is a similarity between people with PCOS, and what t
 # | echo: true
 # | eval: true
 
-# FIX JULIE AND MILLE
-
-body_measurements %>% 
+p_age_hair <- body_measurements |> 
   ggplot(aes(x=hair_growth,
              fill = PCOS_diagnosis))+
-  geom_bar(position = position_dodge())+
+  geom_bar(position = position_dodge2(preserve = "single"), width = 0.8,
+           alpha = 0.8)+
   facet_wrap(~ age_group)+
-  labs(x = "Age groups", 
-       y = "Hair growth (yes/no))",
-       title = "Correlation between age groups and hair growth stratisfied for PCOS diagnosis",
-       color = "PCOS diagnosis") +
-  scale_color_brewer(palette = "Set2") +
+  labs(x = "Hair growth (yes/no)", 
+       y = "Count",
+       title = "Bar plot of hair growth in different age groups stratisfied for PCOS diagnosis",
+       fill = "PCOS diagnosis") +
+  scale_fill_brewer(palette = "Set2") +
   theme_light() + 
   theme(title = element_text(size = 8),
-        legend.position = "bottom")
-
-# age mod hair growth stratisfied for PCOS
-p_age_hair <- body_measurements |> 
-  ggplot(mapping = aes(x = hair_growth)) +
-  geom_bar() +
-  facet_wrap(vars(age_group))+
-  labs(x = "Age groups", 
-       y = "Hair growth (yes/no))",
-       title = "Correlation between age groups and hair growth stratisfied for PCOS diagnosis",
-       color = "PCOS diagnosis") +
-  scale_color_brewer(palette = "Set2") +
-  theme_light() + 
-  theme(title = element_text(size = 8),
-        legend.position = "bottom")
-
-print(p_age_hair)
+        legend.position = "bottom",
+        axis.title.x= element_text(size = 10))
+  
 
 # Saving the plot as a picture
 ggsave(p_age_hair,
@@ -294,32 +289,31 @@ ggsave(p_age_hair,
        units = "cm")
 ```
 
+An increase in hair growth can not be seen in people with PCOS diagnosis. People with no diagnosis see no increase in hair growth.
+
 ## Age groups vs. pimples stratified for PCOS
 
 ```{r}
 # | echo: true
 # | eval: true
 
-# FIX JULIE AND MILLE + tjek mille noter for et sejt plot (PRG values in a box plot stratisfied for PCOS and facet wrap it with something)
-
+#bar plot 
 p_age_pimple <- body_measurements |> 
-  ggplot(mapping = aes(x = age_group,
-                       y = pimples,
-                       color = PCOS_diagnosis)) +
-  geom_point() +
-  geom_jitter(width = 0.2, 
-              alpha = 0.8, 
-              size = 1) +
-  labs(x = "Age groups", 
-       y = "Pimples (yes/no))",
-       title = "Correlation between age groups and experienced pimples",
-       color = "PCOS diagnosis") +
-  scale_color_brewer(palette = "Set2") +
-  theme_light() +
+  ggplot(aes(x=pimples,
+             fill = PCOS_diagnosis))+
+  geom_bar(position = position_dodge2(preserve = "single"), width = 0.8,
+           alpha = 0.8)+
+  facet_wrap(~ age_group)+
+  labs(x = "Pimples (yes/no)", 
+       y = "Count",
+       title = "Bar plot of pimples in different age groups stratisfied for PCOS diagnosis",
+       fill = "PCOS diagnosis") +
+  scale_fill_brewer(palette = "Set2") +
+  theme_light() + 
   theme(title = element_text(size = 8),
-        legend.position = "bottom")
+        legend.position = "bottom",
+        axis.title.x= element_text(size = 10))
 
-print(p_age_pimple)
 
 # Saving the plot as a picture
 ggsave(p_age_pimple,
@@ -329,3 +323,5 @@ ggsave(p_age_pimple,
        width = 20,
        units = "cm")
 ```
+
+People with PCOS diagnosis experience more pimple then those with no PCOS diagnosis.
