@@ -86,8 +86,6 @@ body_measurements <- body_measurements |>
 :::
 :::
 
-## Descriptive analysis
-
 ## Data handling approach (attempt 1)
 
 The raw data we received contained: 541 observation divided into 45 variables
