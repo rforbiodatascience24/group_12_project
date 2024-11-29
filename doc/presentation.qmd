@@ -4,7 +4,7 @@ format:
   revealjs:
      slide-number: true
      embed-resources: true
-     theme: solarized
+     theme: darcula
       
 author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen & Mille Rask Sander"
 ---
@@ -32,9 +32,29 @@ library(tidyverse)
 
 The aim of this study is to examine a data set (found on Kaggle) of patients with and without PCOS. The data set has been made in India and data comes from 10 different hospitals.
 
-## Data handling approach
+## Data handling approach (attempt 1)
 
 The raw data we received contained: 541 observation divided into 45 variables
+
+::: {.slide title="attempt1"}
++---------------------------------------------------------+----------------------------------------------------------------------+
+| 02 Clean data                                           | 03 Augment data                                                      |
++=========================================================+======================================================================+
+| -   ~Fixing random cells and replacing them with NA~    | -   ~Unit changes ( inch to cm)~                                     |
+|                                                         |                                                                      |
+| ```{=html}                                              | -   ~Rounding BMI~                                                   |
+| <!-- -->                                                |                                                                      |
+| ```                                                     | -   ~Grouping & BMI~                                                 |
+| -   ~Rename & factorizing columns~                      |                                                                      |
+|                                                         | -   ~Change Blood type and cycles from numeric values to characters~ |
+| -   ~Split data frame into body and blood measurements~ |                                                                      |
+|                                                         | -   ~Create new column for cycle/ pregnancy stage~                   |
+| -   ~Removed empty column~                              |                                                                      |
+|                                                         | -   ~Merging data frame into one file~                               |
++---------------------------------------------------------+----------------------------------------------------------------------+
+:::
+
+# Attempt 2 on data handling
 
 +-------------------------------------------------------------+--------------------------------------------------------------------------+
 | 02 Clean data                                               | 03 Augment data                                                          |
