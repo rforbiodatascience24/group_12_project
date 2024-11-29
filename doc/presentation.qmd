@@ -103,7 +103,21 @@ her
 
 ## PCA of blood measurements
 
-her
+<div>
+
+```{r Blood measurments PCA, echo=FALSE, out.width='50%'}
+knitr::include_graphics("../results/07_blood_PCA.png")
+```
+
+<div>
+
+```{r Blood measurments rotation matrix, echo=FALSE, out.width='50%'}
+knitr::include_graphics("../results/07_rotation_matrix_blood.png")
+```
+
+</div>
+
+</div>
 
 ## PCA of body measurements
 
