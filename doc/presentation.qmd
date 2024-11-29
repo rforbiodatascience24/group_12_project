@@ -4,7 +4,7 @@ format:
   revealjs:
      slide-number: true
      embed-resources: true
-     theme: solarized
+     theme: sky
       
 author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen & Mille Rask Sander"
 ---
@@ -18,9 +18,19 @@ library(tidyverse)
 
 # Introduction
 
--   PCOS
+## Background
 
--   other stuff
+-   Polycystic ovary syndrome (PCOS) is a syndrome documented in women in their menustruating ages
+
+-   Documented symptoms are often; period pains, irregular periods, ovary related problems and hormone imbalance
+
+-   Patients with PCOS often have problems with pregnancy and potential complication with/in pregnancy
+
+-   However, it is still not verified what the cause of PCOS is.
+
+## Aim
+
+The aim of this study is to examine a dataset (found on Kaggle) of patients with and without PCOS. The data set has been made in India and data comes from 10 different hospitals.
 
 # Cleaning
 
