@@ -1,5 +1,5 @@
 ---
-title: "PCOS Analysis"
+title: "Group 12 - PCOS Analysis"
 format:
   revealjs:
      slide-number: true
@@ -168,7 +168,7 @@ Slight divergance of PCOS and non-PCOS in body measurements.
 </div>
 
 |                                           |                                                          |
-|-------------------------------------------|----------------------------------------------------------|
+|-------------------------------|-----------------------------------------|
 | ![](images/07_body_PCA.png){width="13cm"} | ![](images/07_rotation_matrix_body-01.png){width="13cm"} |
 :::
 
@@ -191,7 +191,7 @@ No diverging of PCOS diagnosed individuals compared to non-PCOS diagnosed indivi
 :::
 
 |                                            |                                                              |
-|--------------------------------------------|--------------------------------------------------------------|
+|------------------------------|------------------------------------------|
 | ![](images/07_blood_PCA.png){width="12cm"} | ![](images/07_explained_variance_blood-01.png){width="14cm"} |
 
 </div>
