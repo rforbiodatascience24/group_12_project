@@ -360,48 +360,34 @@ display: none;
 <pre class="r"><code># | echo: true
 # | eval: true
 
-library(&quot;tidyverse&quot;)
-library(&quot;dplyr&quot;)</code></pre>
+library(tidyverse)
+library(dplyr)</code></pre>
 </div>
 <div id="load-data" class="section level2">
 <h2>Load data</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-#Load the file
+# Load the file
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 29
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr  (7): pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimples, exercise
-## dbl (22): patient_ID, PCOS_diagnosis, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_...
+## chr  (8): PCOS_diagnosis, pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimples, exercise
+## dbl (21): patient_ID, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_RI, period_l...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_blood_measurements.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 14
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## dbl (14): patient_ID, PCOS_diagnosis, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, ...
+## chr  (1): PCOS_diagnosis
+## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitamin...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div id="augmenting-data" class="section level1">
-<h1>Augmenting data</h1>
-<pre class="r"><code># | echo: true
-# | eval: true
-
-# Making PCOS diagnosis into yes and no
-body_measurements &lt;- body_measurements |&gt; 
-  mutate(PCOS_diagnosis = factor(PCOS_diagnosis,
-                                 levels = c(0, 1),
-                                 labels =c(&quot;No&quot;, &quot;Yes&quot;))) 
-
-blood_measurements &lt;- blood_measurements |&gt; 
-  mutate(PCOS_diagnosis = factor(PCOS_diagnosis,
-                                 levels = c(0, 1),
-                                 labels = c(&quot;No&quot;, &quot;Yes&quot;)))</code></pre>
 <div id="unit-changes" class="section level2">
 <h2>Unit changes</h2>
 <pre class="r"><code># | echo: true
@@ -418,7 +404,7 @@ body_measurements &lt;- body_measurements |&gt;
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# round of BMI + categories
+# Rounding of BMI and dividing into categories
 body_measurements &lt;- body_measurements |&gt;
   mutate(BMI = round(BMI, 1)) |&gt; 
   mutate(BMI_class = case_when(
@@ -435,7 +421,11 @@ body_measurements &lt;- body_measurements |&gt;
 </div>
 <div id="grouping-ages" class="section level2">
 <h2>Grouping ages</h2>
-<pre class="r"><code>body_measurements &lt;- body_measurements |&gt;
+<pre class="r"><code># | echo: true
+# | eval: true
+
+# Grouping into different age groups
+body_measurements &lt;- body_measurements |&gt;
   mutate(age_group = case_when(
     age &lt; 20 ~ &quot;]20&quot;,
     age &gt;= 20 &amp; age &lt; 25 ~ &quot;[20;25[&quot;,
@@ -454,8 +444,8 @@ body_measurements &lt;- body_measurements |&gt;
                                         &quot;[45&quot;))) |&gt;
   relocate(age_group, .after = age)</code></pre>
 </div>
-<div id="change-blood-type-numbers-into-blood-indicators" class="section level2">
-<h2>Change blood type numbers into blood indicators</h2>
+<div id="change-blood-type" class="section level2">
+<h2>Change blood type</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
@@ -494,10 +484,13 @@ body_measurements &lt;- body_measurements |&gt;
                            levels = c(&quot;irregular&quot;, 
                                       &quot;regular&quot;)))</code></pre>
 </div>
-<div id="creating-a-cycle-or-pregnancy-stage-column" class="section level2">
-<h2>Creating a cycle or pregnancy stage column</h2>
-<pre class="r"><code># Create a new column &#39;cycle_or_pregnancy_stage&#39; based on PRG levels
-blood_measurements &lt;- blood_measurements %&gt;%
+<div id="creating-a-cyclepregnancy-stage-column" class="section level2">
+<h2>Creating a cycle/pregnancy stage column</h2>
+<pre class="r"><code># | echo: true
+# | eval: true
+
+# create column with cycle/pregnancy stages  
+blood_measurements &lt;- blood_measurements |&gt;
   mutate(cycle_or_pregnancy_stage = case_when(
     PRG &lt;= 0.7 ~ &quot;Follicular stage&quot;,   
     PRG &gt; 0.7 &amp; PRG &lt;= 2 ~ &quot;Likely follicular stage&quot;,                     
@@ -519,24 +512,27 @@ blood_measurements &lt;- blood_measurements %&gt;%
                                                      &quot;Third trimester pregnancy&quot;,
                                                      &quot;Unknown&quot;)))
 
-# View the first few rows to check the new column
+# QC
 head(blood_measurements)</code></pre>
 </div>
-<div id="save-tsv-files" class="section level2">
-<h2>Save tsv files</h2>
-<pre class="r"><code># Write the data into data files and joining the dataframes (for educational purposes)
+<div id="save-to-tsv-files" class="section level2">
+<h2>Save to tsv files</h2>
+<pre class="r"><code># | echo: true
+# | eval: true
+
+# write data into data files
 write_tsv(x = blood_measurements,
           file = &quot;../data/PCOS_blood_measurements_aug.tsv&quot;)
 write_tsv(x = body_measurements,
           file = &quot;../data/PCOS_body_measurements_aug.tsv&quot;)
 
+# joining the dataframes (for educational purposes)
 PCOS_merged &lt;- inner_join(x = body_measurements,
                           y = blood_measurements,
                           by = join_by(patient_ID, 
                                        PCOS_diagnosis))
 write_tsv(x = PCOS_merged,
           file = &quot;../data/PCOS_merged.tsv&quot;)</code></pre>
-</div>
 </div>
 
 

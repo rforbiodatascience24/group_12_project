@@ -355,8 +355,6 @@ display: none;
 </div>
 
 
-<div id="clean-data" class="section level1">
-<h1>Clean data</h1>
 <div id="clear-environment" class="section level2">
 <h2>Clear environment</h2>
 <pre class="r"><code># | echo: true
@@ -369,7 +367,7 @@ rm(list = ls())</code></pre>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-library(&quot;tidyverse&quot;)</code></pre>
+library(tidyverse)</code></pre>
 </div>
 <div id="load-data" class="section level2">
 <h2>Load data</h2>
@@ -379,18 +377,16 @@ library(&quot;tidyverse&quot;)</code></pre>
 # Load the file
 PCOS &lt;- read_tsv(file = &quot;../data/PCOS_data_without_infertility.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 45
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (3): II    beta-HCG(mIU/mL), AMH(ng/mL), ...45
-## dbl (42): Sl. No, Patient File No., PCOS (Y/N), Age (yrs), Weight (Kg), Height(Cm), BMI, Blood Group, Pul...
+## dbl (42): Sl. No, Patient File No., PCOS (Y/N), Age (yrs), Weight (Kg), Height(Cm), BMI, Blood Group,...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div id="data-wrangling" class="section level2">
-<h2>Data wrangling</h2>
-<div id="column-removal-of-non-relevant-data-columns" class="section level3">
-<h3>Column removal of non relevant data columns</h3>
+<div id="data-wrangling---column-removal-of-non-relevant-data-columns" class="section level2">
+<h2>Data wrangling - Column removal of non relevant data columns</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
@@ -404,11 +400,12 @@ PCOS &lt;- PCOS |&gt;
 #QC
 print(PCOS)</code></pre>
 </div>
-<div id="rename-columns" class="section level3">
-<h3>Rename columns</h3>
+<div id="rename-columns" class="section level2">
+<h2>Rename columns</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
+#renaming all columns
 PCOS &lt;- PCOS |&gt; 
   rename(&quot;patient_ID&quot; = &quot;Patient File No.&quot;,
          &quot;PCOS_diagnosis&quot; = &quot;PCOS (Y/N)&quot;,
@@ -455,12 +452,15 @@ PCOS &lt;- PCOS |&gt;
 #QC
 print(PCOS)</code></pre>
 </div>
-<div id="further-cleaning-of-data" class="section level3">
-<h3>Further cleaning of data</h3>
+<div id="correcting-cells" class="section level2">
+<h2>Correcting cells</h2>
+<p>Two cells were identified as inconsistent with the format - a
+misplaced period in betaHCG2 and a character in numeric column AMH.
+These will be changed to NA</p>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-#correct misplaced period from betaHCG column and change to NA and remove misplaced character and replace with NA, additionally create the columns betaHCG_2 and AMH into dbl insted of chr:
+# Change values to NA
 PCOS &lt;- PCOS |&gt; 
   mutate(betaHCG_2 = sub(&quot;\\.$&quot;, 
                          NA, 
@@ -477,11 +477,19 @@ PCOS &lt;- PCOS |&gt;
 # QC
 print(PCOS)
 
+# Checking for NA
 PCOS |&gt; 
   summarise(has_NA = any(is.na(AMH))) |&gt; 
   pull(has_NA)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code># Factorize columns
+</div>
+<div id="factorising-column" class="section level2">
+<h2>Factorising column</h2>
+<pre class="r"><code># | echo: true
+# | eval: true
+
+
+# Factorise columns
 PCOS &lt;- PCOS |&gt; 
   mutate(pregnant = factor(pregnant, 
                            levels = c(0,
@@ -518,8 +526,11 @@ PCOS &lt;- PCOS |&gt;
                                       1), 
                            labels = c(&quot;No&quot;, 
                                       &quot;Yes&quot;)),
+         PCOS_diagnosis = factor(PCOS_diagnosis,
+                                 levels = c(0, 1),
+                                 labels = c(&quot;No&quot;, &quot;Yes&quot;)), 
+
          )</code></pre>
-</div>
 </div>
 <div id="saving-and-splitting-the-data" class="section level2">
 <h2>Saving and Splitting the Data</h2>
@@ -529,6 +540,7 @@ PCOS &lt;- PCOS |&gt;
 # Write the updated dataset into a new data file
 write_tsv(x = PCOS,
           file = &quot;../data/PCOS_clean.tsv&quot;)
+
 # Check colnames of original dataset
 colnames(PCOS)</code></pre>
 <pre><code>##  [1] &quot;patient_ID&quot;      &quot;PCOS_diagnosis&quot;  &quot;age&quot;             &quot;weight&quot;          &quot;height&quot;         
@@ -548,27 +560,28 @@ blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_clean.tsv&quot;,
                                               15:19,
                                               23:28))</code></pre>
 <pre><code>## Rows: 541 Columns: 14
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## dbl (14): patient_ID, PCOS_diagnosis, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, ...
+## chr  (1): PCOS_diagnosis
+## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitamin...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code># View the column names of the selected data
 colnames(blood_measurements)</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;     &quot;PCOS_diagnosis&quot; &quot;hemaglobin&quot;     &quot;betaHCG_1&quot;      &quot;betaHCG_2&quot;      &quot;FSH&quot;           
-##  [7] &quot;LH&quot;             &quot;FSH_LH_ratio&quot;   &quot;TSH&quot;            &quot;AMH&quot;            &quot;PRL&quot;            &quot;vitaminD3&quot;     
-## [13] &quot;PRG&quot;            &quot;RBS&quot;</code></pre>
+<pre><code>##  [1] &quot;patient_ID&quot;     &quot;PCOS_diagnosis&quot; &quot;hemaglobin&quot;     &quot;betaHCG_1&quot;      &quot;betaHCG_2&quot;     
+##  [6] &quot;FSH&quot;            &quot;LH&quot;             &quot;FSH_LH_ratio&quot;   &quot;TSH&quot;            &quot;AMH&quot;           
+## [11] &quot;PRL&quot;            &quot;vitaminD3&quot;      &quot;PRG&quot;            &quot;RBS&quot;</code></pre>
 <pre class="r"><code># Select body measurements using column names (excluding blood measurements)
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_clean.tsv&quot;,
                               col_select = -c(10,
                                               15:19,
                                               23:28))</code></pre>
 <pre><code>## Rows: 541 Columns: 29
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr  (7): pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimples, exercise
-## dbl (22): patient_ID, PCOS_diagnosis, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_...
+## chr  (8): PCOS_diagnosis, pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimples, exercise
+## dbl (21): patient_ID, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_RI, period_l...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -587,7 +600,6 @@ write_tsv(x = body_measurements,
           file = &quot;../data/PCOS_body_measurements.tsv&quot;)
 
 # Note: Patient No. and PCOS Y/N in both datasets!</code></pre>
-</div>
 </div>
 
 

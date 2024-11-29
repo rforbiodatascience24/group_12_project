@@ -124,7 +124,7 @@ PCOS |>
 :::
 :::
 
-## Body measurement data analysis
+## Body measurement - Follicle number
 
 ::: {style=".smaller, font-size: 0.8em"}
 <div>
@@ -161,7 +161,6 @@ Follicle number and PCOS diagnosis:
 <div>
 
 ::: {style="font-size: 0.8em"}
-
 <div>
 
 text1
@@ -184,15 +183,15 @@ text1
 ::: {style=".smaller"}
 ![](../results/07_blood_PCA.png){fig-align="center"}
 
-Here we see....
+No diverging of PCOS diagnosed individuals compared to non-PCOS diagnosed individuals.
 :::
 
 ## PCA of body measurements
 
 ::: {style=".smaller"}
+::: {width="50%"}
 ![](../results/07_body_PCA.png){fig-align="center"}
-
-Here we see....
+:::
 :::
 
 ## Discussion
