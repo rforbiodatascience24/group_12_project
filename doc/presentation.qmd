@@ -91,14 +91,13 @@ body_measurements <- body_measurements |>
 
 ## Descriptive analysis of data
 
-::: columns
+::: {.columns style=".smaller"}
 ### Information on the PCOS dataset:
 
-::: {.column width="50%" style=".smaller"}
+::: {.column width="50%" style=".smaller, font-size: 0.8em"}
 Dimensions:
 
 ``` r
-::: {.r}
 PCOS <- read_tsv(file = "../data/PCOS_merged.tsv")
 
 PCOS_dim <- PCOS |>
@@ -106,21 +105,18 @@ PCOS_dim <- PCOS |>
   tibble()|>
   rename("PCOS dimensions" = "dim(PCOS)")|>
   print()
-:::
 ```
 
 Count of how many have PCOS:
 
 ``` {.r style=".smaller"}
-::: {.r}
 PCOS |> 
   count(PCOS_diagnosis) |>
   as.tibble() |>
   print()
-:::
 ```
 
-::: {.column width="50%" style=".smaller"}
+::: {.column width="50%" style=".smaller, font-size: 0.8em"}
 Plot of the ages:
 
 ![Age plot](../results/04_age_hist.png)
