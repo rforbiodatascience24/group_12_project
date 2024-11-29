@@ -30,6 +30,6 @@ rmarkdown::render(input = '07_PCA.qmd',
                   output_dir = '../results')
 
 
-rmarkdown::render(input = 'presentation.qmd',
-                  output_dir = '../doc')
+#rmarkdown::render(input = 'presentation.qmd',
+                  #output_dir = '../doc')
 ```

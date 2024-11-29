@@ -12,7 +12,7 @@
 <meta name="author" content="Group12" />
 
 
-<title>02_clean</title>
+<title>06_analysis_2</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -349,7 +349,7 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">02_clean</h1>
+<h1 class="title toc-ignore">06_analysis_2</h1>
 <h4 class="author">Group12</h4>
 
 </div>
@@ -357,249 +357,159 @@ display: none;
 
 <div id="clear-environment" class="section level2">
 <h2>Clear environment</h2>
-<pre class="r"><code># | echo: true
-# | eval: true
+<pre class="r"><code># | echo: true 
+# | eval: true 
 
 rm(list = ls())</code></pre>
 </div>
 <div id="load-libraries" class="section level2">
 <h2>Load libraries</h2>
-<pre class="r"><code># | echo: true
+<pre class="r"><code># | echo: true 
 # | eval: true
 
-library(tidyverse)</code></pre>
+library(tidyverse)
+library(reshape2)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;reshape2&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     smiths</code></pre>
+<pre class="r"><code>library(corrr)</code></pre>
 </div>
 <div id="load-data" class="section level2">
 <h2>Load data</h2>
-<pre class="r"><code># | echo: true
-# | eval: true
+<pre class="r"><code># | echo: true 
+# | eval: true  
 
-# Load the file
-PCOS &lt;- read_tsv(file = &quot;../data/PCOS_data_without_infertility.tsv&quot;)</code></pre>
-<pre><code>## Rows: 541 Columns: 45
+blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_blood_measurements_aug.tsv&quot;) </code></pre>
+<pre><code>## Rows: 541 Columns: 15
 ## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr  (3): II    beta-HCG(mIU/mL), AMH(ng/mL), ...45
-## dbl (42): Sl. No, Patient File No., PCOS (Y/N), Age (yrs), Weight (Kg), Height(Cm), BMI, Blood Group,...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div id="data-wrangling---column-removal-of-non-relevant-data-columns" class="section level2">
-<h2>Data wrangling - Column removal of non relevant data columns</h2>
-<pre class="r"><code># | echo: true
-# | eval: true
-
-#Removal of columns
-PCOS &lt;- PCOS |&gt;
-  select(-&quot;Sl. No&quot;) |&gt; 
-  select(-&quot;Marraige Status (Yrs)&quot;) |&gt; 
-  select(-&quot;Fast food (Y/N)&quot;) |&gt; 
-  select(-&quot;...45&quot;)
-
-#QC
-print(PCOS)</code></pre>
-</div>
-<div id="rename-columns" class="section level2">
-<h2>Rename columns</h2>
-<pre class="r"><code># | echo: true
-# | eval: true
-
-#renaming all columns
-PCOS &lt;- PCOS |&gt; 
-  rename(&quot;patient_ID&quot; = &quot;Patient File No.&quot;,
-         &quot;PCOS_diagnosis&quot; = &quot;PCOS (Y/N)&quot;,
-         &quot;age&quot; = &quot;Age (yrs)&quot;,
-         &quot;weight&quot; = &quot;Weight (Kg)&quot;,
-         &quot;height&quot; = &quot;Height(Cm)&quot;,
-         &quot;blood_type&quot; = &quot;Blood Group&quot;,
-         &quot;pulse&quot; = &quot;Pulse rate(bpm)&quot;,
-         &quot;breaths_pr_min&quot; = &quot;RR (breaths/min)&quot;,
-         &quot;hemaglobin&quot; = &quot;Hb(g/dl)&quot;,
-         &quot;cycle_RI&quot; = &quot;Cycle(R/I)&quot;,
-         &quot;period_length&quot; = &quot;Cycle length(days)&quot;,
-         &quot;pregnant&quot; = &quot;Pregnant(Y/N)&quot;,
-         &quot;abortions&quot; = &quot;No. of aborptions&quot;,
-         &quot;betaHCG_1&quot; = &quot;I   beta-HCG(mIU/mL)&quot;,
-         &quot;betaHCG_2&quot; = &quot;II    beta-HCG(mIU/mL)&quot;,
-         &quot;FSH&quot; = &quot;FSH(mIU/mL)&quot;,
-         &quot;LH&quot; = &quot;LH(mIU/mL)&quot;,
-         &quot;FSH_LH_ratio&quot; = &quot;FSH/LH&quot;,
-         &quot;hip&quot; = &quot;Hip(inch)&quot;,
-         &quot;waist&quot; = &quot;Waist(inch)&quot;,
-         &quot;waist_hip_ratio&quot; = &quot;Waist:Hip Ratio&quot;,
-         &quot;TSH&quot; = &quot;TSH (mIU/L)&quot;,
-         &quot;AMH&quot; = &quot;AMH(ng/mL)&quot;,
-         &quot;PRL&quot; = &quot;PRL(ng/mL)&quot;,
-         &quot;vitaminD3&quot; = &quot;Vit D3 (ng/mL)&quot;,
-         &quot;PRG&quot; = &quot;PRG(ng/mL)&quot;,
-         &quot;RBS&quot; = &quot;RBS(mg/dl)&quot;,
-         &quot;weight_gain&quot; = &quot;Weight gain(Y/N)&quot;,
-         &quot;hair_growth&quot; = &quot;hair growth(Y/N)&quot;,
-         &quot;darker_skin&quot; = &quot;Skin darkening (Y/N)&quot;,
-         &quot;hair_loss&quot; = &quot;Hair loss(Y/N)&quot;,
-         &quot;pimples&quot; = &quot;Pimples(Y/N)&quot;,
-         &quot;exercise&quot; = &quot;Reg.Exercise(Y/N)&quot;,
-         &quot;BP_systolic&quot; = &quot;BP _Systolic (mmHg)&quot;,
-         &quot;BP_diastolic&quot; = &quot;BP _Diastolic (mmHg)&quot;,
-         &quot;follicle_no_R&quot; = &quot;Follicle No. (L)&quot;,
-         &quot;follicle_no_L&quot; = &quot;Follicle No. (R)&quot;,
-         &quot;avg_fsize_L&quot; = &quot;Avg. F size (L) (mm)&quot;,
-         &quot;avg_fsize_R&quot; = &quot;Avg. F size (R) (mm)&quot;,
-         &quot;endometrium&quot; = &quot;Endometrium (mm)&quot;
-         ) 
-
-#QC
-print(PCOS)</code></pre>
-</div>
-<div id="correcting-cells" class="section level2">
-<h2>Correcting cells</h2>
-<p>Two cells were identified as inconsistent with the format - a
-misplaced period in betaHCG2 and a character in numeric column AMH.
-These will be changed to NA</p>
-<pre class="r"><code># | echo: true
-# | eval: true
-
-# Change values to NA
-PCOS &lt;- PCOS |&gt; 
-  mutate(betaHCG_2 = sub(&quot;\\.$&quot;, 
-                         NA, 
-                         betaHCG_2),
-  AMH = ifelse(substr(AMH, 
-                      1, 
-                      1) %in% as.character(0:9), 
-               AMH, 
-               NA)) |&gt;  
-  mutate(betaHCG_2 = as.numeric(betaHCG_2),
-         AMH = as.numeric(AMH))
-
-
-# QC
-print(PCOS)
-
-# Checking for NA
-PCOS |&gt; 
-  summarise(has_NA = any(is.na(AMH))) |&gt; 
-  pull(has_NA)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-</div>
-<div id="factorising-column" class="section level2">
-<h2>Factorising column</h2>
-<pre class="r"><code># | echo: true
-# | eval: true
-
-
-# Factorise columns
-PCOS &lt;- PCOS |&gt; 
-  mutate(pregnant = factor(pregnant, 
-                           levels = c(0,
-                                      1), 
-                           labels = c(&quot;No&quot;,
-                                      &quot;Yes&quot;)),
-         weight_gain = factor(weight_gain, 
-                              levels = c(0,
-                                         1), 
-                              labels = c(&quot;No&quot;, 
-                                         &quot;Yes&quot;)),
-         hair_growth = factor(hair_growth, 
-                              levels = c(0,
-                                         1), 
-                              labels = c(&quot;No&quot;, 
-                                         &quot;Yes&quot;)),
-         hair_loss = factor(hair_loss, 
-                            levels = c(0,
-                                       1), 
-                            labels = c(&quot;No&quot;, 
-                                       &quot;Yes&quot;)),
-         darker_skin = factor(darker_skin, 
-                              levels = c(0,
-                                         1), 
-                              labels = c(&quot;No&quot;,
-                                         &quot;Yes&quot;)),
-         pimples = factor(pimples, 
-                          levels = c(0,
-                                     1), 
-                          labels = c(&quot;No&quot;, 
-                                     &quot;Yes&quot;)),
-         exercise = factor(exercise, 
-                           levels = c(0,
-                                      1), 
-                           labels = c(&quot;No&quot;, 
-                                      &quot;Yes&quot;)),
-         PCOS_diagnosis = factor(PCOS_diagnosis,
-                                 levels = c(0, 1),
-                                 labels = c(&quot;No&quot;, &quot;Yes&quot;)), 
-
-         )</code></pre>
-</div>
-<div id="saving-and-splitting-the-data" class="section level2">
-<h2>Saving and Splitting the Data</h2>
-<pre class="r"><code># | echo: true
-# | eval: true
-
-# Write the updated dataset into a new data file
-write_tsv(x = PCOS,
-          file = &quot;../data/PCOS_clean.tsv&quot;)
-
-# Check colnames of original dataset
-colnames(PCOS)</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;      &quot;PCOS_diagnosis&quot;  &quot;age&quot;             &quot;weight&quot;          &quot;height&quot;         
-##  [6] &quot;BMI&quot;             &quot;blood_type&quot;      &quot;pulse&quot;           &quot;breaths_pr_min&quot;  &quot;hemaglobin&quot;     
-## [11] &quot;cycle_RI&quot;        &quot;period_length&quot;   &quot;pregnant&quot;        &quot;abortions&quot;       &quot;betaHCG_1&quot;      
-## [16] &quot;betaHCG_2&quot;       &quot;FSH&quot;             &quot;LH&quot;              &quot;FSH_LH_ratio&quot;    &quot;hip&quot;            
-## [21] &quot;waist&quot;           &quot;waist_hip_ratio&quot; &quot;TSH&quot;             &quot;AMH&quot;             &quot;PRL&quot;            
-## [26] &quot;vitaminD3&quot;       &quot;PRG&quot;             &quot;RBS&quot;             &quot;weight_gain&quot;     &quot;hair_growth&quot;    
-## [31] &quot;darker_skin&quot;     &quot;hair_loss&quot;       &quot;pimples&quot;         &quot;exercise&quot;        &quot;BP_systolic&quot;    
-## [36] &quot;BP_diastolic&quot;    &quot;follicle_no_R&quot;   &quot;follicle_no_L&quot;   &quot;avg_fsize_L&quot;     &quot;avg_fsize_R&quot;    
-## [41] &quot;endometrium&quot;</code></pre>
-<pre class="r"><code>## Read the data into separate files
-# Load the dataset, selecting columns from defined ranges 
-blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_clean.tsv&quot;,
-                               col_select = c(1:2,
-                                              10,
-                                              15:19,
-                                              23:28))</code></pre>
-<pre><code>## Rows: 541 Columns: 14
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;\t&quot;
-## chr  (1): PCOS_diagnosis
+## chr  (2): PCOS_diagnosis, cycle_or_pregnancy_stage
 ## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitamin...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code># View the column names of the selected data
-colnames(blood_measurements)</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;     &quot;PCOS_diagnosis&quot; &quot;hemaglobin&quot;     &quot;betaHCG_1&quot;      &quot;betaHCG_2&quot;     
-##  [6] &quot;FSH&quot;            &quot;LH&quot;             &quot;FSH_LH_ratio&quot;   &quot;TSH&quot;            &quot;AMH&quot;           
-## [11] &quot;PRL&quot;            &quot;vitaminD3&quot;      &quot;PRG&quot;            &quot;RBS&quot;</code></pre>
-<pre class="r"><code># Select body measurements using column names (excluding blood measurements)
-body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_clean.tsv&quot;,
-                              col_select = -c(10,
-                                              15:19,
-                                              23:28))</code></pre>
-<pre><code>## Rows: 541 Columns: 29
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;\t&quot;
-## chr  (8): PCOS_diagnosis, pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimples, exercise
-## dbl (21): patient_ID, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_RI, period_l...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code># View the column names of the selected data
-colnames(body_measurements)</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;      &quot;PCOS_diagnosis&quot;  &quot;age&quot;             &quot;weight&quot;          &quot;height&quot;         
-##  [6] &quot;BMI&quot;             &quot;blood_type&quot;      &quot;pulse&quot;           &quot;breaths_pr_min&quot;  &quot;cycle_RI&quot;       
-## [11] &quot;period_length&quot;   &quot;pregnant&quot;        &quot;abortions&quot;       &quot;hip&quot;             &quot;waist&quot;          
-## [16] &quot;waist_hip_ratio&quot; &quot;weight_gain&quot;     &quot;hair_growth&quot;     &quot;darker_skin&quot;     &quot;hair_loss&quot;      
-## [21] &quot;pimples&quot;         &quot;exercise&quot;        &quot;BP_systolic&quot;     &quot;BP_diastolic&quot;    &quot;follicle_no_R&quot;  
-## [26] &quot;follicle_no_L&quot;   &quot;avg_fsize_L&quot;     &quot;avg_fsize_R&quot;     &quot;endometrium&quot;</code></pre>
-<pre class="r"><code># Write the data into two data files
-write_tsv(x = blood_measurements,
-          file = &quot;../data/PCOS_blood_measurements.tsv&quot;)
-write_tsv(x = body_measurements,
-          file = &quot;../data/PCOS_body_measurements.tsv&quot;)
+</div>
+<div id="blood-data-analysis" class="section level1">
+<h1>Blood data analysis</h1>
+<p>First part of this project, is to see if there is a correlation
+between patients with PCOS using the data from the blood samples.</p>
+<div id="boxplot-of-pcos-diagnosis-of-anti-müllerin-hormone-amh" class="section level2">
+<h2>Boxplot of PCOS diagnosis of Anti-Müllerin hormone (AMH)</h2>
+<pre class="r"><code># | echo: true 
+# | eval: true 
 
-# Note: Patient No. and PCOS Y/N in both datasets!</code></pre>
+#Creating boxplot 
+box_AMH &lt;- blood_measurements |&gt; 
+  ggplot(mapping = aes(x = PCOS_diagnosis,
+                       y = AMH,
+                       fill = PCOS_diagnosis)) + 
+  geom_boxplot(outliers = FALSE)+
+  labs(x = &quot;PCOS diagnosis&quot;, 
+       y = &quot;AMH level&quot;,
+       title = &quot;Boxplot of AMH level and PCOS diagnosis&quot;,
+       fill = &quot;PCOS diagnosis&quot;)+
+  scale_fill_brewer(palette = &quot;Set2&quot;)+
+  theme_light()+
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;)
+
+# Saving plot
+ggsave(box_AMH,
+       filename = &quot;../results/06_box_AMH.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)</code></pre>
+<pre><code>## Warning: Removed 1 row containing non-finite outside the scale range (`stat_boxplot()`).</code></pre>
+<p>The box plot shows elevated AMH level for people with PCOS diagnosis
+compared to no diagnosis. One extreme outlier from “yes PCOS diagnosis”
+has been removed to show the boxplots better.</p>
+</div>
+<div id="densityplot-of-prolactin-prl" class="section level2">
+<h2>Densityplot of prolactin (PRL)</h2>
+<pre class="r"><code># | echo: true 
+# | eval: true  
+
+# Creating density plot
+PRL_density &lt;- blood_measurements |&gt; 
+  ggplot(mapping = aes(x = PCOS_diagnosis, y=PRL, fill = PCOS_diagnosis)) + 
+  geom_violin(alpha = 0.90) +
+  geom_point(position = &quot;jitter&quot;,
+             alpha = 0.2) +
+  labs(x = &quot;PCOS diagnosis (&quot;, 
+       y = &quot;Density&quot;,
+       title = &quot;Density of PCOS patients with PRL values&quot;,
+       fill = &quot;PCOS diagnosis&quot;) +
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  theme_light() +
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;)
+
+# saving the plot
+ggsave(PRL_density,
+       filename = &quot;../results/06_PRL_density.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)</code></pre>
+<p>The density plot shows a similar distribution of PRL values and PCOS
+diagnosis.</p>
+</div>
+<div id="correlation-plot-of-the-variables-from-the-blood-measurements" class="section level2">
+<h2>Correlation plot of the variables from the blood measurements</h2>
+<pre class="r"><code># Make a correlation table of the variables
+cor_table &lt;- blood_measurements |&gt;  
+  select(hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, TSH, AMH, PRL, vitaminD3, PRG, RBS)|&gt; 
+  correlate(diagonal = 1)</code></pre>
+<pre><code>## Correlation computed with
+## • Method: &#39;pearson&#39;
+## • Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
+<pre class="r"><code>melted_table &lt;- cor_table |&gt; 
+  pivot_longer(-term, names_to = &quot;variable&quot;, values_to = &quot;value&quot;)
+
+# Order the axis
+melted_table &lt;- melted_table |&gt; 
+  mutate(
+    term = factor(term, levels = cor_table$term),
+    variable = factor(variable, levels = cor_table$term)
+  )
+
+cor_blood_plot &lt;- ggplot(data = melted_table, 
+       mapping = aes(x = term, 
+                     y = variable, 
+                     fill = value)) + 
+  geom_tile() +
+  scale_y_discrete(limits = rev(levels(melted_table$variable))) +
+  theme_light() + 
+ theme(axis.text.x = element_text(angle = 45, 
+                                  vjust = 1, 
+                                  size = 7, 
+                                  hjust = 1),
+       axis.text.y = element_text(size = 7),
+       legend.position = &quot;bottom&quot;)+
+ coord_fixed()+
+  scale_fill_gradient2(low = &quot;#1B9E77&quot;, 
+                       high = &quot;#D95F02&quot;, 
+                       mid = &quot;white&quot;, 
+                       midpoint = 0, 
+                       limit = c(-1,1), 
+                       space = &quot;Lab&quot;)+
+  labs(x = &quot;&quot;, 
+       y = &quot;&quot;, 
+       fill = &quot;Correlation&quot;,
+       title = &quot;Correlationplot of the blood values&quot;)+
+  theme(title = element_text(size = 8))
+
+
+ggsave(cor_blood_plot,
+       filename = &quot;../results/06_cor_blood_plot.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)</code></pre>
+</div>
 </div>
 
 

@@ -367,8 +367,7 @@ rm(list = ls())</code></pre>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# load libraries
-library(&quot;tidyverse&quot;)
+library(tidyverse)
 library(RColorBrewer)
 library(ggplot2)
 library(ggridges)</code></pre>
@@ -381,59 +380,59 @@ library(ggridges)</code></pre>
 #Load the file
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements_aug.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 31
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_growth,...
-## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, wai...
+## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_gro...
+## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip,...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_blood_measurements_aug.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 15
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (2): PCOS_diagnosis, cycle_or_pregnancy_stage
-## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitaminD3, ...
+## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitamin...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>PCOS &lt;- read_tsv(file = &quot;../data/PCOS_merged.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 44
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr (13): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_growth,...
-## dbl (31): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, wai...
+## chr (13): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_gro...
+## dbl (31): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip,...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 <div id="data-statistics" class="section level2">
 <h2>Data statistics</h2>
-<p>Checking dimensions of metadata</p>
+<p>Checking dimensions of metadata tible</p>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# cheking the dimensions of the body measurements
+# Cheking the dimensions of the body measurements
 body_measurements_dim &lt;- body_measurements |&gt;
   dim() |&gt;
   tibble()|&gt;
   rename(&quot;Body measurments dimensions&quot; = &quot;dim(body_measurements)&quot;)|&gt;
   print()
 
-# cheking the dimensions of the blood measurements
+# Cheking the dimensions of the blood measurements
 blood_measurements_dim &lt;- blood_measurements |&gt;
   dim() |&gt;
   tibble()|&gt;
   rename(&quot;Blood measurments dimensions&quot; = &quot;dim(blood_measurements)&quot;)|&gt;
   print()
   
-# cheking the dimensions of the blood measurements
+# Cheking the dimensions of the blood measurements
 PCOS_dim &lt;- PCOS |&gt;
   dim() |&gt;
   tibble()|&gt;
   rename(&quot;PCOS dimensions&quot; = &quot;dim(PCOS)&quot;)|&gt;
   print()</code></pre>
-<p>Checking column names and patients with and without PCOS
+<p>Checking column names and count patients with and without PCOS
 diagnosis</p>
 <pre class="r"><code># | echo: true
 # | eval: true
@@ -459,36 +458,22 @@ PCOS |&gt;
 <pre class="r"><code># counting patients with (yes) and without (no PCOS diagnosis)
 PCOS |&gt; 
   count(PCOS_diagnosis)</code></pre>
-<p>There are 364 patients who have not been diagnosed with PCOS and 177
-who have been diagnosed with PCOS.</p>
+<p>There are 364 patients without PCOS diagnosis and 177 who have been
+diagnosed with PCOS. There is an over representation of people without
+the diagnosis this will effects the results of the analysis, but this
+will not be taken into account.</p>
+<div id="count-of-distribution-in-cycle-or-pregnancy-stages" class="section level3">
+<h3>Count of distribution in cycle or pregnancy stages</h3>
+<pre class="r"><code># | echo: true
+# | eval: true   
+blood_measurements |&gt;    
+  count(cycle_or_pregnancy_stage)</code></pre>
+<p>The cycle or pregnancy stage groups created earlier have a very
+skewed distribution between the groups.</p>
+</div>
 </div>
 <div id="plotting-distributions-of-data" class="section level2">
 <h2>Plotting distributions of data</h2>
-<div id="density-plot-of-period-length" class="section level3">
-<h3>Density plot of period length</h3>
-<pre class="r"><code># | echo: true
-# | eval: true
-
-
-period_plot &lt;- body_measurements |&gt; 
-  ggplot(mapping = aes(x = period_length, 
-                       fill = PCOS_diagnosis)) + 
-  geom_density(alpha = 0.45) +
-  labs(x = &quot;Period length (days)&quot;, 
-       y = &quot;Density&quot;,
-       title = &quot;Density plot of period lengths&quot;,
-       fill = &quot;PCOS diagnosis&quot;) +
-  scale_fill_brewer(palette = &quot;Set2&quot;) +
-  theme_light()
-
-# Saving the plot as a picture
-ggsave(period_plot,
-       filename = &quot;../results/04_period_dens.png&quot;,
-       device = &quot;png&quot;,
-       height = 20,
-       width = 20,
-       units = &quot;cm&quot;)</code></pre>
-</div>
 <div id="histogram-of-age-distribution" class="section level3">
 <h3>Histogram of age distribution</h3>
 <pre class="r"><code># | echo: true
@@ -507,7 +492,10 @@ age_plot &lt;- body_measurements |&gt;
        title = &quot;Histogram of age distribution stratified for PCOS diagnosis&quot;,
        fill = &quot;PCOS diagnosis&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
-  theme_light()
+  theme_light()+
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;)
+
 
 # Saving the plot as a picture
 ggsave(age_plot,
@@ -516,14 +504,17 @@ ggsave(age_plot,
        height = 20,
        width = 20,
        units = &quot;cm&quot;)</code></pre>
+<p>The age looks normally distributed</p>
 </div>
-<div id="bar-chart-of-bmi-groups" class="section level3">
-<h3>Bar chart of BMI groups</h3>
+</div>
+<div id="bar-chart-of-bmi-groups" class="section level2">
+<h2>Bar chart of BMI groups</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
 # Creating bar chart of BMI distribution stratified on PCOS diagnosis
-BMI_bar &lt;- body_measurements |&gt; 
+BMI_bar &lt;- body_measurements |&gt;
+  mutate(BMI_class = fct_relevel(BMI_class, &quot;Underweight&quot;, &quot;Normal weight&quot;, &quot;Overweight&quot;,&quot;Obesity&quot;)) |&gt; 
   ggplot(mapping = aes(x = BMI_class,
                        fill = PCOS_diagnosis)) +
   geom_bar(position = position_dodge(preserve = &quot;single&quot;),
@@ -531,10 +522,12 @@ BMI_bar &lt;- body_measurements |&gt;
            color = &quot;black&quot;) +
   labs(x = &quot;BMI groups&quot;, 
        y = &quot;Count&quot;,
-       title = &quot;Bar chart over BMI groups stratified PCOS diagnosis&quot;,
+       title = &quot;Bar chart over BMI groups stratified for PCOS diagnosis&quot;,
        fill = &quot;PCOS diagnosis&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
-  theme_light()
+  theme_light()+
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;)
 
 # Saving the plot as a picture
 ggsave(BMI_bar,
@@ -543,7 +536,9 @@ ggsave(BMI_bar,
        height = 20,
        width = 20,
        units = &quot;cm&quot;)</code></pre>
-</div>
+<p>There is an over representation of data points in the Normal weight
+category and a scewed proportion of PCOS diagnoses in the normal weight
+category.</p>
 <div id="bar-chart-of-blood-groups" class="section level3">
 <h3>Bar chart of blood groups</h3>
 <pre class="r"><code># | echo: true
@@ -561,7 +556,10 @@ blood_type_plot &lt;- body_measurements |&gt;
        title = &quot;Bar chart of blood groups stratified for PCOS diagnosis&quot;,
        fill = &quot;PCOS diagnosis&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
-  theme_light()
+  theme_light()+
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;)
+
 
 
 # Saving the plot as a picture
@@ -571,10 +569,38 @@ ggsave(blood_type_plot,
        height = 20,
        width = 20,
        units = &quot;cm&quot;)</code></pre>
+<p>There is not an equal distribution of the data points between
+different blood groups.</p>
 </div>
+<div id="density-plot-of-period-length" class="section level3">
+<h3>Density plot of period length</h3>
+<pre class="r"><code># | echo: true
+# | eval: true
+
+
+period_plot &lt;- body_measurements |&gt; 
+  ggplot(mapping = aes(x = period_length, 
+                       fill = PCOS_diagnosis)) + 
+  geom_density(alpha = 0.45) +
+  labs(x = &quot;Period length (days)&quot;, 
+       y = &quot;Density&quot;,
+       title = &quot;Density plot of period lengths&quot;,
+       fill = &quot;PCOS diagnosis&quot;) +
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  theme_light()+
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;)
+
+# Saving the plot as a picture
+ggsave(period_plot,
+       filename = &quot;../results/04_period_dens.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)</code></pre>
+<p>The period length of people with PCOS diagnosis is more scattered
+then the lengths of people with no diagnosis.</p>
 </div>
-<div id="section" class="section level2">
-<h2></h2>
 </div>
 
 

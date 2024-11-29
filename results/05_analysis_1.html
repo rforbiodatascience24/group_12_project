@@ -12,7 +12,7 @@
 <meta name="author" content="Group12" />
 
 
-<title>02_clean</title>
+<title>05_analysis_1</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -349,7 +349,7 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">02_clean</h1>
+<h1 class="title toc-ignore">05_analysis_1</h1>
 <h4 class="author">Group12</h4>
 
 </div>
@@ -367,239 +367,300 @@ rm(list = ls())</code></pre>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-library(tidyverse)</code></pre>
+# load libraries
+library(tidyverse)
+library(patchwork)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;patchwork&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:cowplot&#39;:
+## 
+##     align_plots</code></pre>
+<pre class="r"><code>library(RColorBrewer)
+library(ggplot2)
+library(ggridges)
+library(RColorBrewer)</code></pre>
 </div>
 <div id="load-data" class="section level2">
 <h2>Load data</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# Load the file
-PCOS &lt;- read_tsv(file = &quot;../data/PCOS_data_without_infertility.tsv&quot;)</code></pre>
-<pre><code>## Rows: 541 Columns: 45
+# Loading file
+body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements_aug.tsv&quot;)</code></pre>
+<pre><code>## Rows: 541 Columns: 31
 ## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr  (3): II    beta-HCG(mIU/mL), AMH(ng/mL), ...45
-## dbl (42): Sl. No, Patient File No., PCOS (Y/N), Age (yrs), Weight (Kg), Height(Cm), BMI, Blood Group,...
+## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_gro...
+## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip,...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div id="data-wrangling---column-removal-of-non-relevant-data-columns" class="section level2">
-<h2>Data wrangling - Column removal of non relevant data columns</h2>
+<div id="analysis-of-body-measurement-data" class="section level1">
+<h1>Analysis of body measurement data</h1>
+<p>First part of this project, will be to test if there is a correlation
+between patients with PCOS using the body measurments data.</p>
+<div id="follicle-and-pcos" class="section level2">
+<h2>Follicle and PCOS</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-#Removal of columns
-PCOS &lt;- PCOS |&gt;
-  select(-&quot;Sl. No&quot;) |&gt; 
-  select(-&quot;Marraige Status (Yrs)&quot;) |&gt; 
-  select(-&quot;Fast food (Y/N)&quot;) |&gt; 
-  select(-&quot;...45&quot;)
+# distribution of follicles in both ovaries
+p_follicles_ovaries &lt;- body_measurements |&gt; 
+  ggplot(mapping = aes(x = follicle_no_R,
+                       y = follicle_no_L,
+                       color = PCOS_diagnosis)) + 
+  geom_point() +  
+  geom_smooth(method = &quot;lm&quot;, 
+              se = TRUE, 
+              aes(fill = PCOS_diagnosis), 
+              alpha = 0.3) +
+  labs(title = &quot;Distribution of follicles in both ovaries&quot;,
+       x = &quot;Follicle No. (R)&quot;, 
+       y = &quot;Follicle No. (L)&quot;,
+       color = &quot;PCOS Diagnosis&quot;,
+       fill = &quot;PCOS Diagnosis&quot;) +
+  scale_color_brewer(palette = &quot;Set2&quot;) +
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  theme_light() +
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;)
 
-#QC
-print(PCOS)</code></pre>
+# Saving the plot as a picture
+ggsave(p_follicles_ovaries,
+       filename = &quot;../results/05_follicle_correlation.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p>The number of follicles in the left and right ovaries are increased
+for people with the PCOs diagnosis. We look further into the number of
+follicles in each ovary:</p>
+<pre class="r"><code># | echo: true
+# | eval: true
+
+# distribution of follicles to the left
+p_follicle_L &lt;- body_measurements |&gt; 
+  ggplot(aes(x = PCOS_diagnosis, 
+             y = follicle_no_L)) + 
+  geom_boxplot(aes(fill = PCOS_diagnosis), 
+               outlier.shape = NA) + 
+  geom_jitter(width = 0.2, 
+              alpha = 0.2, 
+              size = 1) +
+  labs(x = &quot;PCOS (Y/N)&quot;, 
+       y = &quot;Follicle No. (L)&quot;,
+       title = &quot;Follicle number of left ovary and correlation to PCOS diagnosis&quot;,
+       fill = &quot;&quot;) + 
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  theme_light() +
+  theme(title = element_text(size = 8),
+        legend.position = &quot;none&quot;)
+
+
+# saving the plot
+ggsave(p_follicle_L,
+       filename = &quot;../results/05_follicle_L_box.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)
+
+# distribution of follicles to the right
+p_follicle_R &lt;- body_measurements |&gt; 
+  ggplot(aes(x = PCOS_diagnosis, 
+             y = follicle_no_R)) + 
+  geom_boxplot(aes(fill = PCOS_diagnosis), 
+               outlier.shape = NA) + 
+  geom_jitter(width = 0.2, 
+              alpha = 0.2, 
+              size = 1) + 
+  labs(x = &quot;PCOS (Y/N)&quot;, 
+       y = &quot;Follicle No. (R)&quot;,
+       title = &quot;Follicle number of right ovary and correlation to PCOS diagnosis&quot;,
+       fill = &quot;&quot;) + 
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  theme_light() +
+  theme(title = element_text(size = 8),
+        legend.position = &quot;none&quot;)
+
+
+# saving the plot
+ggsave(p_follicle_R,
+       filename = &quot;../results/05_follicle_R_box.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)</code></pre>
+<p>In the two boxplots a significant increase in the number of follicles
+for both sides for people diagnosed with PCOS.</p>
 </div>
-<div id="rename-columns" class="section level2">
-<h2>Rename columns</h2>
+<div id="correlation-between-bmi-and-pcos" class="section level2">
+<h2>Correlation between BMI and PCOS</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-#renaming all columns
-PCOS &lt;- PCOS |&gt; 
-  rename(&quot;patient_ID&quot; = &quot;Patient File No.&quot;,
-         &quot;PCOS_diagnosis&quot; = &quot;PCOS (Y/N)&quot;,
-         &quot;age&quot; = &quot;Age (yrs)&quot;,
-         &quot;weight&quot; = &quot;Weight (Kg)&quot;,
-         &quot;height&quot; = &quot;Height(Cm)&quot;,
-         &quot;blood_type&quot; = &quot;Blood Group&quot;,
-         &quot;pulse&quot; = &quot;Pulse rate(bpm)&quot;,
-         &quot;breaths_pr_min&quot; = &quot;RR (breaths/min)&quot;,
-         &quot;hemaglobin&quot; = &quot;Hb(g/dl)&quot;,
-         &quot;cycle_RI&quot; = &quot;Cycle(R/I)&quot;,
-         &quot;period_length&quot; = &quot;Cycle length(days)&quot;,
-         &quot;pregnant&quot; = &quot;Pregnant(Y/N)&quot;,
-         &quot;abortions&quot; = &quot;No. of aborptions&quot;,
-         &quot;betaHCG_1&quot; = &quot;I   beta-HCG(mIU/mL)&quot;,
-         &quot;betaHCG_2&quot; = &quot;II    beta-HCG(mIU/mL)&quot;,
-         &quot;FSH&quot; = &quot;FSH(mIU/mL)&quot;,
-         &quot;LH&quot; = &quot;LH(mIU/mL)&quot;,
-         &quot;FSH_LH_ratio&quot; = &quot;FSH/LH&quot;,
-         &quot;hip&quot; = &quot;Hip(inch)&quot;,
-         &quot;waist&quot; = &quot;Waist(inch)&quot;,
-         &quot;waist_hip_ratio&quot; = &quot;Waist:Hip Ratio&quot;,
-         &quot;TSH&quot; = &quot;TSH (mIU/L)&quot;,
-         &quot;AMH&quot; = &quot;AMH(ng/mL)&quot;,
-         &quot;PRL&quot; = &quot;PRL(ng/mL)&quot;,
-         &quot;vitaminD3&quot; = &quot;Vit D3 (ng/mL)&quot;,
-         &quot;PRG&quot; = &quot;PRG(ng/mL)&quot;,
-         &quot;RBS&quot; = &quot;RBS(mg/dl)&quot;,
-         &quot;weight_gain&quot; = &quot;Weight gain(Y/N)&quot;,
-         &quot;hair_growth&quot; = &quot;hair growth(Y/N)&quot;,
-         &quot;darker_skin&quot; = &quot;Skin darkening (Y/N)&quot;,
-         &quot;hair_loss&quot; = &quot;Hair loss(Y/N)&quot;,
-         &quot;pimples&quot; = &quot;Pimples(Y/N)&quot;,
-         &quot;exercise&quot; = &quot;Reg.Exercise(Y/N)&quot;,
-         &quot;BP_systolic&quot; = &quot;BP _Systolic (mmHg)&quot;,
-         &quot;BP_diastolic&quot; = &quot;BP _Diastolic (mmHg)&quot;,
-         &quot;follicle_no_R&quot; = &quot;Follicle No. (L)&quot;,
-         &quot;follicle_no_L&quot; = &quot;Follicle No. (R)&quot;,
-         &quot;avg_fsize_L&quot; = &quot;Avg. F size (L) (mm)&quot;,
-         &quot;avg_fsize_R&quot; = &quot;Avg. F size (R) (mm)&quot;,
-         &quot;endometrium&quot; = &quot;Endometrium (mm)&quot;
-         ) 
+# boxplot of BMI and PCOS diagnosis
+PCOS_BMI_correlation_box &lt;- body_measurements |&gt; 
+  ggplot(mapping = aes(x = PCOS_diagnosis,
+                       y = BMI,
+                       fill = PCOS_diagnosis)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, 
+              alpha = 0.2, 
+              size = 1) +
+  labs(x = &quot;PCOS diagnosis&quot;, 
+       y = &quot;BMI&quot;,
+       title = &quot;Correlation between BMI and PCOS diagnosis&quot;,
+       fill = &quot;PCOS diagnosis&quot;) +
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  theme_light() +
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;)
 
-#QC
-print(PCOS)</code></pre>
+# Saving the plot as a picture
+ggsave(PCOS_BMI_correlation_box,
+       filename = &quot;../results/05_PCOS_BMI_correlation_box.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)</code></pre>
+<p>A slight difference can be seen between diagnosis and BMI.</p>
 </div>
-<div id="correcting-cells" class="section level2">
-<h2>Correcting cells</h2>
-<p>Two cells were identified as inconsistent with the format - a
-misplaced period in betaHCG2 and a character in numeric column AMH.
-These will be changed to NA</p>
+<div id="correlation-between-pcos-and-endometrium-size" class="section level2">
+<h2>Correlation between PCOS and endometrium size</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# Change values to NA
-PCOS &lt;- PCOS |&gt; 
-  mutate(betaHCG_2 = sub(&quot;\\.$&quot;, 
-                         NA, 
-                         betaHCG_2),
-  AMH = ifelse(substr(AMH, 
-                      1, 
-                      1) %in% as.character(0:9), 
-               AMH, 
-               NA)) |&gt;  
-  mutate(betaHCG_2 = as.numeric(betaHCG_2),
-         AMH = as.numeric(AMH))
+# plotting the distribution of endometrium and PCOS diagnosis
+PCOS_endometrium_correlation_box &lt;- body_measurements |&gt; 
+  ggplot(mapping = aes(x = PCOS_diagnosis,
+                       y = endometrium,
+                       fill = PCOS_diagnosis)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, 
+              alpha = 0.2, 
+              size = 1) +
+  labs(x = &quot;PCOS diagnosis&quot;, 
+       y = &quot;Endometrium size (mm)&quot;,
+       title = &quot;Correlation between endometrium size and PCOS diagnosis&quot;,
+       fill = &quot;PCOS diagnosis&quot;) +
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  theme_light() +
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;)
 
 
-# QC
-print(PCOS)
-
-# Checking for NA
-PCOS |&gt; 
-  summarise(has_NA = any(is.na(AMH))) |&gt; 
-  pull(has_NA)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
+# Saving the plot as a picture
+ggsave(PCOS_endometrium_correlation_box,
+       filename = &quot;../results/05_PCOS_endometrium_correlation_box.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)</code></pre>
+<p>No difference can be seen in the endometrium size and PCIS
+diagnosis.</p>
 </div>
-<div id="factorising-column" class="section level2">
-<h2>Factorising column</h2>
+<div id="correlation-between-age-and-cycle-stratified-for-pcos" class="section level2">
+<h2>Correlation between age and cycle stratified for PCOS</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
+# age vs. cycle stratified for PCOS diagnosis
+age_cycle_plot &lt;- na.omit(body_measurements) |&gt; 
+  ggplot(mapping = aes(x = age,
+                       y = cycle_RI,
+                       color = PCOS_diagnosis)) +
+  geom_violin() +
+  geom_jitter(width = 0.2, 
+              alpha = 0.8, 
+              size = 1) +
+  labs(x = &quot;Age&quot;, 
+       y = &quot;Cycle (Irregular / Regular)&quot;,
+       title = &quot;Correlation between age and cycle stratified for PCOS&quot;,
+       color = &quot;PCOS diagnosis&quot;) +
+  scale_color_brewer(palette = &quot;Set2&quot;) +
+  theme_light() +
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;)
 
-# Factorise columns
-PCOS &lt;- PCOS |&gt; 
-  mutate(pregnant = factor(pregnant, 
-                           levels = c(0,
-                                      1), 
-                           labels = c(&quot;No&quot;,
-                                      &quot;Yes&quot;)),
-         weight_gain = factor(weight_gain, 
-                              levels = c(0,
-                                         1), 
-                              labels = c(&quot;No&quot;, 
-                                         &quot;Yes&quot;)),
-         hair_growth = factor(hair_growth, 
-                              levels = c(0,
-                                         1), 
-                              labels = c(&quot;No&quot;, 
-                                         &quot;Yes&quot;)),
-         hair_loss = factor(hair_loss, 
-                            levels = c(0,
-                                       1), 
-                            labels = c(&quot;No&quot;, 
-                                       &quot;Yes&quot;)),
-         darker_skin = factor(darker_skin, 
-                              levels = c(0,
-                                         1), 
-                              labels = c(&quot;No&quot;,
-                                         &quot;Yes&quot;)),
-         pimples = factor(pimples, 
-                          levels = c(0,
-                                     1), 
-                          labels = c(&quot;No&quot;, 
-                                     &quot;Yes&quot;)),
-         exercise = factor(exercise, 
-                           levels = c(0,
-                                      1), 
-                           labels = c(&quot;No&quot;, 
-                                      &quot;Yes&quot;)),
-         PCOS_diagnosis = factor(PCOS_diagnosis,
-                                 levels = c(0, 1),
-                                 labels = c(&quot;No&quot;, &quot;Yes&quot;)), 
 
-         )</code></pre>
+# Saving the plot as a picture
+ggsave(age_cycle_plot,
+       filename = &quot;../results/05_age_cycle_plot.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)</code></pre>
+<p>Unable to conclude if there is a similarity between people with PCOS,
+and what their ages is and if their cycle is regular/irregular.</p>
 </div>
-<div id="saving-and-splitting-the-data" class="section level2">
-<h2>Saving and Splitting the Data</h2>
+<div id="age-groups-vs.-hair-growth-stratified-for-pcos" class="section level2">
+<h2>Age groups vs. hair growth stratified for PCOS</h2>
 <pre class="r"><code># | echo: true
 # | eval: true
 
-# Write the updated dataset into a new data file
-write_tsv(x = PCOS,
-          file = &quot;../data/PCOS_clean.tsv&quot;)
+p_age_hair &lt;- body_measurements |&gt; 
+  ggplot(aes(x=hair_growth,
+             fill = PCOS_diagnosis))+
+  geom_bar(position = position_dodge2(preserve = &quot;single&quot;), width = 0.8,
+           alpha = 0.8)+
+  facet_wrap(~ age_group)+
+  labs(x = &quot;Hair growth (yes/no)&quot;, 
+       y = &quot;Count&quot;,
+       title = &quot;Bar plot of hair growth in different age groups stratisfied for PCOS diagnosis&quot;,
+       fill = &quot;PCOS diagnosis&quot;) +
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  theme_light() + 
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;,
+        axis.title.x= element_text(size = 10))
+  
 
-# Check colnames of original dataset
-colnames(PCOS)</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;      &quot;PCOS_diagnosis&quot;  &quot;age&quot;             &quot;weight&quot;          &quot;height&quot;         
-##  [6] &quot;BMI&quot;             &quot;blood_type&quot;      &quot;pulse&quot;           &quot;breaths_pr_min&quot;  &quot;hemaglobin&quot;     
-## [11] &quot;cycle_RI&quot;        &quot;period_length&quot;   &quot;pregnant&quot;        &quot;abortions&quot;       &quot;betaHCG_1&quot;      
-## [16] &quot;betaHCG_2&quot;       &quot;FSH&quot;             &quot;LH&quot;              &quot;FSH_LH_ratio&quot;    &quot;hip&quot;            
-## [21] &quot;waist&quot;           &quot;waist_hip_ratio&quot; &quot;TSH&quot;             &quot;AMH&quot;             &quot;PRL&quot;            
-## [26] &quot;vitaminD3&quot;       &quot;PRG&quot;             &quot;RBS&quot;             &quot;weight_gain&quot;     &quot;hair_growth&quot;    
-## [31] &quot;darker_skin&quot;     &quot;hair_loss&quot;       &quot;pimples&quot;         &quot;exercise&quot;        &quot;BP_systolic&quot;    
-## [36] &quot;BP_diastolic&quot;    &quot;follicle_no_R&quot;   &quot;follicle_no_L&quot;   &quot;avg_fsize_L&quot;     &quot;avg_fsize_R&quot;    
-## [41] &quot;endometrium&quot;</code></pre>
-<pre class="r"><code>## Read the data into separate files
-# Load the dataset, selecting columns from defined ranges 
-blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_clean.tsv&quot;,
-                               col_select = c(1:2,
-                                              10,
-                                              15:19,
-                                              23:28))</code></pre>
-<pre><code>## Rows: 541 Columns: 14
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;\t&quot;
-## chr  (1): PCOS_diagnosis
-## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitamin...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code># View the column names of the selected data
-colnames(blood_measurements)</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;     &quot;PCOS_diagnosis&quot; &quot;hemaglobin&quot;     &quot;betaHCG_1&quot;      &quot;betaHCG_2&quot;     
-##  [6] &quot;FSH&quot;            &quot;LH&quot;             &quot;FSH_LH_ratio&quot;   &quot;TSH&quot;            &quot;AMH&quot;           
-## [11] &quot;PRL&quot;            &quot;vitaminD3&quot;      &quot;PRG&quot;            &quot;RBS&quot;</code></pre>
-<pre class="r"><code># Select body measurements using column names (excluding blood measurements)
-body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_clean.tsv&quot;,
-                              col_select = -c(10,
-                                              15:19,
-                                              23:28))</code></pre>
-<pre><code>## Rows: 541 Columns: 29
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;\t&quot;
-## chr  (8): PCOS_diagnosis, pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimples, exercise
-## dbl (21): patient_ID, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_RI, period_l...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code># View the column names of the selected data
-colnames(body_measurements)</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;      &quot;PCOS_diagnosis&quot;  &quot;age&quot;             &quot;weight&quot;          &quot;height&quot;         
-##  [6] &quot;BMI&quot;             &quot;blood_type&quot;      &quot;pulse&quot;           &quot;breaths_pr_min&quot;  &quot;cycle_RI&quot;       
-## [11] &quot;period_length&quot;   &quot;pregnant&quot;        &quot;abortions&quot;       &quot;hip&quot;             &quot;waist&quot;          
-## [16] &quot;waist_hip_ratio&quot; &quot;weight_gain&quot;     &quot;hair_growth&quot;     &quot;darker_skin&quot;     &quot;hair_loss&quot;      
-## [21] &quot;pimples&quot;         &quot;exercise&quot;        &quot;BP_systolic&quot;     &quot;BP_diastolic&quot;    &quot;follicle_no_R&quot;  
-## [26] &quot;follicle_no_L&quot;   &quot;avg_fsize_L&quot;     &quot;avg_fsize_R&quot;     &quot;endometrium&quot;</code></pre>
-<pre class="r"><code># Write the data into two data files
-write_tsv(x = blood_measurements,
-          file = &quot;../data/PCOS_blood_measurements.tsv&quot;)
-write_tsv(x = body_measurements,
-          file = &quot;../data/PCOS_body_measurements.tsv&quot;)
+# Saving the plot as a picture
+ggsave(p_age_hair,
+       filename = &quot;../results/05_age_hair_correlation_plot.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)</code></pre>
+<p>An increase in hair growth can not be seen in people with PCOS
+diagnosis. People with no diagnosis see no increase in hair growth.</p>
+</div>
+<div id="age-groups-vs.-pimples-stratified-for-pcos" class="section level2">
+<h2>Age groups vs. pimples stratified for PCOS</h2>
+<pre class="r"><code># | echo: true
+# | eval: true
 
-# Note: Patient No. and PCOS Y/N in both datasets!</code></pre>
+#bar plot 
+p_age_pimple &lt;- body_measurements |&gt; 
+  ggplot(aes(x=pimples,
+             fill = PCOS_diagnosis))+
+  geom_bar(position = position_dodge2(preserve = &quot;single&quot;), width = 0.8,
+           alpha = 0.8)+
+  facet_wrap(~ age_group)+
+  labs(x = &quot;Pimples (yes/no)&quot;, 
+       y = &quot;Count&quot;,
+       title = &quot;Bar plot of pimples in different age groups stratisfied for PCOS diagnosis&quot;,
+       fill = &quot;PCOS diagnosis&quot;) +
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  theme_light() + 
+  theme(title = element_text(size = 8),
+        legend.position = &quot;bottom&quot;,
+        axis.title.x= element_text(size = 10))
+
+
+# Saving the plot as a picture
+ggsave(p_age_pimple,
+       filename = &quot;../results/05_age_pimple_correlation_plot.png&quot;,
+       device = &quot;png&quot;,
+       height = 20,
+       width = 20,
+       units = &quot;cm&quot;)</code></pre>
+<p>People with PCOS diagnosis experience more pimple then those with no
+PCOS diagnosis.</p>
+</div>
 </div>
 
 
