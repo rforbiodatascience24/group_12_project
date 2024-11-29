@@ -155,9 +155,21 @@ her
 
 ## PCA of blood measurements
 
+<div>
+
 \![\](../results/07_blood_PCA.png){width=50%}
 
+<div>
+
+<div>
+
 \![\](../results/07_rotation_matrix_blood.png){width=50%}
+
+</div>
+
+</div>
+
+</div>
 
 ## PCA of body measurements
 
