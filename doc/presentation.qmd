@@ -181,9 +181,11 @@ her
 
 <div>
 
-```{r Blood measurments PCA, echo=FALSE, out.width='50%'}
-knitr::include_graphics("../results/07_blood_PCA.png")
-```
+\![\](../results/07_blood_PCA.png){.absolute bottom=0 left=0 width="500" height="330}
+
+</div>
+
+<div>
 
 <div>
 
