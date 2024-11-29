@@ -165,17 +165,15 @@ Plot of the ages:
 
 In this analysis, we have been looking at the correlation between PCOS diagnosed patients, and what factors they potentially have in common from the body measurements data.
 
-<div>
+::: columns
+::: {.column width="50%"}
+![](images/05_follicle_L_box-01.png)
+:::
 
-![L](images/05_follicle_L_box-01.png)
-
-<div>
-
-![R](images/05_follicle_R_box-01.png)
-
-</div>
-
-</div>
+::: {.column width="50%"}
+![](images/05_follicle_R_box-01.png)
+:::
+:::
 
 ## PCA of blood measurements
 
