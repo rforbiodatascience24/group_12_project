@@ -93,9 +93,9 @@ body_measurements <- body_measurements |>
 
 ::: columns
 ::: {.column width="50%"}
-::: {style="font-size: 0.6em"}
-::: incremental
-::: {.column width="50%"}
+Information on the PCOS dataset
+
+::: {style="font-size: 0.8em"}
 Dimensions:
 
 ``` r
@@ -118,11 +118,11 @@ PCOS |>
 ```
 :::
 :::
-:::
-:::
 
 ::: {.column width="50%"}
-\![Age distribution\](../results/04_age_hist.png)
+Plot of the ages:
+
+![Age plot](../results/04_age_hist.png){alt="Age plot"}
 :::
 :::
 
@@ -131,38 +131,9 @@ PCOS |>
 ::: {.columns style=".smaller"}
 ### Information on the PCOS dataset:
 
-::: {.column width="50%" style=".smaller, font-size: 0.8em"}
-Dimensions:
-
-``` r
-PCOS <- read_tsv(file = "../data/PCOS_merged.tsv")
-
-PCOS_dim <- PCOS |>
-  dim() |>
-  tibble()|>
-  rename("PCOS dimensions" = "dim(PCOS)")|>
-  print()
-```
-
-Count of how many have PCOS:
-
-``` {.r style=".smaller"}
-PCOS |> 
-  count(PCOS_diagnosis) |>
-  as.tibble() |>
-  print()
-```
-
-as
-
-::: {.column width="50%" style=".smaller, font-size: 0.8em"}
 Plot of the ages:
 
 ![Age plot](../results/04_age_hist.png)
-:::
-
-lsksd
-:::
 :::
 
 ## Analysis 1
