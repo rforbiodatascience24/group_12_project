@@ -32,9 +32,41 @@ library(tidyverse)
 
 The aim of this study is to examine a dataset (found on Kaggle) of patients with and without PCOS. The data set has been made in India and data comes from 10 different hospitals.
 
-# Cleaning
+# Data handling approach
 
--   steps
+:::: {.columns} ::: {.column width="50%"}
+
+::: {style="font-size: 0.8em"}
+-   <strong>Raw data</strong>:<br />6795 observations with 20 variables.<br />
+-   <strong>01_load_data</strong>:<br />Data has been loaded and splitted in metadata and measurements.<br />
+-   <strong>02_clean_data</strong> (Data Wrangling):<br />Age values converted to integers, column names replaced with more meaningful names, unusable values set to NA and the data sets have been re-joined into one. <br />
+:::
+
+:::
+
+# Descriptive analysis
+
+besrkiv data her
+
+# Analysis 1
+
+her
+
+# Analysis 2
+
+her
+
+# PCA of blood measurments
+
+her
+
+# PCA of body measurments
+
+her
+
+# Discussion
+
+her
 
 # Conclusion
 
