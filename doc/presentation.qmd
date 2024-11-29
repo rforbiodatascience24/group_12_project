@@ -130,7 +130,7 @@ PCOS |>
 <div>
 
 ::: {style="font-size: 0.8em"}
-In this analysis, we have been looking at the correlation between PCOS diagnosed patients, and what factors they potentially have in common from the body measurements data.
+Follicle number and PCOS diagnosis:
 :::
 
 </div>
@@ -145,6 +145,38 @@ In this analysis, we have been looking at the correlation between PCOS diagnosed
 :::
 :::
 :::
+
+## Blood measurement data analysis
+
+<div>
+
+|                               |                                      |
+|-------------------------------|--------------------------------------|
+| ![](images/06_box_AMH-04.png) | ![](images/06_cor_blood_plot-03.png) |
+
+</div>
+
+## header
+
+<div>
+
+::: {style="font-size: 0.8em"}
+<div>
+
+text1
+
+</div>
+
+<div>
+
+<div>
+
+</div>
+
+</div>
+:::
+
+</div>
 
 ## PCA of blood measurements
 
@@ -164,17 +196,19 @@ No diverging of PCOS diagnosed individuals compared to non-PCOS diagnosed indivi
 
 ## Discussion
 
-blah blah blah
+-   
 
--   hdsjkdhs
+-   Distribution between women diagnosed with and without PCOS
 
--   ndsjkandlas
+-   PCA plots show few variables show relevance to diagnose PCOS (FSH & LH)
 
--   sajlda
+-   Body parameters show little clustering (BMI)
+
+-   
 
 ## Conclusion
 
--   no significance
+-   Not an optimal data set for significant conclutions
 -   ...
 -   ...
 -   ...
