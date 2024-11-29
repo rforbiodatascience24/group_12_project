@@ -29,7 +29,4 @@ rmarkdown::render(input = '06_analysis_2.qmd',
 rmarkdown::render(input = '07_PCA.qmd',
                   output_dir = '../results')
 
-
-rmarkdown::render(input = 'presentation.qmd',
-                  output_dir = '../doc')
 ```
