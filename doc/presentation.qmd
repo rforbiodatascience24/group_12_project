@@ -94,7 +94,7 @@ body_measurements <- body_measurements |>
 ::: columns
 ### Information on the PCOS dataset:
 
-::: column
+::: {.column width="50%" style=".smaller"}
 Dimensions:
 
 ``` r
@@ -111,7 +111,7 @@ PCOS_dim <- PCOS |>
 
 Count of how many have PCOS:
 
-``` r
+``` {.r style=".smaller"}
 ::: {.r}
 PCOS |> 
   count(PCOS_diagnosis) |>
@@ -120,7 +120,7 @@ PCOS |>
 :::
 ```
 
-::: column
+::: {.column width="50%" style=".smaller"}
 Plot of the ages:
 
 ![Age plot](../results/04_age_hist.png)
