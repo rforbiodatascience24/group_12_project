@@ -93,9 +93,9 @@ body_measurements <- body_measurements |>
 
 ::: columns
 ::: {.column width="50%"}
-::: {style="font-size: 0.6em"}
-::: incremental
-::: {.column width="50%"}
+Information on the PCOS dataset
+
+::: {style="font-size: 0.8em"}
 Dimensions:
 
 ``` r
@@ -118,8 +118,6 @@ PCOS |>
 ```
 :::
 :::
-:::
-:::
 
 ::: {style=".smaller"}
 +---------------------------------------------------------+----------------------------------------------------------------------+
@@ -132,7 +130,11 @@ PCOS |>
 |                                                         | -   ~Merging data frame into one file~                               |
 +---------------------------------------------------------+----------------------------------------------------------------------+
 
-======= ::: {.column width="50%"} \![Age distribution\](../results/04_age_hist.png)
+# ======= ::: {.column width="50%"} \![Age distribution\](../results/04_age_hist.png)
+
+======= ::: {.column width="50%"} Plot of the ages:
+
+![Age plot](../results/04_age_hist.png)
 :::
 :::
 
@@ -164,10 +166,14 @@ PCOS |>
 ```
 
 ::: {.column width="50%" style=".smaller, font-size: 0.8em"}
+=======
+
 Plot of the ages:
 
 ![Age plot](../results/04_age_hist.png)
 :::
+
+# \## Analysis 1
 
 lsksd
 :::
