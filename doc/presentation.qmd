@@ -4,7 +4,7 @@ format:
   revealjs:
      slide-number: true
      embed-resources: true
-     theme: league
+     theme: white
       
 author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen & Mille Rask Sander"
 ---
@@ -44,7 +44,7 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
 
 -   <strong>02_clean_data</strong>:<br />
 
-    ::: incremental
+    ::: nonincremental
     -   Fixing random cells and replacing them with NA
     -   Rename & factorizing columns
     -   Split dataframe into body and blood measurements
@@ -56,7 +56,7 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
 
 ::: {.column width="50%"}
 ::: {style="font-size: 0.6em"}
-::: incremental
+::: nonincremental
 -   <strong>03_augment</strong>:<br />
     -   Unit changes ( inch to cm)
 
@@ -128,11 +128,9 @@ PCOS |>
 ::: {style=".smaller, font-size: 0.8em"}
 <div>
 
-<div>
-
+::: {style="font-size: 0.8em"}
 In this analysis, we have been looking at the correlation between PCOS diagnosed patients, and what factors they potentially have in common from the body measurements data.
-
-</div>
+:::
 
 </div>
 
