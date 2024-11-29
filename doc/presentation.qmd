@@ -147,11 +147,11 @@ Follicle number and PCOS diagnosis:
 
 ::: columns
 ::: {.column width="50%"}
-![](images/05_follicle_L_box-01.png){style=".smaller"}
+![](images/05_follicle_L_box.png){style=".smaller"}
 :::
 
 ::: {.column width="50%"}
-![](images/05_follicle_R_box-01.png){style=".smaller"}
+![](images/05_follicle_R_box.png){style=".smaller"}
 :::
 :::
 :::
@@ -167,18 +167,18 @@ Slight divergance of PCOS and non-PCOS in body measurements.
 
 </div>
 
-|                                           |                                                          |
-|-------------------------------------------|----------------------------------------------------------|
-| ![](images/07_body_PCA.png){width="13cm"} | ![](images/07_rotation_matrix_body-01.png){width="13cm"} |
+|                                           |                                                       |
+|-------------------------------|-----------------------------------------|
+| ![](images/07_body_PCA.png){width="15cm"} | ![](images/07_rotation_matrix_body.png){width="12cm"} |
 :::
 
 ## Blood measurement data analysis
 
 <div>
 
-|                               |                                      |
-|-------------------------------|--------------------------------------|
-| ![](images/06_box_AMH-04.png) | ![](images/06_cor_blood_plot-03.png) |
+|                                          |                                                 |
+|---------------------------------|---------------------------------------|
+| ![](images/06_box_AMH.png){width="14cm"} | ![](images/06_cor_blood_plot.png){width="12cm"} |
 
 </div>
 
@@ -190,9 +190,9 @@ Slight divergance of PCOS and non-PCOS in body measurements.
 No diverging of PCOS diagnosed individuals compared to non-PCOS diagnosed individuals.
 :::
 
-|                                            |                                                              |
-|--------------------------------------------|--------------------------------------------------------------|
-| ![](images/07_blood_PCA.png){width="12cm"} | ![](images/07_explained_variance_blood-01.png){width="14cm"} |
+|                                            |                                                           |
+|------------------------------|------------------------------------------|
+| ![](images/07_blood_PCA.png){width="15cm"} | ![](images/07_explained_variance_blood.png){width="12cm"} |
 
 </div>
 
