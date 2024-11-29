@@ -89,7 +89,7 @@ body_measurements <- body_measurements |>
 :::
 :::
 
-## Descriptive analysis of data {style=".smaller"}
+## Descriptive analysis of data 1 {style=".smaller"}
 
 ::: columns
 ::: {.column width="50%"}
@@ -119,26 +119,12 @@ PCOS |>
 :::
 :::
 
-::: {style=".smaller"}
-+---------------------------------------------------------+----------------------------------------------------------------------+
-| 02 Clean data                                           | 03 Augment data                                                      |
-+=========================================================+======================================================================+
-| -   ~Fixing random cells and replacing them with NA~    | -   ~Unit changes ( inch to cm)~                                     |
-| -   ~Rename & factorizing columns~                      | -   ~Rounding and grouping BMI~                                      |
-| -   ~Split data frame into body and blood measurements~ | -   ~Change Blood type and cycles from numeric values to characters~ |
-| -   ~Removed empty column~                              | -   ~Create new column for cycle/ pregnancy stage~                   |
-|                                                         | -   ~Merging data frame into one file~                               |
-+---------------------------------------------------------+----------------------------------------------------------------------+
-
-# ======= ::: {.column width="50%"} \![Age distribution\](../results/04_age_hist.png)
-
-======= ::: {.column width="50%"} Plot of the ages:
-
+::: {.column width="50%"}
 ![Age plot](../results/04_age_hist.png)
 :::
 :::
 
-## Descriptive analysis of data
+## Descriptive analysis of data 2
 
 ::: {.columns style=".smaller"}
 ### Information on the PCOS dataset:
@@ -166,18 +152,14 @@ PCOS |>
 ```
 
 ::: {.column width="50%" style=".smaller, font-size: 0.8em"}
-=======
-
 Plot of the ages:
 
 ![Age plot](../results/04_age_hist.png)
 :::
-
-# \## Analysis 1
-
-lsksd
 :::
 :::
+
+## Analysis 1
 
 ## Body measurement data analysis
 
