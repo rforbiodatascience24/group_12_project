@@ -369,8 +369,13 @@ rm(list = ls())</code></pre>
 
 # load libraries
 library(tidyverse)
-library(patchwork)
-library(RColorBrewer)
+library(patchwork)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;patchwork&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:cowplot&#39;:
+## 
+##     align_plots</code></pre>
+<pre class="r"><code>library(RColorBrewer)
 library(ggplot2)
 library(ggridges)
 library(RColorBrewer)</code></pre>
@@ -383,10 +388,10 @@ library(RColorBrewer)</code></pre>
 # Loading file
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements_aug.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 31
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_growth, darker_skin, hair_loss,...
-## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, waist, waist_hip_ratio, BP_...
+## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain,...
+## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, aborti...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>

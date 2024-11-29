@@ -371,33 +371,19 @@ library(dplyr)</code></pre>
 # Load the file
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 29
-<<<<<<< HEAD
-## ── Column specification ──────────────────────────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr  (8): PCOS_diagnosis, pregnant, weight_gain, hair_growth, darker_skin, hair_loss, ...
-## dbl (21): patient_ID, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cyc...
-=======
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;\t&quot;
-## chr  (8): PCOS_diagnosis, pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimples, exercise
-## dbl (21): patient_ID, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_RI, period_length, abortions, hip, waist...
->>>>>>> 01c32df3ff08a6e37fc6902ac348a419346c4b19
+## chr  (8): PCOS_diagnosis, pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimple...
+## dbl (21): patient_ID, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_RI,...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_blood_measurements.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 14
-<<<<<<< HEAD
-## ── Column specification ──────────────────────────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (1): PCOS_diagnosis
-## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AM...
-=======
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;\t&quot;
-## chr  (1): PCOS_diagnosis
-## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitaminD3, PRG, RBS
->>>>>>> 01c32df3ff08a6e37fc6902ac348a419346c4b19
+## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
