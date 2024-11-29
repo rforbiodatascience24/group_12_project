@@ -380,28 +380,28 @@ library(ggridges)</code></pre>
 #Load the file
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements_aug.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 31
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_gro...
-## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip,...
+## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_growth, darker_skin, hair_loss,...
+## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, waist, waist_hip_ratio, BP_...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_blood_measurements_aug.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 15
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (2): PCOS_diagnosis, cycle_or_pregnancy_stage
-## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitamin...
+## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitaminD3, PRG, RBS
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>PCOS &lt;- read_tsv(file = &quot;../data/PCOS_merged.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 44
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr (13): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_gro...
-## dbl (31): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip,...
+## chr (13): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_growth, darker_skin, hair_loss,...
+## dbl (31): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, waist, waist_hip_ratio, BP_...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -440,21 +440,17 @@ diagnosis</p>
 # which column names exist in the merged data set:
 PCOS |&gt; 
   colnames()</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;               &quot;PCOS_diagnosis&quot;           &quot;age&quot;                     
-##  [4] &quot;age_group&quot;                &quot;weight&quot;                   &quot;height&quot;                  
-##  [7] &quot;BMI&quot;                      &quot;BMI_class&quot;                &quot;blood_type&quot;              
-## [10] &quot;pulse&quot;                    &quot;breaths_pr_min&quot;           &quot;cycle_RI&quot;                
-## [13] &quot;period_length&quot;            &quot;pregnant&quot;                 &quot;abortions&quot;               
-## [16] &quot;hip&quot;                      &quot;waist&quot;                    &quot;waist_hip_ratio&quot;         
-## [19] &quot;weight_gain&quot;              &quot;hair_growth&quot;              &quot;darker_skin&quot;             
-## [22] &quot;hair_loss&quot;                &quot;pimples&quot;                  &quot;exercise&quot;                
-## [25] &quot;BP_systolic&quot;              &quot;BP_diastolic&quot;             &quot;follicle_no_R&quot;           
-## [28] &quot;follicle_no_L&quot;            &quot;avg_fsize_L&quot;              &quot;avg_fsize_R&quot;             
-## [31] &quot;endometrium&quot;              &quot;hemaglobin&quot;               &quot;betaHCG_1&quot;               
-## [34] &quot;betaHCG_2&quot;                &quot;FSH&quot;                      &quot;LH&quot;                      
-## [37] &quot;FSH_LH_ratio&quot;             &quot;TSH&quot;                      &quot;AMH&quot;                     
-## [40] &quot;PRL&quot;                      &quot;vitaminD3&quot;                &quot;PRG&quot;                     
-## [43] &quot;RBS&quot;                      &quot;cycle_or_pregnancy_stage&quot;</code></pre>
+<pre><code>##  [1] &quot;patient_ID&quot;               &quot;PCOS_diagnosis&quot;           &quot;age&quot;                      &quot;age_group&quot;               
+##  [5] &quot;weight&quot;                   &quot;height&quot;                   &quot;BMI&quot;                      &quot;BMI_class&quot;               
+##  [9] &quot;blood_type&quot;               &quot;pulse&quot;                    &quot;breaths_pr_min&quot;           &quot;cycle_RI&quot;                
+## [13] &quot;period_length&quot;            &quot;pregnant&quot;                 &quot;abortions&quot;                &quot;hip&quot;                     
+## [17] &quot;waist&quot;                    &quot;waist_hip_ratio&quot;          &quot;weight_gain&quot;              &quot;hair_growth&quot;             
+## [21] &quot;darker_skin&quot;              &quot;hair_loss&quot;                &quot;pimples&quot;                  &quot;exercise&quot;                
+## [25] &quot;BP_systolic&quot;              &quot;BP_diastolic&quot;             &quot;follicle_no_R&quot;            &quot;follicle_no_L&quot;           
+## [29] &quot;avg_fsize_L&quot;              &quot;avg_fsize_R&quot;              &quot;endometrium&quot;              &quot;hemaglobin&quot;              
+## [33] &quot;betaHCG_1&quot;                &quot;betaHCG_2&quot;                &quot;FSH&quot;                      &quot;LH&quot;                      
+## [37] &quot;FSH_LH_ratio&quot;             &quot;TSH&quot;                      &quot;AMH&quot;                      &quot;PRL&quot;                     
+## [41] &quot;vitaminD3&quot;                &quot;PRG&quot;                      &quot;RBS&quot;                      &quot;cycle_or_pregnancy_stage&quot;</code></pre>
 <pre class="r"><code># counting patients with (yes) and without (no PCOS diagnosis)
 PCOS |&gt; 
   count(PCOS_diagnosis)</code></pre>
