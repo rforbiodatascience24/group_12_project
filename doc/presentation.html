@@ -1166,9 +1166,48 @@ Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen &amp;
 <h3 id="aim">Aim</h3>
 <p>The aim of this study is to examine a data set (found on Kaggle) of patients with and without PCOS. The data set has been made in India and data comes from 10 different hospitals.</p>
 </section>
-<section id="data-handling-approach" class="slide level2">
-<h2>Data handling approach</h2>
+<section id="data-handling-approach-attempt-1" class="slide level2">
+<h2>Data handling approach (attempt 1)</h2>
 <p>The raw data we received contained: 541 observation divided into 45 variables</p>
+<div class="slide" title="attempt1">
+<table class="caption-top">
+<colgroup>
+<col style="width: 44%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>02 Clean data</th>
+<th>03 Augment data</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><ul>
+<li><sub>Fixing random cells and replacing them with NA</sub></li>
+</ul>
+<!-- -->
+<ul>
+<li><p><sub>Rename &amp; factorizing columns</sub></p></li>
+<li><p><sub>Split data frame into body and blood measurements</sub></p></li>
+<li><p><sub>Removed empty column</sub></p></li>
+</ul></td>
+<td><ul>
+<li><p><sub>Unit changes ( inch to cm)</sub></p></li>
+<li><p><sub>Rounding BMI</sub></p></li>
+<li><p><sub>Grouping &amp; BMI</sub></p></li>
+<li><p><sub>Change Blood type and cycles from numeric values to characters</sub></p></li>
+<li><p><sub>Create new column for cycle/ pregnancy stage</sub></p></li>
+<li><p><sub>Merging data frame into one file</sub></p></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section>
+<section id="attempt-2-on-data-handling" class="title-slide slide level1 center">
+<h1>Attempt 2 on data handling</h1>
 <table class="caption-top">
 <colgroup>
 <col style="width: 45%">
@@ -1269,7 +1308,7 @@ Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen &amp;
 
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 

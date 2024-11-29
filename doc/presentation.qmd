@@ -4,7 +4,7 @@ format:
   revealjs:
      slide-number: true
      embed-resources: true
-     theme: darcula
+     theme: solarized
       
 author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen & Mille Rask Sander"
 ---
@@ -42,14 +42,14 @@ The raw data we received contained: 541 observation divided into 45 variables
 +=========================================================+======================================================================+
 | -   ~Fixing random cells and replacing them with NA~    | -   ~Unit changes ( inch to cm)~                                     |
 |                                                         |                                                                      |
-| ```{=html}                                              | -   ~Rounding BMI~                                                   |
-| <!-- -->                                                |                                                                      |
-| ```                                                     | -   ~Grouping & BMI~                                                 |
-| -   ~Rename & factorizing columns~                      |                                                                      |
-|                                                         | -   ~Change Blood type and cycles from numeric values to characters~ |
-| -   ~Split data frame into body and blood measurements~ |                                                                      |
-|                                                         | -   ~Create new column for cycle/ pregnancy stage~                   |
-| -   ~Removed empty column~                              |                                                                      |
+| <!-- -->                                                | -   ~Rounding BMI~                                                   |
+|                                                         |                                                                      |
+| -   ~Rename & factorizing columns~                      | -   ~Grouping & BMI~                                                 |
+|                                                         |                                                                      |
+| -   ~Split data frame into body and blood measurements~ | -   ~Change Blood type and cycles from numeric values to characters~ |
+|                                                         |                                                                      |
+| -   ~Removed empty column~                              | -   ~Create new column for cycle/ pregnancy stage~                   |
+|                                                         |                                                                      |
 |                                                         | -   ~Merging data frame into one file~                               |
 +---------------------------------------------------------+----------------------------------------------------------------------+
 :::
