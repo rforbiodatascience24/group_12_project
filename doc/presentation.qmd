@@ -157,13 +157,13 @@ her
 
 <div>
 
-\![\](../results/07_blood_PCA.png){width=50%}
+\![PCA\](../results/07_blood_PCA.png){width=50%}
 
 <div>
 
 <div>
 
-\![\](../results/07_rotation_matrix_blood.png){width=50%}
+\![Rotation matrix\](../results/07_rotation_matrix_blood.png){width=50%}
 
 </div>
 
