@@ -63,6 +63,7 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
     -   Change Blood type and cycles from numeric values to characters
     -   Create new column for cycle/ pregnancy stage
     -   Merging data frame into one file<br />
+    -   TEST POINT
 :::
 
 ``` {.r style=".smaller"}
