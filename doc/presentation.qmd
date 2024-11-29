@@ -34,19 +34,27 @@ The aim of this study is to examine a dataset (found on Kaggle) of patients with
 
 # Data handling approach
 
-:::: {.columns} ::: {.column width="50%"}
+-   02_clean:
 
-::: {style="font-size: 0.8em"}
--   <strong>Raw data</strong>:<br />6795 observations with 20 variables.<br />
--   <strong>01_load_data</strong>:<br />Data has been loaded and splitted in metadata and measurements.<br />
--   <strong>02_clean_data</strong> (Data Wrangling):<br />Age values converted to integers, column names replaced with more meaningful names, unusable values set to NA and the data sets have been re-joined into one. <br />
-:::
+    -   Fixing random cells and replacing them with NA
 
-:::
+    -   Rename & factorising columns
 
-# Descriptive analysis
+    -   Split data frame into body and blood measurements
 
-besrkiv data her
+-   03_augment:
+
+    -   Unit changes ( inch to cm)
+
+    -   Rounding BMI
+
+    -   Grouping & BMI
+
+    -   Change Blood type and cycles from numeric values to characters
+
+    -   Create new column for cycle/ pregnancy stage
+
+    -   Merging data frame into one file
 
 # Analysis 1
 

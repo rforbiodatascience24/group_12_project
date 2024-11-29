@@ -1174,20 +1174,23 @@ Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen &amp;
 </section></section>
 <section id="data-handling-approach" class="title-slide slide level1 center">
 <h1>Data handling approach</h1>
-<p>:::: {.columns} ::: {.column width=“50%”}</p>
-<div style="font-size: 0.8em">
 <ul>
-<li><strong>Raw data</strong>:<br>6795 observations with 20 variables.<br></li>
-<li><strong>01_load_data</strong>:<br>Data has been loaded and splitted in metadata and measurements.<br></li>
-<li><strong>02_clean_data</strong> (Data Wrangling):<br>Age values converted to integers, column names replaced with more meaningful names, unusable values set to NA and the data sets have been re-joined into one. <br></li>
+<li><p>02_clean:</p>
+<ul>
+<li><p>Fixing random cells and replacing them with NA</p></li>
+<li><p>Rename &amp; factorising columns</p></li>
+<li><p>Split data frame into body and blood measurements</p></li>
+</ul></li>
+<li><p>03_augment:</p>
+<ul>
+<li><p>Unit changes ( inch to cm)</p></li>
+<li><p>Rounding BMI</p></li>
+<li><p>Grouping &amp; BMI</p></li>
+<li><p>Change Blood type and cycles from numeric values to characters</p></li>
+<li><p>Create new column for cycle/ pregnancy stage</p></li>
+<li><p>Merging data frame into one file</p></li>
+</ul></li>
 </ul>
-</div>
-<p>:::</p>
-</section>
-
-<section id="descriptive-analysis" class="title-slide slide level1 center">
-<h1>Descriptive analysis</h1>
-<p>besrkiv data her</p>
 </section>
 
 <section id="analysis-1" class="title-slide slide level1 center">
