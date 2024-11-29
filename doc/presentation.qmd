@@ -16,7 +16,7 @@ author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Peter
 library(tidyverse)
 ```
 
-## Introduction
+## Introduction {.smaller}
 
 ### Background
 
@@ -34,20 +34,48 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
 
 ## Data handling approach
 
-The raw data we received contained:
+The raw data we received contained: 541 observation divided into 45 variables
 
-+-------------------------------------------------------+--------------------------------------------------------------------+
-| 02 Clean data                                         | 03 Augment data                                                    |
-+=======================================================+====================================================================+
-| -   Fixing random cells and replacing them with NA    | -   Unit changes ( inch to cm)                                     |
-| -   Rename & factorizing columns                      | -   Rounding BMI                                                   |
-| -   Split data frame into body and blood measurements | -   Grouping & BMI                                                 |
-|                                                       | -   Change Blood type and cycles from numeric values to characters |
-|                                                       | -   Create new column for cycle/ pregnancy stage                   |
-|                                                       | -   Merging data frame into one file                               |
-+-------------------------------------------------------+--------------------------------------------------------------------+
++-------------------------------------------------------------+--------------------------------------------------------------------------+
+| 02 Clean data                                               | 03 Augment data                                                          |
++=============================================================+==========================================================================+
+| -   ::: {style="font-size: 0.8 em"}                         | -   ::: {style="font-size: 0.8 em"}                                      |
+|     -   ~Fixing random cells and replacing them with NA~    |     -   ~Unit changes ( inch to cm)~                                     |
+|                                                             |                                                                          |
+|     -   ~Rename & factorizing columns~                      |     -   ~Rounding BMI~                                                   |
+|                                                             |                                                                          |
+|     -   ~Split data frame into body and blood measurements~ |     -   ~Grouping & BMI~                                                 |
+|                                                             |                                                                          |
+|     -   ~Removed empty column~                              |     -   ~Change Blood type and cycles from numeric values to characters~ |
+|     :::                                                     |                                                                          |
+|                                                             |     -   ~Create new column for cycle/ pregnancy stage~                   |
+|                                                             |                                                                          |
+|                                                             |     -   ~Merging data frame into one file~                               |
+|                                                             |     :::                                                                  |
++-------------------------------------------------------------+--------------------------------------------------------------------------+
 
 ## Descriptive analysis of data
+
+The data analysed consists of 541 observation in 44 variables.
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+PCOS <- read_tsv(file = "../data/PCOS_merged.tsv")
+
+PCOS_dim <- PCOS |>
+  dim() |>
+  tibble()|>
+  rename("PCOS dimensions" = "dim(PCOS)")|>
+  print()
+
+PCOS |> 
+  count(PCOS_diagnosis) |>
+  as.tibble() |>
+  print()
+
+```
 
 \[![Caption](../results/04_age_hist.png)\]
 
@@ -59,11 +87,11 @@ her
 
 her
 
-## PCA of blood measurments
+## PCA of blood measurements
 
 her
 
-## PCA of body measurments
+## PCA of body measurements
 
 her
 
