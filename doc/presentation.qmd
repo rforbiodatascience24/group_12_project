@@ -156,42 +156,34 @@ Follicle number and PCOS diagnosis:
 
 </div>
 
-## header
+## PCA of blood measurements
 
 <div>
 
 ::: {style="font-size: 0.8em"}
-<div>
-
-text1
-
-</div>
-
-<div>
-
-<div>
-
-</div>
-
-</div>
-:::
-
-</div>
-
-## PCA of blood measurements
-
-::: {style=".smaller"}
-![](../results/07_blood_PCA.png){fig-align="center"}
-
 No diverging of PCOS diagnosed individuals compared to non-PCOS diagnosed individuals.
 :::
 
+|                                            |                                                          |
+|---------------------------------------|---------------------------------|
+| ![](images/07_blood_PCA.png){width="12cm"} | ![](images/07_explained_variance_blood.png){width="500"} |
+
+</div>
+
 ## PCA of body measurements
 
-::: {style=".smaller"}
-::: {width="50%"}
-![](../results/07_body_PCA.png){fig-align="center"}
+::: {style="font-size: 0.8em"}
+<div>
+
+::: {style="font-size: 0.8em"}
+Slight divergance of PCOS and non-PCOS in body measurements.
 :::
+
+</div>
+
+|                                           |                                            |
+|-------------------------------------------|--------------------------------------------|
+| ![](images/07_body_PCA.png){width="13cm"} | ![](images/07_rotation_matrix_body-01.png) |
 :::
 
 ## Discussion
