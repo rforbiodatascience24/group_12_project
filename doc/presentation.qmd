@@ -4,7 +4,7 @@ format:
   revealjs:
      slide-number: true
      embed-resources: true
-     theme: sky
+     theme: solarized
       
 author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Petersen & Mille Rask Sander"
 ---
@@ -16,9 +16,9 @@ author: "Agnes Lorenzen, Cecille Hobbs, Freja E. Klippmann, Julie Dalgaard Peter
 library(tidyverse)
 ```
 
-# Introduction
+## Introduction
 
-## Background
+### Background
 
 -   Polycystic ovary syndrome (PCOS) is a syndrome documented in women in their menustruating ages
 
@@ -28,54 +28,49 @@ library(tidyverse)
 
 -   However, it is still not verified what the cause of PCOS is.
 
-## Aim
+### Aim
 
 The aim of this study is to examine a dataset (found on Kaggle) of patients with and without PCOS. The data set has been made in India and data comes from 10 different hospitals.
 
-# Data handling approach
+## Data handling approach
 
--   02_clean:
++------------------------------------------------------------------------+-----------------+
+| -   02_clean:                                                          | -   04_describe |
+|                                                                        |                 |
+|     -   Fixing random cells and replacing them with NA                 |     -           |
+|     -   Rename & factorising columns                                   |                 |
+|     -   Split data frame into body and blood measurements              |                 |
+|                                                                        |                 |
+| -   03_augment:                                                        |                 |
+|                                                                        |                 |
+|     -   Unit changes ( inch to cm)                                     |                 |
+|     -   Rounding BMI                                                   |                 |
+|     -   Grouping & BMI                                                 |                 |
+|     -   Change Blood type and cycles from numeric values to characters |                 |
+|     -   Create new column for cycle/ pregnancy stage                   |                 |
+|     -   Merging data frame into one file                               |                 |
++------------------------------------------------------------------------+-----------------+
 
-    -   Fixing random cells and replacing them with NA
-
-    -   Rename & factorising columns
-
-    -   Split data frame into body and blood measurements
-
--   03_augment:
-
-    -   Unit changes ( inch to cm)
-
-    -   Rounding BMI
-
-    -   Grouping & BMI
-
-    -   Change Blood type and cycles from numeric values to characters
-
-    -   Create new column for cycle/ pregnancy stage
-
-    -   Merging data frame into one file
-
-# Analysis 1
+## Analysis 1
 
 her
 
-# Analysis 2
+## Analysis 2
 
 her
 
-# PCA of blood measurments
+## PCA of blood measurments
 
 her
 
-# PCA of body measurments
+## PCA of body measurments
 
 her
 
-# Discussion
+## Discussion
 
 her
 
-# Conclusion
+## Conclusion
 
 -   no significance
