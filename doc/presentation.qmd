@@ -32,11 +32,11 @@ library(tidyverse)
 
 The aim of this study is to examine a data set (found on Kaggle) of patients with and without PCOS. The data set has been made in India and data comes from 10 different hospitals.
 
-# Data handling approach (attempt 0)
+## Data handling approach {style=".smaller"}
 
 ::: columns
 ::: {.column width="50%"}
-::: {style="font-size: 0.8em"}
+::: {style="font-size: 0.7em"}
 -   <strong>Raw data</strong>:<br />541 observation divided into 45 variables.<br />
 -   <strong>01_load_data</strong>:<br />Data is loaded.<br />
 -   <strong>02_clean_data</strong>:<br />
@@ -48,7 +48,7 @@ The aim of this study is to examine a data set (found on Kaggle) of patients wit
 :::
 
 ::: {.column width="50%"}
-::: {style="font-size: 0.8em"}
+::: {style="font-size: 0.7em"}
 -   <strong>03_augment</strong>:<br />
     -   Unit changes ( inch to cm)
 
@@ -143,10 +143,6 @@ knitr::include_graphics("../results/04_age_hist.png", out.width = "50%")
 hh
 
 hh
-
-<div>
-
-</div>
 :::
 
 ## Analysis 2
@@ -155,6 +151,7 @@ her
 
 ## PCA of blood measurements
 
+<<<<<<< HEAD
 <div>
 
 \![PCA\](../results/07_blood_PCA.png){width=50%}
@@ -164,12 +161,11 @@ her
 <div>
 
 \![Rotation matrix\](../results/07_rotation_matrix_blood.png){width=50%}
+=======
+\![\](../results/07_blood_PCA.png){width=50%}
 
-</div>
-
-</div>
-
-</div>
+\![\](../results/07_rotation_matrix_blood.png){width=50%}
+>>>>>>> cdf3e75eedfdb3f502a2e8a582368bf80cf17b0d
 
 ## PCA of body measurements
 
