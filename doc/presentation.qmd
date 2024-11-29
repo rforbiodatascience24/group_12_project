@@ -161,6 +161,24 @@ Plot of the ages:
 
 ## Analysis 1
 
+::: {style=".smaller"}
+## Body measurement data analysis - Follicle number
+
+In this analysis, we have been looking at the correlation between PCOS diagnosed patients, and what factors they potentially have in common from the body measurements data.
+
+::: columns
+::: {.column width="50%"}
+![](images/05_follicle_L_box-01.png){style=".smaller"}
+:::
+
+::: {.column width="50%"}
+![](images/05_follicle_R_box-01.png){style=".smaller"}
+:::
+
+Look at these plots!
+:::
+:::
+
 ## Body measurement data analysis - Follicle number
 
 In this analysis, we have been looking at the correlation between PCOS diagnosed patients, and what factors they potentially have in common from the body measurements data.
