@@ -132,8 +132,6 @@ PCOS |>
 
 ::: {.column width="50%"}
 ### Right Column
-
-knitr::include_graphics("../results/04_age_hist.png", out.width = "50%")
 :::
 :::
 
@@ -151,21 +149,13 @@ her
 
 ## PCA of blood measurements
 
-<<<<<<< HEAD
-<div>
-
 \![PCA\](../results/07_blood_PCA.png){width=50%}
 
-<div>
-
-<div>
-
 \![Rotation matrix\](../results/07_rotation_matrix_blood.png){width=50%}
-=======
+
 \![\](../results/07_blood_PCA.png){width=50%}
 
 \![\](../results/07_rotation_matrix_blood.png){width=50%}
->>>>>>> cdf3e75eedfdb3f502a2e8a582368bf80cf17b0d
 
 ## PCA of body measurements
 
