@@ -47,11 +47,12 @@ From previous analysis, the follicle number and size seems slight important for 
 # | echo: true 
 # | eval: true 
 
-# making the generalized linear regression model, for all paramters related to follicles size of number
+# Linear regression model for all paramters related to follicles size of number
 
 lm <- glm(as.factor(PCOS_diagnosis) ~ follicle_no_R + follicle_no_L + avg_fsize_R + avg_fsize_L, 
           family = "binomial",
           data = body_measurements)
+
 
 summary(lm)
 
