@@ -1,0 +1,132 @@
+---
+title: "08_linear_regression.qmd"
+author: "Group12"
+format: html
+editor: visual
+---
+
+## Linear regression
+
+## Clear environment
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+rm(list = ls())
+```
+
+## Load libraries
+
+```{r}
+# | echo: true 
+# | eval: true  
+
+library(tidyverse)
+
+```
+
+## Load data
+
+```{r}
+# | echo: true 
+# | eval: true 
+
+body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
+blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements_aug.tsv")
+
+# verifying column names
+colnames(blood_measurements)
+```
+
+## Linear regression
+
+From previous analysis, the follicle number and size seems slight important for individuals with PCOS diagnosis compared to individuals without. Out of curiosity we wanted to see if we could perform a linear regression model on a subset of the data
+
+```{r}
+# | echo: true 
+# | eval: true 
+
+# making the generalized linear regression model, for all paramters related to follicles size of number
+
+lm <- glm(as.factor(PCOS_diagnosis) ~ follicle_no_R + follicle_no_L + avg_fsize_R + avg_fsize_L, 
+          family = "binomial",
+          data = body_measurements)
+
+summary(lm)
+
+```
+
+Now we see that for number of follicles to the right and left, both have a low p-value, showing significant importance of the individuals with PCOS. However the size does not seem very important.
+
+We will try to plot the following.
+
+```{r}
+# | echo: true 
+# | eval: true 
+
+# plotting the right side
+lm_plot_R <- body_measurements |>
+   ggplot(mapping = aes(x = PCOS_diagnosis, 
+                        y = follicle_no_R)) +
+   geom_point(alpha = 0.3) +
+   geom_smooth(method = "glm",
+               method.args = list(family = "binomial")) +
+   labs(title = "Logistic Regression Model",
+        x = "PCOS diagnosis (Yes/no)",
+        y = "Follicle number (R)") +
+   theme_minimal()
+
+lm_plot_R
+
+# Saving the plot as a picture
+ggsave(lm_plot_R,
+       filename = "../results/08_lm_plot_R.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+
+# plotting the left side
+lm_plot_L <- body_measurements |>
+   ggplot(mapping = aes(x = follicle_no_L, 
+                        y = PCOS_diagnosis)) +
+   geom_point(alpha = 0.3) +
+   geom_smooth(method = "glm",
+               method.args = list(family = "binomial")) +
+   labs(title = "Logistic Regression Model",
+        x = "Follicle number (L)",
+        y = "PCOS diagnosis (Yes/no)") +
+   theme_minimal()
+
+lm_plot_L
+
+# Saving the plot as a picture
+ggsave(lm_plot_L,
+       filename = "../results/08_lm_plot_L.png",
+       device = "png",
+       height = 20,
+       width = 20,
+       units = "cm")
+
+```
+
+Now we want to test, if the difference between number of follicles in right and left, has any significance.
+
+```{r}
+# | echo: true 
+# | eval: true 
+
+body_measurements <- body_measurements |>
+  mutate(follicle_no_diff = follicle_no_R - follicle_no_L)
+
+lm_diff <- glm(as.factor(PCOS_diagnosis) ~ follicle_no_diff, 
+               family = "binomial",
+               data = body_measurements)
+
+summary(lm_diff)
+
+
+```
+
+There is no significant difference between the number of follicles to the left and right
