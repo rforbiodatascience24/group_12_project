@@ -23,6 +23,7 @@ rm(list = ls())
 # | eval: true  
 
 library(tidyverse)
+library(ggfortify)
 
 ```
 
@@ -60,17 +61,52 @@ summary(model_follicle)
 
 Now we see that for number of follicles to the right and left, both have a low p-value, showing significant importance of the individuals with PCOS. However the size does not seem very important.
 
-We will try to plot the following.
+```{r}
+# | echo: true 
+# | eval: true 
+
+
+
+
+avg_fsize_R_range <- seq(min(body_measurements$avg_fsize_R), max(body_measurements$avg_fsize_R), length.out = 100)
+new_data <- data.frame(
+  follicle_no_R = mean(body_measurements$follicle_no_R),
+  follicle_no_L = mean(body_measurements$follicle_no_L),
+  avg_fsize_R = avg_fsize_R_range,
+  avg_fsize_L = mean(body_measurements$avg_fsize_L)
+)
+probs <- predict(model_follicle, newdata = new_data, type = "response")
+```
+
+We will know try to predict on the binary data for follicle no to the right and left respectivally
 
 ```{r}
 # | echo: true 
 # | eval: true 
 
+#defining the range of follicles to right and left respectivally
+range(body_measurements$follicle_no_R)
+# results is 0-22
+range(body_measurements$follicle_no_L)
+#results is 0-20
+
+# defining the sequence
+follicle_R <- seq(0, 22, 1)
+follicle_L <- seq(0, 20, 1)
+
+# performing the model for each senario
+model_follicle_R <- glm(as.factor(PCOS_diagnosis) ~ follicle_no_R, data = body_measurements, family = "binomial")
+model_follicle_L <- glm(as.factor(PCOS_diagnosis) ~ follicle_no_L, data = body_measurements, family = "binomial")
+
+# use the function predict, to a model for values in each sequence
+predict_follicle_R <- predict(model_follicle_R, list(follicle_no_R = follicle_R), ,type="response")
+predict_follicle_L <- predict(model_follicle_L, list(follicle_no_L = follicle_L), ,type="response")
+
 # plotting the right side
 lm_plot_R <- body_measurements |>
    ggplot(mapping = aes(x = follicle_no_R, 
                         y = PCOS_diagnosis)) +
-   geom_smooth(method = "glm",
+   stat_smooth(method = "glm",
                formula = y ~ x,
                color = "pink") +
    geom_point(alpha = 0.5, color = "purple") +
@@ -89,12 +125,11 @@ ggsave(lm_plot_R,
        width = 20,
        units = "cm")
 
-
 # plotting the left side
 lm_plot_L <- body_measurements |>
    ggplot(mapping = aes(x = follicle_no_L, 
                         y = as.factor(PCOS_diagnosis))) +
-   geom_smooth(method = "glm",
+   stat_smooth(method = "glm",
                formula = y ~ x,
                color = "pink") +
    geom_point(alpha = 0.5, color = "purple") +
