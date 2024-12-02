@@ -390,28 +390,27 @@ library(cowplot)</code></pre>
 
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements_aug.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 31
-## ── Column specification ──────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_grow...
-## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, ...
+## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_growth, darker_skin, hair_loss,...
+## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, waist, waist_hip_ratio, BP_...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_blood_measurements_aug.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 15
-## ── Column specification ──────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (2): PCOS_diagnosis, cycle_or_pregnancy_stage
-## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitaminD...
+## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitaminD3, PRG, RBS
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code># verifying column names
 colnames(blood_measurements)</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;               &quot;PCOS_diagnosis&quot;           &quot;hemaglobin&quot;              
-##  [4] &quot;betaHCG_1&quot;                &quot;betaHCG_2&quot;                &quot;FSH&quot;                     
-##  [7] &quot;LH&quot;                       &quot;FSH_LH_ratio&quot;             &quot;TSH&quot;                     
-## [10] &quot;AMH&quot;                      &quot;PRL&quot;                      &quot;vitaminD3&quot;               
+<pre><code>##  [1] &quot;patient_ID&quot;               &quot;PCOS_diagnosis&quot;           &quot;hemaglobin&quot;               &quot;betaHCG_1&quot;               
+##  [5] &quot;betaHCG_2&quot;                &quot;FSH&quot;                      &quot;LH&quot;                       &quot;FSH_LH_ratio&quot;            
+##  [9] &quot;TSH&quot;                      &quot;AMH&quot;                      &quot;PRL&quot;                      &quot;vitaminD3&quot;               
 ## [13] &quot;PRG&quot;                      &quot;RBS&quot;                      &quot;cycle_or_pregnancy_stage&quot;</code></pre>
 </div>
 <div id="pca-analysis-with-blood-measurements" class="section level2">

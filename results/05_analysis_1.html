@@ -383,10 +383,10 @@ library(RColorBrewer)</code></pre>
 # Loading file
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements_aug.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 31
-## ── Column specification ──────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_grow...
-## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, ...
+## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_growth, darker_skin, hair_loss,...
+## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, waist, waist_hip_ratio, BP_...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -405,7 +405,7 @@ p_follicles_ovaries &lt;- body_measurements |&gt;
   ggplot(mapping = aes(x = follicle_no_R,
                        y = follicle_no_L,
                        color = PCOS_diagnosis)) + 
-  geom_point(alpha = 0.45) +  
+  geom_point() +  
   geom_smooth(method = &quot;lm&quot;, 
               se = TRUE, 
               aes(fill = PCOS_diagnosis), 
@@ -418,7 +418,7 @@ p_follicles_ovaries &lt;- body_measurements |&gt;
   scale_color_brewer(palette = &quot;Set2&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = &quot;bottom&quot;)
 
 # Saving the plot as a picture
@@ -440,8 +440,7 @@ p_follicle_L &lt;- body_measurements |&gt;
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_L)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
-               outlier.shape = NA,
-               alpha = 0.45) + 
+               outlier.shape = NA) + 
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) +
@@ -451,7 +450,7 @@ p_follicle_L &lt;- body_measurements |&gt;
        fill = &quot;&quot;) + 
   scale_fill_brewer(palette = &quot;Set2&quot;) +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = &quot;none&quot;)
 
 
@@ -468,8 +467,7 @@ p_follicle_R &lt;- body_measurements |&gt;
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_R)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
-               outlier.shape = NA,
-               alpha = 0.45) + 
+               outlier.shape = NA) + 
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) + 
@@ -479,7 +477,7 @@ p_follicle_R &lt;- body_measurements |&gt;
        fill = &quot;&quot;) + 
   scale_fill_brewer(palette = &quot;Set2&quot;) +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = &quot;none&quot;)
 
 
@@ -503,7 +501,7 @@ PCOS_BMI_correlation_box &lt;- body_measurements |&gt;
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = BMI,
                        fill = PCOS_diagnosis)) +
-  geom_boxplot(alpha = 0.45) +
+  geom_boxplot() +
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) +
@@ -513,7 +511,7 @@ PCOS_BMI_correlation_box &lt;- body_measurements |&gt;
        fill = &quot;PCOS diagnosis&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = &quot;bottom&quot;)
 
 # Saving the plot as a picture
@@ -535,7 +533,7 @@ PCOS_endometrium_correlation_box &lt;- body_measurements |&gt;
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = endometrium,
                        fill = PCOS_diagnosis)) +
-  geom_boxplot(alpha = 0.45) +
+  geom_boxplot() +
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) +
@@ -545,7 +543,7 @@ PCOS_endometrium_correlation_box &lt;- body_measurements |&gt;
        fill = &quot;PCOS diagnosis&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = &quot;bottom&quot;)
 
 
@@ -569,7 +567,7 @@ age_cycle_plot &lt;- na.omit(body_measurements) |&gt;
   ggplot(mapping = aes(x = age,
                        y = cycle_RI,
                        color = PCOS_diagnosis)) +
-  geom_violin(alpha = 0.45) +
+  geom_violin() +
   geom_jitter(width = 0.2, 
               alpha = 0.8, 
               size = 1) +
@@ -579,7 +577,7 @@ age_cycle_plot &lt;- na.omit(body_measurements) |&gt;
        color = &quot;PCOS diagnosis&quot;) +
   scale_color_brewer(palette = &quot;Set2&quot;) +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = &quot;bottom&quot;)
 
 
@@ -599,20 +597,20 @@ and what their ages is and if their cycle is regular/irregular.</p>
 # | eval: true
 
 p_age_hair &lt;- body_measurements |&gt; 
-  ggplot(aes(x = hair_growth,
-             fill = PCOS_diagnosis)) +
+  ggplot(aes(x=hair_growth,
+             fill = PCOS_diagnosis))+
   geom_bar(position = position_dodge2(preserve = &quot;single&quot;), width = 0.8,
-           alpha = 0.45) +
-  facet_wrap(~ age_group) +
+           alpha = 0.8)+
+  facet_wrap(~ age_group)+
   labs(x = &quot;Hair growth (yes/no)&quot;, 
        y = &quot;Count&quot;,
        title = &quot;Bar plot of hair growth in different age groups stratisfied for PCOS diagnosis&quot;,
        fill = &quot;PCOS diagnosis&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
   theme_light() + 
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = &quot;bottom&quot;,
-        axis.title.x= element_text(size = 10))
+        axis.title.x= element_text(size = 12))
   
 
 # Saving the plot as a picture
@@ -632,19 +630,18 @@ diagnosis. People with no diagnosis see no increase in hair growth.</p>
 
 #bar plot 
 p_age_pimple &lt;- body_measurements |&gt; 
-  ggplot(aes(x = pimples,
-             fill = PCOS_diagnosis)) +
-  geom_bar(position = position_dodge2(preserve = &quot;single&quot;),
-           width = 0.8,
-           alpha = 0.45) +
-  facet_wrap(~ age_group) +
+  ggplot(aes(x=pimples,
+             fill = PCOS_diagnosis))+
+  geom_bar(position = position_dodge2(preserve = &quot;single&quot;), width = 0.8,
+           alpha = 0.8)+
+  facet_wrap(~ age_group)+
   labs(x = &quot;Pimples (yes/no)&quot;, 
        y = &quot;Count&quot;,
        title = &quot;Bar plot of pimples in different age groups stratisfied for PCOS diagnosis&quot;,
        fill = &quot;PCOS diagnosis&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
   theme_light() + 
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = &quot;bottom&quot;,
         axis.title.x= element_text(size = 10))
 
