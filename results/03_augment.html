@@ -371,19 +371,19 @@ library(dplyr)</code></pre>
 # Load the file
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 29
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (8): PCOS_diagnosis, pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimples, exercise
-## dbl (21): patient_ID, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_RI, period_length, abortions, hip, waist...
+## dbl (21): patient_ID, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_RI, period_le...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_blood_measurements.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 14
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (1): PCOS_diagnosis
-## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitaminD3, PRG, RBS
+## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitaminD...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -395,8 +395,8 @@ body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements.tsv
 
 # Going from inches to cm + new hip/waist ratio
 body_measurements &lt;- body_measurements |&gt; 
-  mutate(hip = hip * 2.54)|&gt;
-  mutate(waist = waist * 2.54)|&gt;
+  mutate(hip = hip * 2.54) |&gt;
+  mutate(waist = waist * 2.54) |&gt;
   mutate(waist_hip_ratio = round(waist_hip_ratio * 2.54, 1))</code></pre>
 </div>
 <div id="rounding-bmi-and-dividing-into-categories" class="section level2">
@@ -413,10 +413,8 @@ body_measurements &lt;- body_measurements |&gt;
     BMI &lt;= 25 | BMI &lt; 30 ~ &quot;Overweight&quot;,
     BMI &gt;= 30 ~ &quot;Obesity&quot;)) |&gt;
   mutate(BMI_class = factor(BMI_class,
-                            levels =  c(&quot;Underweight&quot;, 
-                                        &quot;Normal weight&quot;,
-                                        &quot;Overweight&quot;, 
-                                        &quot;Obesity&quot;))) |&gt;
+                            levels =  c(&quot;Underweight&quot;, &quot;Normal weight&quot;, 
+                                        &quot;Overweight&quot;, &quot;Obesity&quot;))) |&gt;
   relocate(BMI_class, .after = BMI)</code></pre>
 </div>
 <div id="grouping-ages" class="section level2">
@@ -435,13 +433,8 @@ body_measurements &lt;- body_measurements |&gt;
     age &gt;= 40 &amp; age &lt; 45 ~ &quot;[40;45[&quot;,
     age &gt;= 45 ~ &quot;[45&quot;,)) |&gt;
   mutate(age_group = factor(age_group,
-                            levels =  c(&quot;]20&quot;,
-                                        &quot;[20;25[&quot;, 
-                                        &quot;[25;30[&quot;,
-                                        &quot;[30;35[&quot;, 
-                                        &quot;[35;40[&quot;,
-                                        &quot;[40;45[&quot;,
-                                        &quot;[45&quot;))) |&gt;
+                            levels =  c(&quot;]20&quot;, &quot;[20;25[&quot;, &quot;[25;30[&quot;, &quot;[30;35[&quot;,
+                                        &quot;[35;40[&quot;, &quot;[40;45[&quot;, &quot;[45&quot;))) |&gt;
   relocate(age_group, .after = age)</code></pre>
 </div>
 <div id="change-blood-type" class="section level2">
@@ -461,14 +454,8 @@ body_measurements &lt;- body_measurements |&gt;
     blood_type == 17 ~ &quot;AB+&quot;,
     blood_type == 18 ~ &quot;AB-&quot;)) |&gt; 
   mutate(blood_type = factor(blood_type, 
-                             levels = c(&quot;A+&quot;, 
-                                        &quot;A-&quot;, 
-                                        &quot;B+&quot;,
-                                        &quot;B-&quot;, 
-                                        &quot;O+&quot;, 
-                                        &quot;O-&quot;,
-                                        &quot;AB+&quot;,
-                                        &quot;AB-&quot;)))</code></pre>
+                             levels = c(&quot;A+&quot;, &quot;A-&quot;, &quot;B+&quot;, &quot;B-&quot;, &quot;O+&quot;, &quot;O-&quot;,
+                                        &quot;AB+&quot;, &quot;AB-&quot;)))</code></pre>
 </div>
 <div id="change-cycle-status-into-strings" class="section level2">
 <h2>Change cycle status into strings</h2>
@@ -481,8 +468,7 @@ body_measurements &lt;- body_measurements |&gt;
     cycle_RI == 2 ~ &quot;regular&quot;,
     cycle_RI == 4 ~ &quot;irregular&quot;)) |&gt; 
   mutate(cycle_RI = factor(cycle_RI, 
-                           levels = c(&quot;irregular&quot;, 
-                                      &quot;regular&quot;)))</code></pre>
+                           levels = c(&quot;irregular&quot;, &quot;regular&quot;)))</code></pre>
 </div>
 <div id="creating-a-cyclepregnancy-stage-column" class="section level2">
 <h2>Creating a cycle/pregnancy stage column</h2>
@@ -506,7 +492,7 @@ blood_measurements &lt;- blood_measurements |&gt;
                                                      &quot;Likely follicular stage&quot;, 
                                                      &quot;Luteal stage&quot;,
                                                      &quot;Luteal stage/possibly first or second trimester pregnancy&quot;,
-                                                     &quot;First or second trimester pregnancy&quot;, 
+                                                     &quot;First or second trimester pregnancy&quot;,
                                                      &quot;Second trimester pregnancy&quot;,
                                                      &quot;Second or third trimester pregnancy&quot;, 
                                                      &quot;Third trimester pregnancy&quot;,
@@ -529,8 +515,7 @@ write_tsv(x = body_measurements,
 # joining the dataframes (for educational purposes)
 PCOS_merged &lt;- inner_join(x = body_measurements,
                           y = blood_measurements,
-                          by = join_by(patient_ID, 
-                                       PCOS_diagnosis))
+                          by = join_by(patient_ID, PCOS_diagnosis))
 write_tsv(x = PCOS_merged,
           file = &quot;../data/PCOS_merged.tsv&quot;)</code></pre>
 </div>

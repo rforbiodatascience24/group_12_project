@@ -369,8 +369,18 @@ rm(list = ls())</code></pre>
 
 # Loading relevant packages used in this section
 
-library(tidyverse)
-library(readxl)
+library(tidyverse)</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ────────────────────────────────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.2     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.2     
+## ── Conflicts ──────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>library(readxl)
 library(readr)</code></pre>
 </div>
 <div id="load-data" class="section level2">
@@ -385,13 +395,15 @@ path_to_xlsx_file &lt;- &quot;../data/_raw/PCOS_data_without_infertility.xlsx&qu
 sheet_names &lt;- excel_sheets(path_to_xlsx_file)
 
 # load file of interest by sheet name
-PCOS_data_xlsx &lt;- read_excel(path_to_xlsx_file, sheet = &quot;Full_new&quot;)</code></pre>
+PCOS_data_xlsx &lt;- read_excel(path_to_xlsx_file,
+                             sheet = &quot;Full_new&quot;)</code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...45`</code></pre>
 <pre class="r"><code>### quality check
 print(head(PCOS_data_xlsx))
 
-print(paste(&quot;Xlsx file saved at:&quot;, path_to_xlsx_file))</code></pre>
+print(paste(&quot;Xlsx file saved at:&quot;,
+            path_to_xlsx_file))</code></pre>
 <pre><code>## [1] &quot;Xlsx file saved at: ../data/_raw/PCOS_data_without_infertility.xlsx&quot;</code></pre>
 </div>
 <div id="write-and-save-to-tsv" class="section level2">
@@ -403,14 +415,19 @@ print(paste(&quot;Xlsx file saved at:&quot;, path_to_xlsx_file))</code></pre>
 path_to_tsv_file &lt;- &quot;../data/PCOS_data_without_infertility.tsv&quot;
 
 # read sheet of interest by sheet name
-PCOS_data_tsv &lt;- read_excel(path_to_xlsx_file, sheet = &quot;Full_new&quot;)</code></pre>
+PCOS_data_tsv &lt;- read_excel(path_to_xlsx_file,
+                            sheet = &quot;Full_new&quot;)</code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...45`</code></pre>
 <pre class="r"><code># save the data to TSV format
-write.table(PCOS_data_tsv, file = path_to_tsv_file, sep = &quot;\t&quot;, row.names = FALSE, quote = FALSE)
+write.table(PCOS_data_tsv, file = path_to_tsv_file,
+            sep = &quot;\t&quot;,
+            row.names = FALSE,
+            quote = FALSE)
 
 # quality check
-print(paste(&quot;TSV file saved at:&quot;, path_to_tsv_file))</code></pre>
+print(paste(&quot;TSV file saved at:&quot;,
+            path_to_tsv_file))</code></pre>
 <pre><code>## [1] &quot;TSV file saved at: ../data/PCOS_data_without_infertility.tsv&quot;</code></pre>
 </div>
 
