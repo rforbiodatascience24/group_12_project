@@ -56,6 +56,8 @@ model_follicle <- glm(as.factor(PCOS_diagnosis) ~ follicle_no_R + follicle_no_L 
 
 
 summary(model_follicle)
+plot(model_follicle)
+
 
 ```
 
@@ -164,6 +166,7 @@ lm_diff <- glm(as.factor(PCOS_diagnosis) ~ follicle_no_diff,
                data = body_measurements)
 
 summary(lm_diff)
+plot(lm_diff)
 
 
 ```
@@ -198,6 +201,7 @@ lm_follicle_R <- lm(nonPCOS_follicles_no ~ PCOS_follicles_no,
             data = follicle_R_dataframe)
 
 summary(lm_follicle_R)
+plot(lm_follicle_R)
 
 ### number of follicles to the left
 
@@ -223,6 +227,7 @@ lm_follicle_L <- lm(nonPCOS_follicles_no ~ PCOS_follicles_no,
             data = follicle_L_dataframe)
 
 summary(lm_follicle_L)
+plot(lm_follicle_L)
 
 ```
 
