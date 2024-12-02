@@ -72,7 +72,7 @@ blood_PCA <- pca_fit |>
        color = "PCOS diagnosis") + 
   geom_point(size = 1.5, 
              alpha = 0.45) +
-  scale_color_brewer(palette = "set2")
+  scale_color_brewer(palette = "Set2") +
   theme_light() +
   theme(legend.position = "bottom") +
   xlim(-1, 1) +  
@@ -169,7 +169,7 @@ explained_variance_blood <- pca_fit |>
              color = "#7570B3",
              alpha = 0.6) +
   geom_col(fill = "#D95F02", 
-           alpha = 0.8) +
+           alpha = 0.45) +
   geom_text(aes(label = scales::percent(percent, 
                                         accuracy = 0.1), 
                                         y = percent+0.01), 
@@ -219,9 +219,11 @@ FSH_PCA <- pca_fit |>
        x = "Principal component 1",
        y = "Principal component 2",
        color = "FSH") + 
-  theme_minimal() +
+  theme_light() +
+  scale_color_brewer(palette = "Set2") +
   theme(legend.position = "bottom") +
-  geom_point(size = 1.5, alpha = 0.5) +
+  geom_point(size = 1.5,
+             alpha = 0.45) +
   xlim(-0.5, 0.5) +  
   ylim(-1, 1)   
 
@@ -263,8 +265,10 @@ blood_not_hormes_PCA <- pca_fit |>
   labs(x = "Principal component 1",
        y = "Principal component 2",
        color = "PCOS diagnosis") + 
-  geom_point(size = 1.5, alpha = 0.45) +
-  theme_minimal() + 
+  geom_point(size = 1.5,
+             alpha = 0.45) +
+  theme_light() + 
+  scale_color_brewer(palette = "Set2") +
   theme(legend.position = "bottom") +
   xlim(-0.5, 0.5) +  
   ylim(-1, 1)    
@@ -351,7 +355,7 @@ rotation_matrix_body <- pca_fit_2 |>
               names_prefix = "PC", 
               values_from = "value") |> 
   ggplot(aes(PC1, PC2)) +
-  labs(title = "Rotation matrix",
+  labs(title = "Rotation matrix for body measurements",
        x = "Principal component 1",
        y = "Principal component 2") +
   geom_segment(xend = 0, 
@@ -400,7 +404,7 @@ explained_variance_body <- pca_fit_2 |>
   geom_point(aes(y = cumulative / transformation_co_BM), 
              color = "#7570B3") +
   geom_col(fill = "#D95F02", 
-           alpha = 0.8) +
+           alpha = 0.45) +
   geom_text(aes(label = scales::percent(percent, 
                                         accuracy = 0.1), 
                 y = percent+0.01), 
@@ -453,7 +457,8 @@ follicle_PCA <- pca_fit_3 |>
        color = "PCOS diagnosis") + 
   geom_point(size = 1.5, 
              alpha = 0.45) +
-  theme_minimal()
+  theme_light() +
+  scale_color_brewer(palette = "Set2")
 
 follicle_PCA
 
@@ -490,8 +495,9 @@ obs_PCA <- pca_fit_4 |>
        y = "Principal component 2",
        color = "PCOS diagnosis") + 
   geom_point(size = 1.5, 
-             alpha = 0.5) +
-  theme_minimal()
+             alpha = 0.45) +
+  theme_light() +
+  scale_color_brewer(palette = "Set2")
 
 obs_PCA
 
