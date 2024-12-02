@@ -43,7 +43,7 @@ body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
 
 # Analysis of body measurement data
 
-First part of this project, will be to test if there is a correlation between patients with PCOS using the body measurments data.
+First part of this project, will be to test if there is a correlation between patients with PCOS using the body measurements data.
 
 ## Follicle and PCOS
 
@@ -82,7 +82,7 @@ ggsave(p_follicles_ovaries,
 
 ```
 
-The number of follicles in the left and right ovaries are increased for people with the PCOs diagnosis. We look further into the number of follicles in each ovary:
+The number of follicles in the left and right ovaries are increased for people with the PCOS diagnosis. We look further into the number of follicles in each ovary:
 
 ```{r}
 # | echo: true

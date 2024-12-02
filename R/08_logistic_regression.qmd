@@ -78,7 +78,7 @@ new_data <- data.frame(
 probs <- predict(model_follicle, newdata = new_data, type = "response")
 ```
 
-We will know try to predict on the binary data for follicle no to the right and left respectivally
+We will know try to predict on the binary data for follicle no to the right and left retrospectively
 
 ```{r}
 # | echo: true 
