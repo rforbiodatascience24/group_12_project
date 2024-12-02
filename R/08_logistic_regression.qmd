@@ -50,8 +50,10 @@ From previous analysis, the follicle number and size seems slight important for 
 
 # wrangling data for analysis with logistic regression
 body_measurements <- body_measurements |>
-  mutate(PCOS_diagnosis = factor(PCOS_diagnosis, levels = c("No", "Yes"), labels = c(0, 1)))|>
-  mutate(PCOS_diagnosis = as.numeric(PCOS_diagnosis)-1)
+  mutate(PCOS_diagnosis = factor(PCOS_diagnosis,
+                                 levels = c("No", "Yes"),
+                                 labels = c(0, 1)))|>
+  mutate(PCOS_diagnosis = as.numeric(PCOS_diagnosis) -1)
 
 # making a new dataframe
 data_model <- body_measurements |>
@@ -65,7 +67,7 @@ follicle_model <- glm(PCOS_diagnosis ~.,
           family = "binomial",
           data = data_model)
 
-summary(new_model)
+summary(follicle_model)
 
 ```
 
@@ -81,16 +83,31 @@ We will know try to predict on the binary data for follicle no to the right and 
 
 plot_follicle_R <- body_measurements |>
   ggplot(mapping = aes(follicle_no_R, PCOS_diagnosis)) + 
-  geom_point(alpha = 0.5, color = "purple") + 
+  geom_point(alpha = 0.45,
+             color = "#1B9E77") + 
   geom_smooth(method = "glm",
-              method.args = list(family = "binomial"))+
-  geom_hline(yintercept = 0.5, linetype = "dashed", color = "pink", linewidth = 0.5) +  
-  geom_vline(xintercept = 8.4, linetype = "dashed", color = "pink", linewidth = 0.5) + 
-  geom_point(x = 8.4, y = 0.5, color = "pink", size = 4) + 
+              method.args = list(family = "binomial"),
+              color = "#7570B3",
+              alpha = 0.45) +
+  geom_hline(yintercept = 0.5,
+             linetype = "dashed",
+             color = "#D95F02",
+             linewidth = 0.5,
+             alpha = 0.3) +  
+  geom_vline(xintercept = 8.4,
+             linetype = "dashed",
+             color = "#D95F02",
+             linewidth = 0.5,
+             alpha = 0.3) + 
+  geom_point(x = 8.4,
+             y = 0.5,
+             color = "#D95F02",
+             size = 4,
+             alpha = 0.3) + 
   labs(title = "Logistic Regression Model",
         x = "Follicle number (R)",
-        y = "PCOS diagnosis (Yes/no)") +
-   theme_minimal()
+        y = "Probability of PCOS") +
+   theme_light()
 
 
 print(plot_follicle_R)
@@ -107,16 +124,31 @@ ggsave(plot_follicle_R,
 
 plot_follicle_L <- body_measurements |>
   ggplot(mapping = aes(follicle_no_L, PCOS_diagnosis)) + 
-  geom_point(alpha = 0.5, color = "purple") + 
+  geom_point(alpha = 0.45,
+             color = "#1B9E77") + 
   geom_smooth(method = "glm",
-              method.args = list(family = "binomial"))+
-  geom_hline(yintercept = 0.5, linetype = "dashed", color = "pink", linewidth = 0.5) +  
-  geom_vline(xintercept = 9.0, linetype = "dashed", color = "pink", linewidth = 0.5) + 
-  geom_point(x = 9.0, y = 0.5, color = "pink", size = 4) + 
+              method.args = list(family = "binomial"),
+              color = "#7570B3",
+              alpha = 0.45) +
+  geom_hline(yintercept = 0.5,
+             linetype = "dashed",
+             color = "#D95F02",
+             linewidth = 0.5,
+             alpha = 0.3) +  
+  geom_vline(xintercept = 9.0,
+             linetype = "dashed",
+             color = "#D95F02",
+             linewidth = 0.5,
+             alpha = 0.3) + 
+  geom_point(x = 9.0,
+             y = 0.5,
+             color = "#D95F02",
+             size = 4,
+             alpha = 0.3) + 
   labs(title = "Logistic Regression Model",
         x = "Follicle number (L)",
-        y = "PCOS diagnosis (Yes/no)") +
-   theme_minimal()
+        y = "Probability of PCOS") +
+   theme_light()
 
 
 print(plot_follicle_L)
@@ -146,7 +178,6 @@ lm_diff <- glm(as.factor(PCOS_diagnosis) ~ follicle_no_diff,
                data = body_measurements)
 
 summary(lm_diff)
-plot(lm_diff)
 
 ```
 
@@ -173,7 +204,8 @@ nonPCOS_patients <- body_measurements |>
   select(- follicle_no_R)
 
 follicle_R_dataframe <- bind_rows(nonPCOS_patients, PCOS_patients) |>
-  replace_na(list(nonPCOS_follicles_no = 0, PCOS_follicles_no = 0))
+  replace_na(list(nonPCOS_follicles_no = 0,
+                  PCOS_follicles_no = 0))
 
 # trying to make the model
 lm_follicle_R <- lm(nonPCOS_follicles_no ~ PCOS_follicles_no, 
@@ -199,7 +231,8 @@ nonPCOS_patients <- body_measurements |>
   select(- follicle_no_L)
 
 follicle_L_dataframe <- bind_rows(nonPCOS_patients, PCOS_patients) |>
-  replace_na(list(nonPCOS_follicles_no = 0, PCOS_follicles_no = 0))
+  replace_na(list(nonPCOS_follicles_no = 0,
+                  PCOS_follicles_no = 0))
 
 # trying to make the model
 lm_follicle_L <- lm(nonPCOS_follicles_no ~ PCOS_follicles_no, 
