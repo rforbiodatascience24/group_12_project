@@ -377,10 +377,10 @@ library(tidyverse)</code></pre>
 # Load the file
 PCOS &lt;- read_tsv(file = &quot;../data/PCOS_data_without_infertility.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 45
-## ── Column specification ────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (3): II    beta-HCG(mIU/mL), AMH(ng/mL), ...45
-## dbl (42): Sl. No, Patient File No., PCOS (Y/N), Age (yrs), Weight (Kg), Height(Cm), BMI, Blo...
+## dbl (42): Sl. No, Patient File No., PCOS (Y/N), Age (yrs), Weight (Kg), Height(Cm), BMI, Blood Group, Pulse rate(bpm), RR (breath...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -543,15 +543,12 @@ write_tsv(x = PCOS,
 
 # Check colnames of original dataset
 colnames(PCOS)</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;      &quot;PCOS_diagnosis&quot;  &quot;age&quot;             &quot;weight&quot;          &quot;height&quot;         
-##  [6] &quot;BMI&quot;             &quot;blood_type&quot;      &quot;pulse&quot;           &quot;breaths_pr_min&quot;  &quot;hemaglobin&quot;     
-## [11] &quot;cycle_RI&quot;        &quot;period_length&quot;   &quot;pregnant&quot;        &quot;abortions&quot;       &quot;betaHCG_1&quot;      
-## [16] &quot;betaHCG_2&quot;       &quot;FSH&quot;             &quot;LH&quot;              &quot;FSH_LH_ratio&quot;    &quot;hip&quot;            
-## [21] &quot;waist&quot;           &quot;waist_hip_ratio&quot; &quot;TSH&quot;             &quot;AMH&quot;             &quot;PRL&quot;            
-## [26] &quot;vitaminD3&quot;       &quot;PRG&quot;             &quot;RBS&quot;             &quot;weight_gain&quot;     &quot;hair_growth&quot;    
-## [31] &quot;darker_skin&quot;     &quot;hair_loss&quot;       &quot;pimples&quot;         &quot;exercise&quot;        &quot;BP_systolic&quot;    
-## [36] &quot;BP_diastolic&quot;    &quot;follicle_no_R&quot;   &quot;follicle_no_L&quot;   &quot;avg_fsize_L&quot;     &quot;avg_fsize_R&quot;    
-## [41] &quot;endometrium&quot;</code></pre>
+<pre><code>##  [1] &quot;patient_ID&quot;      &quot;PCOS_diagnosis&quot;  &quot;age&quot;             &quot;weight&quot;          &quot;height&quot;          &quot;BMI&quot;             &quot;blood_type&quot;     
+##  [8] &quot;pulse&quot;           &quot;breaths_pr_min&quot;  &quot;hemaglobin&quot;      &quot;cycle_RI&quot;        &quot;period_length&quot;   &quot;pregnant&quot;        &quot;abortions&quot;      
+## [15] &quot;betaHCG_1&quot;       &quot;betaHCG_2&quot;       &quot;FSH&quot;             &quot;LH&quot;              &quot;FSH_LH_ratio&quot;    &quot;hip&quot;             &quot;waist&quot;          
+## [22] &quot;waist_hip_ratio&quot; &quot;TSH&quot;             &quot;AMH&quot;             &quot;PRL&quot;             &quot;vitaminD3&quot;       &quot;PRG&quot;             &quot;RBS&quot;            
+## [29] &quot;weight_gain&quot;     &quot;hair_growth&quot;     &quot;darker_skin&quot;     &quot;hair_loss&quot;       &quot;pimples&quot;         &quot;exercise&quot;        &quot;BP_systolic&quot;    
+## [36] &quot;BP_diastolic&quot;    &quot;follicle_no_R&quot;   &quot;follicle_no_L&quot;   &quot;avg_fsize_L&quot;     &quot;avg_fsize_R&quot;     &quot;endometrium&quot;</code></pre>
 <pre class="r"><code>## Read the data into separate files
 # Load the dataset, selecting columns from defined ranges 
 blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_clean.tsv&quot;,
@@ -560,39 +557,37 @@ blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_clean.tsv&quot;,
                                               15:19,
                                               23:28))</code></pre>
 <pre><code>## Rows: 541 Columns: 14
-## ── Column specification ────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (1): PCOS_diagnosis
-## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL...
+## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitaminD3, PRG, RBS
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code># View the column names of the selected data
 colnames(blood_measurements)</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;     &quot;PCOS_diagnosis&quot; &quot;hemaglobin&quot;     &quot;betaHCG_1&quot;      &quot;betaHCG_2&quot;     
-##  [6] &quot;FSH&quot;            &quot;LH&quot;             &quot;FSH_LH_ratio&quot;   &quot;TSH&quot;            &quot;AMH&quot;           
-## [11] &quot;PRL&quot;            &quot;vitaminD3&quot;      &quot;PRG&quot;            &quot;RBS&quot;</code></pre>
+<pre><code>##  [1] &quot;patient_ID&quot;     &quot;PCOS_diagnosis&quot; &quot;hemaglobin&quot;     &quot;betaHCG_1&quot;      &quot;betaHCG_2&quot;      &quot;FSH&quot;            &quot;LH&quot;            
+##  [8] &quot;FSH_LH_ratio&quot;   &quot;TSH&quot;            &quot;AMH&quot;            &quot;PRL&quot;            &quot;vitaminD3&quot;      &quot;PRG&quot;            &quot;RBS&quot;</code></pre>
 <pre class="r"><code># Select body measurements using column names (excluding blood measurements)
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_clean.tsv&quot;,
                               col_select = -c(10,
                                               15:19,
                                               23:28))</code></pre>
 <pre><code>## Rows: 541 Columns: 29
-## ── Column specification ────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr  (8): PCOS_diagnosis, pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimple...
-## dbl (21): patient_ID, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_RI,...
+## chr  (8): PCOS_diagnosis, pregnant, weight_gain, hair_growth, darker_skin, hair_loss, pimples, exercise
+## dbl (21): patient_ID, age, weight, height, BMI, blood_type, pulse, breaths_pr_min, cycle_RI, period_length, abortions, hip, waist...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code># View the column names of the selected data
 colnames(body_measurements)</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;      &quot;PCOS_diagnosis&quot;  &quot;age&quot;             &quot;weight&quot;          &quot;height&quot;         
-##  [6] &quot;BMI&quot;             &quot;blood_type&quot;      &quot;pulse&quot;           &quot;breaths_pr_min&quot;  &quot;cycle_RI&quot;       
-## [11] &quot;period_length&quot;   &quot;pregnant&quot;        &quot;abortions&quot;       &quot;hip&quot;             &quot;waist&quot;          
-## [16] &quot;waist_hip_ratio&quot; &quot;weight_gain&quot;     &quot;hair_growth&quot;     &quot;darker_skin&quot;     &quot;hair_loss&quot;      
-## [21] &quot;pimples&quot;         &quot;exercise&quot;        &quot;BP_systolic&quot;     &quot;BP_diastolic&quot;    &quot;follicle_no_R&quot;  
-## [26] &quot;follicle_no_L&quot;   &quot;avg_fsize_L&quot;     &quot;avg_fsize_R&quot;     &quot;endometrium&quot;</code></pre>
+<pre><code>##  [1] &quot;patient_ID&quot;      &quot;PCOS_diagnosis&quot;  &quot;age&quot;             &quot;weight&quot;          &quot;height&quot;          &quot;BMI&quot;             &quot;blood_type&quot;     
+##  [8] &quot;pulse&quot;           &quot;breaths_pr_min&quot;  &quot;cycle_RI&quot;        &quot;period_length&quot;   &quot;pregnant&quot;        &quot;abortions&quot;       &quot;hip&quot;            
+## [15] &quot;waist&quot;           &quot;waist_hip_ratio&quot; &quot;weight_gain&quot;     &quot;hair_growth&quot;     &quot;darker_skin&quot;     &quot;hair_loss&quot;       &quot;pimples&quot;        
+## [22] &quot;exercise&quot;        &quot;BP_systolic&quot;     &quot;BP_diastolic&quot;    &quot;follicle_no_R&quot;   &quot;follicle_no_L&quot;   &quot;avg_fsize_L&quot;     &quot;avg_fsize_R&quot;    
+## [29] &quot;endometrium&quot;</code></pre>
 <pre class="r"><code># Write the data into two data files
 write_tsv(x = blood_measurements,
           file = &quot;../data/PCOS_blood_measurements.tsv&quot;)
