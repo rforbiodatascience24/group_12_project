@@ -30,7 +30,7 @@ The purpose of this study is to test if there is any relationship between PCOS a
 
 The dataset used for this analysis has been published on Kraggle and created by the author Prasoon Kottarathil and consists of data collected from 10 hospitals across Kerala, India [4]. The dataset consists of various factors, belonging to clinical and physical variables. The cleaned dataset consist of the following:
 
-**Variable *- unit***
+**Variable and unit**
 
 | Variable | PCOS_diagnosis | age    | weight | height | pulse | breaths_pr_min | hemaglobin | cycle_RI            | period_length | pregnant | abortions | betaHCG_1 | betaHCG_2 | FSH      | LH       | FSH_LH_ratio | hip  | waist | TSH      | AMH     | PRL     | vitaminD3 | PRG     | RBS     | weight_gain | hair_growth | darker_skin | hair_loss | pimples  | exercise | BP_systolic | BP_diastolic | follicle_no_R | follicle_no_L | avg_fsize_L | avg_fsize_R | endometrium |
 |--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
