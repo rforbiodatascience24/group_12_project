@@ -33,7 +33,7 @@ The dataset used for this analysis has been published on Kraggle and created by 
 **Variable and unit**
 
 | Variable | PCOS_diagnosis | age    | weight | height | pulse | breaths_pr_min | hemaglobin | cycle_RI            | period_length | pregnant | abortions | betaHCG_1 | betaHCG_2 | FSH      | LH       | FSH_LH_ratio | hip  | waist | TSH      | AMH     | PRL     | vitaminD3 | PRG     | RBS     | weight_gain | hair_growth | darker_skin | hair_loss | pimples  | exercise | BP_systolic | BP_diastolic | follicle_no_R | follicle_no_L | avg_fsize_L | avg_fsize_R | endometrium |
-|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+|----------|----------------|--------|--------|--------|-------|----------------|------------|---------------------|---------------|----------|-----------|-----------|-----------|----------|----------|--------------|------|-------|----------|---------|---------|-----------|---------|---------|-------------|-------------|-------------|-----------|----------|----------|-------------|--------------|---------------|---------------|-------------|-------------|-------------|
 | Unit     | (yes/no)       | (year) | (kg)   | (cm)   | (bpm) | (breaths/min)  | (g/dl)     | (regular/irregular) | (days)        | (yes/no) | (count)   | (mIU/mL)  | (mIU/mL)  | (mIU/mL) | (mIU/mL) |              | (cm) | (cm)  | (mIU/mL) | (ng/mL) | (ng/mL) | (ng/mL)   | (ng/mL) | (mg/mL) | (yes/no)    | (yes/no)    | (yes/no)    | (yes/no)  | (yes/no) | (yes/no) | (mmHg)      | (mmHg)       | (count)       | (count)       | (mm)        | (mm)        | (mm)        |
 
 ## Usage
