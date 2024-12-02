@@ -107,7 +107,8 @@ plot_follicle_R <- body_measurements |>
   labs(title = "Logistic Regression Model",
         x = "Follicle number (R)",
         y = "Probability of PCOS") +
-   theme_light()
+   theme_light() +
+  theme(title = element_text(size = 14))
 
 
 print(plot_follicle_R)
@@ -148,7 +149,8 @@ plot_follicle_L <- body_measurements |>
   labs(title = "Logistic Regression Model",
         x = "Follicle number (L)",
         y = "Probability of PCOS") +
-   theme_light()
+  theme_light() +
+  theme(title = element_text(size = 14))
 
 
 print(plot_follicle_L)

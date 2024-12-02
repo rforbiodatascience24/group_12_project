@@ -127,7 +127,7 @@ age_plot <- body_measurements |>
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
   theme_light() +
-  theme(title = element_text(size = 15),
+  theme(title = element_text(size = 14),
         legend.position = "bottom")
 
 
@@ -163,7 +163,7 @@ BMI_bar <- body_measurements |>
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = "bottom")
 
 # Saving the plot as a picture
@@ -197,7 +197,7 @@ blood_type_plot <- body_measurements |>
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = "bottom")
 
 
@@ -231,7 +231,7 @@ period_plot <- body_measurements |>
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = "bottom")
 
 # Saving the plot as a picture

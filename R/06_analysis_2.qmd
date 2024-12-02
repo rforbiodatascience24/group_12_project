@@ -57,7 +57,7 @@ box_AMH <- blood_measurements |>
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = "bottom")
 
 box_AMH
@@ -90,7 +90,7 @@ PRL_density <- blood_measurements |>
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 14),
         legend.position = "bottom")
 
 # saving the plot
@@ -144,7 +144,7 @@ cor_blood_plot <- ggplot(data = melted_table,
        y = "", 
        fill = "Correlation",
        title = "Correlationplot of the blood values") +
-  theme(title = element_text(size = 8))
+  theme(title = element_text(size = 14))
 
 
 ggsave(cor_blood_plot,
