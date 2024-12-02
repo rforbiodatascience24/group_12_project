@@ -24,6 +24,7 @@ library(tidyverse)
 library(RColorBrewer)
 library(ggplot2)
 library(ggridges)
+library(table1)
 ```
 
 ## Load data
@@ -214,7 +215,6 @@ There is not an equal distribution of the data points between different blood gr
 ### Density plot of period length
 
 ```{r}
-
 # | echo: true
 # | eval: true
 
@@ -243,3 +243,32 @@ ggsave(period_plot,
 ```
 
 The period length of people with PCOS diagnosis is more scattered then the lengths of people with no diagnosis.
+
+For easy summary of the data, the following can also be performed.
+
+```{r}
+# | echo: true
+# | eval: true
+
+# general summary table
+summary_table <- PCOS |>
+  table1(x = formula(~ age + weight + height + pulse + breaths_pr_min + cycle_RI + period_length + period_length + pregnant + abortions + weight_gain + hair_growth + darker_skin + hair_loss | PCOS_diagnosis)) 
+
+# checking the summary table
+print(summary_table)
+
+# summary table for period related parameters
+summary_period <- PCOS |>
+  table1(x = formula(~ cycle_RI +  period_length + pregnant + abortions | PCOS_diagnosis)) 
+
+# checking the summary table for period paramters
+print(summary_period)
+
+# summary table for symptoms often related to PCOS
+summary_symptoms <- PCOS |>
+  table1(x = formula(~ weight_gain + hair_growth + darker_skin + hair_loss | PCOS_diagnosis)) 
+
+# checking the summary table for PCOS related symptoms
+print(summary_symptoms)
+
+```
