@@ -22,17 +22,17 @@ library(tidyverse)
 
 -   Polycystic ovary syndrome (PCOS) is a syndrome documented in women in their menstruating ages
 
--   Documented symptoms are often; period pains, irregular periods, ovary-related problems and hormone imbalance
+-   Documented symptoms are often; period pains, irregular periods, ovary-related problems and hormone imbalance \[Mayo Clinic\]
 
--   Patients with PCOS often have problems with fertility and potential pregnancy complications
+-   Patients with PCOS often have problems with fertility and potential pregnancy complications \[Cleveland Clinic\]
 
 -   However, the cause of PCOS is still not verified, and diagnosis is complicated
 
--   The data set has been made in India and data comes from 10 different hospitals.
+-   The data set has been made in India and data comes from 10 different hospitals \[Kaggle\]
 
 ### Aim
 
-The aim of this study is to examine a data set of patients with and without PCOS to identify potential biomarkers.
+The aim of this study is to examine a data set of patients with and without PCOS to identify potential biomarkers
 
 ## Data handling approach {style=".smaller"}
 
@@ -248,7 +248,6 @@ summary(follicle_model)
 ## Logistic regression of follicle numbers as a biomarker
 
 ::: {style=".smaller, font-size: 0.8em"}
-
 ::: columns
 ::: {.column width="50%"}
 ![](../results/08_plot_follicle_R.png)
@@ -263,19 +262,21 @@ summary(follicle_model)
 ## Discussion and Conclusion
 
 ::: {style="font-size: 0.9em"}
--   Blood measurements don't show significance
+::: {style="font-size: 0.8em"}
+Blood measurements don't show significance
 
-    -   Blood biomarker for PCOS diagnosis - not recommended based on this data
+-   Blood biomarker for PCOS diagnosis - not recommended based on this data
 
-    -   A limitation of the data is that it does not explicitly tell where the women are in their cycle
+-   A limitation of the data is that it does not explicitly tell where the women are in their cycle
 
--   Body measurements show significance for left and right follicle numbers
+Body measurements show significance for left and right follicle numbers
 
-    -   High follicle number could potentially be a biomarker for PCOS diagnosis
+-   High follicle number could potentially be a biomarker for PCOS diagnosis
 
-        -   This aligns well with the use of ultrasound
+    -   This aligns well with the use of ultrasound
 
--   Imbalanced dataset between women with an without PCOS - more women without PCOS present
+Imbalanced dataset between women with an without PCOS - more women without PCOS present
 
--   Not an optimal data set for significant conclusions
+Not an optimal data set for significant conclusions
+:::
 :::
