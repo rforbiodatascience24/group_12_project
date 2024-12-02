@@ -363,7 +363,7 @@ rotation_matrix_body <- pca_fit_2 |>
                arrow = arrow_style) +
   geom_text(aes(label = column), 
             color = "#1B9E77") +
-  theme_minimal()
+  theme_light()
 
 rotation_matrix_body
 
