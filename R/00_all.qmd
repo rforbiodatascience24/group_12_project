@@ -16,18 +16,25 @@ editor: visual
 
 rmarkdown::render(input = '01_load.qmd',
                   output_dir = '../results')
+
 rmarkdown::render(input = '02_clean.qmd',
                   output_dir = '../results')
+
 rmarkdown::render(input = '03_augment.qmd',
                   output_dir = '../results')
+
 rmarkdown::render(input = '04_describe.qmd',
                   output_dir = '../results')
+
 rmarkdown::render(input = '05_analysis_1.qmd',
                   output_dir = '../results')
+
 rmarkdown::render(input = '06_analysis_2.qmd',
                   output_dir = '../results')
+
 rmarkdown::render(input = '07_PCA.qmd',
                   output_dir = '../results')
+
 rmarkdown::render(input = '08_logistic_regression.qmd',
                   output_dir = '../results')
 

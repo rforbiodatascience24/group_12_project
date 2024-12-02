@@ -386,57 +386,57 @@ library(table1)</code></pre>
 #Load the file
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements_aug.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 31
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_growth, darker_skin, hair_loss,...
-## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, waist, waist_hip_ratio, BP_...
+## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_grow...
+## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, ...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>blood_measurements &lt;- read_tsv(file = &quot;../data/PCOS_blood_measurements_aug.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 15
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (2): PCOS_diagnosis, cycle_or_pregnancy_stage
-## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitaminD3, PRG, RBS
+## dbl (13): patient_ID, hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, FSH_LH_ratio, TSH, AMH, PRL, vitaminD...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>PCOS &lt;- read_tsv(file = &quot;../data/PCOS_merged.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 44
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr (13): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_growth, darker_skin, hair_loss,...
-## dbl (31): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, waist, waist_hip_ratio, BP_...
+## chr (13): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_grow...
+## dbl (31): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, ...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 <div id="data-statistics" class="section level2">
 <h2>Data statistics</h2>
-<p>Checking dimensions of metadata tible</p>
+<p>Checking dimensions of metadata tibble.</p>
 <pre class="r"><code># | echo: true
 # | eval: true
 
 # Cheking the dimensions of the body measurements
 body_measurements_dim &lt;- body_measurements |&gt;
   dim() |&gt;
-  tibble()|&gt;
-  rename(&quot;Body measurments dimensions&quot; = &quot;dim(body_measurements)&quot;)|&gt;
+  tibble() |&gt;
+  rename(&quot;Body measurments dimensions&quot; = &quot;dim(body_measurements)&quot;) |&gt;
   print()
 
 # Cheking the dimensions of the blood measurements
 blood_measurements_dim &lt;- blood_measurements |&gt;
   dim() |&gt;
-  tibble()|&gt;
-  rename(&quot;Blood measurments dimensions&quot; = &quot;dim(blood_measurements)&quot;)|&gt;
+  tibble() |&gt;
+  rename(&quot;Blood measurments dimensions&quot; = &quot;dim(blood_measurements)&quot;) |&gt;
   print()
   
 # Cheking the dimensions of the blood measurements
 PCOS_dim &lt;- PCOS |&gt;
   dim() |&gt;
-  tibble()|&gt;
-  rename(&quot;PCOS dimensions&quot; = &quot;dim(PCOS)&quot;)|&gt;
+  tibble() |&gt;
+  rename(&quot;PCOS dimensions&quot; = &quot;dim(PCOS)&quot;) |&gt;
   print()</code></pre>
 <p>Checking column names and count patients with and without PCOS
 diagnosis</p>
@@ -446,17 +446,21 @@ diagnosis</p>
 # which column names exist in the merged data set:
 PCOS |&gt; 
   colnames()</code></pre>
-<pre><code>##  [1] &quot;patient_ID&quot;               &quot;PCOS_diagnosis&quot;           &quot;age&quot;                      &quot;age_group&quot;               
-##  [5] &quot;weight&quot;                   &quot;height&quot;                   &quot;BMI&quot;                      &quot;BMI_class&quot;               
-##  [9] &quot;blood_type&quot;               &quot;pulse&quot;                    &quot;breaths_pr_min&quot;           &quot;cycle_RI&quot;                
-## [13] &quot;period_length&quot;            &quot;pregnant&quot;                 &quot;abortions&quot;                &quot;hip&quot;                     
-## [17] &quot;waist&quot;                    &quot;waist_hip_ratio&quot;          &quot;weight_gain&quot;              &quot;hair_growth&quot;             
-## [21] &quot;darker_skin&quot;              &quot;hair_loss&quot;                &quot;pimples&quot;                  &quot;exercise&quot;                
-## [25] &quot;BP_systolic&quot;              &quot;BP_diastolic&quot;             &quot;follicle_no_R&quot;            &quot;follicle_no_L&quot;           
-## [29] &quot;avg_fsize_L&quot;              &quot;avg_fsize_R&quot;              &quot;endometrium&quot;              &quot;hemaglobin&quot;              
-## [33] &quot;betaHCG_1&quot;                &quot;betaHCG_2&quot;                &quot;FSH&quot;                      &quot;LH&quot;                      
-## [37] &quot;FSH_LH_ratio&quot;             &quot;TSH&quot;                      &quot;AMH&quot;                      &quot;PRL&quot;                     
-## [41] &quot;vitaminD3&quot;                &quot;PRG&quot;                      &quot;RBS&quot;                      &quot;cycle_or_pregnancy_stage&quot;</code></pre>
+<pre><code>##  [1] &quot;patient_ID&quot;               &quot;PCOS_diagnosis&quot;           &quot;age&quot;                     
+##  [4] &quot;age_group&quot;                &quot;weight&quot;                   &quot;height&quot;                  
+##  [7] &quot;BMI&quot;                      &quot;BMI_class&quot;                &quot;blood_type&quot;              
+## [10] &quot;pulse&quot;                    &quot;breaths_pr_min&quot;           &quot;cycle_RI&quot;                
+## [13] &quot;period_length&quot;            &quot;pregnant&quot;                 &quot;abortions&quot;               
+## [16] &quot;hip&quot;                      &quot;waist&quot;                    &quot;waist_hip_ratio&quot;         
+## [19] &quot;weight_gain&quot;              &quot;hair_growth&quot;              &quot;darker_skin&quot;             
+## [22] &quot;hair_loss&quot;                &quot;pimples&quot;                  &quot;exercise&quot;                
+## [25] &quot;BP_systolic&quot;              &quot;BP_diastolic&quot;             &quot;follicle_no_R&quot;           
+## [28] &quot;follicle_no_L&quot;            &quot;avg_fsize_L&quot;              &quot;avg_fsize_R&quot;             
+## [31] &quot;endometrium&quot;              &quot;hemaglobin&quot;               &quot;betaHCG_1&quot;               
+## [34] &quot;betaHCG_2&quot;                &quot;FSH&quot;                      &quot;LH&quot;                      
+## [37] &quot;FSH_LH_ratio&quot;             &quot;TSH&quot;                      &quot;AMH&quot;                     
+## [40] &quot;PRL&quot;                      &quot;vitaminD3&quot;                &quot;PRG&quot;                     
+## [43] &quot;RBS&quot;                      &quot;cycle_or_pregnancy_stage&quot;</code></pre>
 <pre class="r"><code># counting patients with (yes) and without (no PCOS diagnosis)
 PCOS |&gt; 
   count(PCOS_diagnosis)</code></pre>
@@ -494,7 +498,7 @@ age_plot &lt;- body_measurements |&gt;
        title = &quot;Histogram of age distribution stratified for PCOS diagnosis&quot;,
        fill = &quot;PCOS diagnosis&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
-  theme_light()+
+  theme_light() +
   theme(title = element_text(size = 8),
         legend.position = &quot;bottom&quot;)
 
@@ -516,7 +520,8 @@ ggsave(age_plot,
 
 # Creating bar chart of BMI distribution stratified on PCOS diagnosis
 BMI_bar &lt;- body_measurements |&gt;
-  mutate(BMI_class = fct_relevel(BMI_class, &quot;Underweight&quot;, &quot;Normal weight&quot;, &quot;Overweight&quot;,&quot;Obesity&quot;)) |&gt; 
+  mutate(BMI_class = fct_relevel(BMI_class, &quot;Underweight&quot;, &quot;Normal weight&quot;, &quot;Overweight&quot;,
+                                 &quot;Obesity&quot;)) |&gt; 
   ggplot(mapping = aes(x = BMI_class,
                        fill = PCOS_diagnosis)) +
   geom_bar(position = position_dodge(preserve = &quot;single&quot;),
@@ -527,7 +532,7 @@ BMI_bar &lt;- body_measurements |&gt;
        title = &quot;Bar chart over BMI groups stratified for PCOS diagnosis&quot;,
        fill = &quot;PCOS diagnosis&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
-  theme_light()+
+  theme_light() +
   theme(title = element_text(size = 8),
         legend.position = &quot;bottom&quot;)
 
@@ -558,7 +563,7 @@ blood_type_plot &lt;- body_measurements |&gt;
        title = &quot;Bar chart of blood groups stratified for PCOS diagnosis&quot;,
        fill = &quot;PCOS diagnosis&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
-  theme_light()+
+  theme_light() +
   theme(title = element_text(size = 8),
         legend.position = &quot;bottom&quot;)
 
@@ -589,7 +594,7 @@ period_plot &lt;- body_measurements |&gt;
        title = &quot;Density plot of period lengths&quot;,
        fill = &quot;PCOS diagnosis&quot;) +
   scale_fill_brewer(palette = &quot;Set2&quot;) +
-  theme_light()+
+  theme_light() +
   theme(title = element_text(size = 8),
         legend.position = &quot;bottom&quot;)
 
@@ -612,7 +617,9 @@ performed.</p>
 
 # general summary table
 summary_table &lt;- PCOS |&gt;
-  table1(x = formula(~ age + weight + height + pulse + breaths_pr_min + cycle_RI + period_length + period_length + pregnant + abortions + weight_gain + hair_growth + darker_skin + hair_loss | PCOS_diagnosis)) 
+  table1(x = formula(~ age + weight + height + pulse + breaths_pr_min + cycle_RI +
+                       period_length + period_length + pregnant + abortions + weight_gain +
+                       hair_growth + darker_skin + hair_loss | PCOS_diagnosis)) 
 
 # checking the summary table
 print(summary_table)

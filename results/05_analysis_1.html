@@ -369,13 +369,8 @@ rm(list = ls())</code></pre>
 
 # load libraries
 library(tidyverse)
-library(patchwork)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;patchwork&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:cowplot&#39;:
-## 
-##     align_plots</code></pre>
-<pre class="r"><code>library(RColorBrewer)
+library(patchwork)
+library(RColorBrewer)
 library(ggplot2)
 library(ggridges)
 library(RColorBrewer)</code></pre>
@@ -388,10 +383,10 @@ library(RColorBrewer)</code></pre>
 # Loading file
 body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements_aug.tsv&quot;)</code></pre>
 <pre><code>## Rows: 541 Columns: 31
-## ── Column specification ────────────────────────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
-## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain,...
-## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, aborti...
+## chr (12): PCOS_diagnosis, age_group, BMI_class, blood_type, cycle_RI, pregnant, weight_gain, hair_grow...
+## dbl (19): patient_ID, age, weight, height, BMI, pulse, breaths_pr_min, period_length, abortions, hip, ...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -399,7 +394,7 @@ body_measurements &lt;- read_tsv(file = &quot;../data/PCOS_body_measurements_aug
 <div id="analysis-of-body-measurement-data" class="section level1">
 <h1>Analysis of body measurement data</h1>
 <p>First part of this project, will be to test if there is a correlation
-between patients with PCOS using the body measurments data.</p>
+between patients with PCOS using the body measurements data.</p>
 <div id="follicle-and-pcos" class="section level2">
 <h2>Follicle and PCOS</h2>
 <pre class="r"><code># | echo: true
@@ -410,7 +405,7 @@ p_follicles_ovaries &lt;- body_measurements |&gt;
   ggplot(mapping = aes(x = follicle_no_R,
                        y = follicle_no_L,
                        color = PCOS_diagnosis)) + 
-  geom_point() +  
+  geom_point(alpha = 0.45) +  
   geom_smooth(method = &quot;lm&quot;, 
               se = TRUE, 
               aes(fill = PCOS_diagnosis), 
@@ -435,7 +430,7 @@ ggsave(p_follicles_ovaries,
        units = &quot;cm&quot;)</code></pre>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p>The number of follicles in the left and right ovaries are increased
-for people with the PCOs diagnosis. We look further into the number of
+for people with the PCOS diagnosis. We look further into the number of
 follicles in each ovary:</p>
 <pre class="r"><code># | echo: true
 # | eval: true
@@ -445,7 +440,8 @@ p_follicle_L &lt;- body_measurements |&gt;
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_L)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
-               outlier.shape = NA) + 
+               outlier.shape = NA,
+               alpha = 0.45) + 
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) +
@@ -472,7 +468,8 @@ p_follicle_R &lt;- body_measurements |&gt;
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_R)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
-               outlier.shape = NA) + 
+               outlier.shape = NA,
+               alpha = 0.45) + 
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) + 
@@ -506,7 +503,7 @@ PCOS_BMI_correlation_box &lt;- body_measurements |&gt;
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = BMI,
                        fill = PCOS_diagnosis)) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.45) +
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) +
@@ -538,7 +535,7 @@ PCOS_endometrium_correlation_box &lt;- body_measurements |&gt;
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = endometrium,
                        fill = PCOS_diagnosis)) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.45) +
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) +
@@ -572,7 +569,7 @@ age_cycle_plot &lt;- na.omit(body_measurements) |&gt;
   ggplot(mapping = aes(x = age,
                        y = cycle_RI,
                        color = PCOS_diagnosis)) +
-  geom_violin() +
+  geom_violin(alpha = 0.45) +
   geom_jitter(width = 0.2, 
               alpha = 0.8, 
               size = 1) +
@@ -602,11 +599,11 @@ and what their ages is and if their cycle is regular/irregular.</p>
 # | eval: true
 
 p_age_hair &lt;- body_measurements |&gt; 
-  ggplot(aes(x=hair_growth,
-             fill = PCOS_diagnosis))+
+  ggplot(aes(x = hair_growth,
+             fill = PCOS_diagnosis)) +
   geom_bar(position = position_dodge2(preserve = &quot;single&quot;), width = 0.8,
-           alpha = 0.8)+
-  facet_wrap(~ age_group)+
+           alpha = 0.45) +
+  facet_wrap(~ age_group) +
   labs(x = &quot;Hair growth (yes/no)&quot;, 
        y = &quot;Count&quot;,
        title = &quot;Bar plot of hair growth in different age groups stratisfied for PCOS diagnosis&quot;,
@@ -635,11 +632,12 @@ diagnosis. People with no diagnosis see no increase in hair growth.</p>
 
 #bar plot 
 p_age_pimple &lt;- body_measurements |&gt; 
-  ggplot(aes(x=pimples,
-             fill = PCOS_diagnosis))+
-  geom_bar(position = position_dodge2(preserve = &quot;single&quot;), width = 0.8,
-           alpha = 0.8)+
-  facet_wrap(~ age_group)+
+  ggplot(aes(x = pimples,
+             fill = PCOS_diagnosis)) +
+  geom_bar(position = position_dodge2(preserve = &quot;single&quot;),
+           width = 0.8,
+           alpha = 0.45) +
+  facet_wrap(~ age_group) +
   labs(x = &quot;Pimples (yes/no)&quot;, 
        y = &quot;Count&quot;,
        title = &quot;Bar plot of pimples in different age groups stratisfied for PCOS diagnosis&quot;,

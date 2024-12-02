@@ -22,56 +22,51 @@ library(tidyverse)
 
 -   Polycystic ovary syndrome (PCOS) is a syndrome documented in women in their menstruating ages
 
--   Documented symptoms are often; period pains, irregular periods, ovary related problems and hormone imbalance
+-   Documented symptoms are often; period pains, irregular periods, ovary-related problems and hormone imbalance
 
 -   Patients with PCOS often have problems with fertility and potential pregnancy complications
 
--   However, the cause of PCOS is still not verified.
+-   However, the cause of PCOS is still not verified, and diagnosis is complicated
+
+-   The data set has been made in India and data comes from 10 different hospitals.
 
 ### Aim
 
-The aim of this study is to examine a data set (found on Kaggle) of patients with and without PCOS. The data set has been made in India and data comes from 10 different hospitals.
+The aim of this study is to examine a data set of patients with and without PCOS to identify potential biomarkers.
 
 ## Data handling approach {style=".smaller"}
 
 ::: columns
 ::: {.column width="50%"}
 ::: {style="font-size: 0.6em"}
-::: incremental
 -   <strong>Raw data</strong>:<br />541 observations divided into 45 variables<br />
 
 -   <strong>01_load_data</strong>:<br />Simply loads the data<br />
 
 -   <strong>02_clean_data</strong>:<br />
 
-    ::: nonincremental
     -   Fixing random cells and replacing them with NA
     -   Rename & factorizing columns
     -   Split dataframe into body and blood measurements
     -   Removed empty column<br />
-    :::
-:::
 :::
 :::
 
 ::: {.column width="50%"}
 ::: {style="font-size: 0.6em"}
-::: incremental
 -   <strong>03_augment</strong>:<br />
 
     <div>
 
-    -   Unit changes ( inch to cm)
+    -   Unit changes (inch to cm)
     -   Rounding & grouping BMI
-    -   Change Blood type and cycles from numeric values to characters
+    -   Change blood type and cycles from numeric values to characters
     -   Create new column for cycle/ pregnancy stage
     -   Merging data frame into one file<br />
 
     </div>
-:::
 
 ``` {.r style=".smaller"}
-
 # Rounding of BMI and dividing into categories
 body_measurements <- body_measurements |>
   mutate(BMI = round(BMI, 1)) |> 
@@ -124,13 +119,43 @@ PCOS |>
 :::
 :::
 
-## Descriptive analysis of data {style=".smaller"}
+## Descriptive analysis of data
 
 <div>
 
-|                                |                                    |
-|--------------------------------|------------------------------------|
-| ![](../results/04_BMI_bar.png) | ![](../results/04_period_dens.png) |
+::: columns
+::: {.column width="50%"}
+![](../results/04_BMI_bar.png)
+:::
+
+::: {.column width="50%"}
+![](../results/04_period_dens.png)
+:::
+:::
+
+</div>
+
+## PCA of blood measurements
+
+<div>
+
+<div>
+
+::: {style="font-size: 0.8em"}
+No diverging of PCOS diagnosed individuals compared to non-PCOS diagnosed individuals
+:::
+
+</div>
+
+::: columns
+::: {.column width="50%"}
+![](../results/07_blood_PCA.png)
+:::
+
+::: {.column width="50%"}
+![](../results/07_rotation_matrix_blood.png)
+:::
+:::
 
 </div>
 
@@ -166,7 +191,7 @@ Follicle number and PCOS diagnosis:
 <div>
 
 ::: {style="font-size: 0.8em"}
-Slight divergence of PCOS and non-PCOS in body measurements.
+Slight divergence of PCOS and non-PCOS in body measurements
 :::
 
 </div>
@@ -182,52 +207,75 @@ Slight divergence of PCOS and non-PCOS in body measurements.
 :::
 :::
 
-## Blood measurement data analysis
+## Logistic regression
+
+<div>
+
+<div>
+
+```{r}
+# loading data
+body_measurements <- read_tsv(file = "../data/PCOS_body_measurements_aug.tsv")
+
+# wrangling data for analysis with logistic regression
+body_measurements <- body_measurements |>
+  mutate(PCOS_diagnosis = factor(PCOS_diagnosis,
+                                 levels = c("No", "Yes"),
+                                 labels = c(0, 1)))|>
+  mutate(PCOS_diagnosis = as.numeric(PCOS_diagnosis) -1)
+
+# making a new dataframe
+data_model <- body_measurements |>
+  dplyr::select(PCOS_diagnosis, 
+                follicle_no_R, 
+                follicle_no_L, 
+                avg_fsize_R, 
+                avg_fsize_L)
+
+# performing the model
+follicle_model <- glm(PCOS_diagnosis ~., 
+          family = "binomial",
+          data = data_model)
+
+summary(follicle_model)
+
+```
+
+</div>
+
+</div>
+
+## Logistic regression of follicle numbers as a biomarker
 
 ::: {style=".smaller, font-size: 0.8em"}
-::: columns
-::: {.column width="50%"}
-![](../results/06_box_AMH.png)
-:::
-
-::: {.column width="50%"}
-![](../results/06_cor_blood_plot.png)
-:::
-:::
-:::
-
-## PCA of blood measurements
-
-<div>
-
-<div>
-
-::: {style="font-size: 0.8em"}
-No diverging of PCOS diagnosed individuals compared to non-PCOS diagnosed individuals.
-:::
-
-</div>
 
 ::: columns
 ::: {.column width="50%"}
-![](../results/07_blood_PCA.png)
+![](../results/08_plot_follicle_R.png)
 :::
 
 ::: {.column width="50%"}
-![](../results/07_explained_variance_blood.png)
+![](../results/08_plot_follicle_L.png)
 :::
 :::
-
-</div>
+:::
 
 ## Discussion and Conclusion
 
--   Distribution between women diagnosed with and without PCOS
+::: {style="font-size: 0.9em"}
+-   Blood measurements don't show significance
 
--   PCA plots show few variables with relevance to PCOS diagnosis (FSH & LH)
+    -   Blood biomarker for PCOS diagnosis - not recommended based on this data
 
--   Body parameters show little clustering (BMI)
+    -   A limitation of the data is that it does not explicitly tell where the women are in their cycle
+
+-   Body measurements show significance for left and right follicle numbers
+
+    -   High follicle number could potentially be a biomarker for PCOS diagnosis
+
+        -   This aligns well with the use of ultrasound
+
+-   Imbalanced dataset between women with an without PCOS - more women without PCOS present
 
 -   Not an optimal data set for significant conclusions
-
--   seje regressions pointer
+:::

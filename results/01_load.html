@@ -385,13 +385,15 @@ path_to_xlsx_file &lt;- &quot;../data/_raw/PCOS_data_without_infertility.xlsx&qu
 sheet_names &lt;- excel_sheets(path_to_xlsx_file)
 
 # load file of interest by sheet name
-PCOS_data_xlsx &lt;- read_excel(path_to_xlsx_file, sheet = &quot;Full_new&quot;)</code></pre>
+PCOS_data_xlsx &lt;- read_excel(path_to_xlsx_file,
+                             sheet = &quot;Full_new&quot;)</code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...45`</code></pre>
 <pre class="r"><code>### quality check
 print(head(PCOS_data_xlsx))
 
-print(paste(&quot;Xlsx file saved at:&quot;, path_to_xlsx_file))</code></pre>
+print(paste(&quot;Xlsx file saved at:&quot;,
+            path_to_xlsx_file))</code></pre>
 <pre><code>## [1] &quot;Xlsx file saved at: ../data/_raw/PCOS_data_without_infertility.xlsx&quot;</code></pre>
 </div>
 <div id="write-and-save-to-tsv" class="section level2">
@@ -403,14 +405,19 @@ print(paste(&quot;Xlsx file saved at:&quot;, path_to_xlsx_file))</code></pre>
 path_to_tsv_file &lt;- &quot;../data/PCOS_data_without_infertility.tsv&quot;
 
 # read sheet of interest by sheet name
-PCOS_data_tsv &lt;- read_excel(path_to_xlsx_file, sheet = &quot;Full_new&quot;)</code></pre>
+PCOS_data_tsv &lt;- read_excel(path_to_xlsx_file,
+                            sheet = &quot;Full_new&quot;)</code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...45`</code></pre>
 <pre class="r"><code># save the data to TSV format
-write.table(PCOS_data_tsv, file = path_to_tsv_file, sep = &quot;\t&quot;, row.names = FALSE, quote = FALSE)
+write.table(PCOS_data_tsv, file = path_to_tsv_file,
+            sep = &quot;\t&quot;,
+            row.names = FALSE,
+            quote = FALSE)
 
 # quality check
-print(paste(&quot;TSV file saved at:&quot;, path_to_tsv_file))</code></pre>
+print(paste(&quot;TSV file saved at:&quot;,
+            path_to_tsv_file))</code></pre>
 <pre><code>## [1] &quot;TSV file saved at: ../data/PCOS_data_without_infertility.tsv&quot;</code></pre>
 </div>
 
