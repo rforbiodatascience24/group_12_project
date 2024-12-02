@@ -97,7 +97,8 @@ There are 364 patients without PCOS diagnosis and 177 who have been diagnosed wi
 
 ```{r}
 # | echo: true
-# | eval: true   
+# | eval: true 
+
 blood_measurements |>    
   count(cycle_or_pregnancy_stage)
 ```
