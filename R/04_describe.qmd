@@ -127,7 +127,7 @@ age_plot <- body_measurements |>
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
   theme_light() +
-  theme(title = element_text(size = 8),
+  theme(title = element_text(size = 15),
         legend.position = "bottom")
 
 
