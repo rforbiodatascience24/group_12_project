@@ -303,7 +303,8 @@ An increase in hair growth can not be seen in people with PCOS diagnosis. People
 p_age_pimple <- body_measurements |> 
   ggplot(aes(x = pimples,
              fill = PCOS_diagnosis)) +
-  geom_bar(position = position_dodge2(preserve = "single"), width = 0.8,
+  geom_bar(position = position_dodge2(preserve = "single"),
+           width = 0.8,
            alpha = 0.45) +
   facet_wrap(~ age_group) +
   labs(x = "Pimples (yes/no)", 

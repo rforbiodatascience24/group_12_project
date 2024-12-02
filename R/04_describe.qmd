@@ -53,22 +53,22 @@ Checking dimensions of metadata tibble.
 # Cheking the dimensions of the body measurements
 body_measurements_dim <- body_measurements |>
   dim() |>
-  tibble()|>
-  rename("Body measurments dimensions" = "dim(body_measurements)")|>
+  tibble() |>
+  rename("Body measurments dimensions" = "dim(body_measurements)") |>
   print()
 
 # Cheking the dimensions of the blood measurements
 blood_measurements_dim <- blood_measurements |>
   dim() |>
-  tibble()|>
-  rename("Blood measurments dimensions" = "dim(blood_measurements)")|>
+  tibble() |>
+  rename("Blood measurments dimensions" = "dim(blood_measurements)") |>
   print()
   
 # Cheking the dimensions of the blood measurements
 PCOS_dim <- PCOS |>
   dim() |>
-  tibble()|>
-  rename("PCOS dimensions" = "dim(PCOS)")|>
+  tibble() |>
+  rename("PCOS dimensions" = "dim(PCOS)") |>
   print()
 
 
@@ -149,7 +149,8 @@ The age looks normally distributed
 
 # Creating bar chart of BMI distribution stratified on PCOS diagnosis
 BMI_bar <- body_measurements |>
-  mutate(BMI_class = fct_relevel(BMI_class, "Underweight", "Normal weight", "Overweight","Obesity")) |> 
+  mutate(BMI_class = fct_relevel(BMI_class, "Underweight", "Normal weight", "Overweight",
+                                 "Obesity")) |> 
   ggplot(mapping = aes(x = BMI_class,
                        fill = PCOS_diagnosis)) +
   geom_bar(position = position_dodge(preserve = "single"),
@@ -254,7 +255,9 @@ For easy summary of the data, the function table1 can be performed.
 
 # general summary table
 summary_table <- PCOS |>
-  table1(x = formula(~ age + weight + height + pulse + breaths_pr_min + cycle_RI + period_length + period_length + pregnant + abortions + weight_gain + hair_growth + darker_skin + hair_loss | PCOS_diagnosis)) 
+  table1(x = formula(~ age + weight + height + pulse + breaths_pr_min + cycle_RI +
+                       period_length + period_length + pregnant + abortions + weight_gain +
+                       hair_growth + darker_skin + hair_loss | PCOS_diagnosis)) 
 
 # checking the summary table
 print(summary_table)
