@@ -56,7 +56,7 @@ p_follicles_ovaries <- body_measurements |>
   ggplot(mapping = aes(x = follicle_no_R,
                        y = follicle_no_L,
                        color = PCOS_diagnosis)) + 
-  geom_point() +  
+  geom_point(alpha = 0.45) +  
   geom_smooth(method = "lm", 
               se = TRUE, 
               aes(fill = PCOS_diagnosis), 
@@ -93,7 +93,8 @@ p_follicle_L <- body_measurements |>
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_L)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
-               outlier.shape = NA) + 
+               outlier.shape = NA,
+               alpha = 0.45) + 
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) +
@@ -120,7 +121,8 @@ p_follicle_R <- body_measurements |>
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_R)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
-               outlier.shape = NA) + 
+               outlier.shape = NA,
+               alpha = 0.45) + 
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) + 
@@ -157,7 +159,7 @@ PCOS_BMI_correlation_box <- body_measurements |>
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = BMI,
                        fill = PCOS_diagnosis)) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.45) +
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) +
@@ -194,7 +196,7 @@ PCOS_endometrium_correlation_box <- body_measurements |>
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = endometrium,
                        fill = PCOS_diagnosis)) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.45) +
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) +
@@ -231,7 +233,7 @@ age_cycle_plot <- na.omit(body_measurements) |>
   ggplot(mapping = aes(x = age,
                        y = cycle_RI,
                        color = PCOS_diagnosis)) +
-  geom_violin() +
+  geom_violin(alpha = 0.45) +
   geom_jitter(width = 0.2, 
               alpha = 0.8, 
               size = 1) +
@@ -267,7 +269,7 @@ p_age_hair <- body_measurements |>
   ggplot(aes(x = hair_growth,
              fill = PCOS_diagnosis)) +
   geom_bar(position = position_dodge2(preserve = "single"), width = 0.8,
-           alpha = 0.8) +
+           alpha = 0.45) +
   facet_wrap(~ age_group) +
   labs(x = "Hair growth (yes/no)", 
        y = "Count",
@@ -301,8 +303,9 @@ An increase in hair growth can not be seen in people with PCOS diagnosis. People
 p_age_pimple <- body_measurements |> 
   ggplot(aes(x = pimples,
              fill = PCOS_diagnosis)) +
-  geom_bar(position = position_dodge2(preserve = "single"), width = 0.8,
-           alpha = 0.8) +
+  geom_bar(position = position_dodge2(preserve = "single"),
+           width = 0.8,
+           alpha = 0.45) +
   facet_wrap(~ age_group) +
   labs(x = "Pimples (yes/no)", 
        y = "Count",

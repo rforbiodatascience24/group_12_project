@@ -49,7 +49,8 @@ box_AMH <- blood_measurements |>
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = AMH,
                        fill = PCOS_diagnosis)) + 
-  geom_boxplot(outliers = FALSE) +
+  geom_boxplot(outliers = FALSE,
+               alpha = 0.45) +
   labs(x = "PCOS diagnosis", 
        y = "AMH level",
        title = "Boxplot of AMH level and PCOS diagnosis",
@@ -59,6 +60,7 @@ box_AMH <- blood_measurements |>
   theme(title = element_text(size = 8),
         legend.position = "bottom")
 
+box_AMH
 # Saving plot
 ggsave(box_AMH,
        filename = "../results/06_box_AMH.png",
@@ -79,7 +81,7 @@ The box plot shows elevated AMH level for people with PCOS diagnosis compared to
 # Creating density plot
 PRL_density <- blood_measurements |> 
   ggplot(mapping = aes(x = PCOS_diagnosis, y = PRL, fill = PCOS_diagnosis)) + 
-  geom_violin(alpha = 0.90) +
+  geom_violin(alpha = 0.45) +
   geom_point(position = "jitter",
              alpha = 0.2) +
   labs(x = "PCOS diagnosis (", 
@@ -131,7 +133,7 @@ cor_blood_plot <- ggplot(data = melted_table,
                                    hjust = 1),
         axis.text.y = element_text(size = 7),
        legend.position = "bottom") +
- coord_fixed() +
+  coord_fixed() +
   scale_fill_gradient2(low = "#1B9E77", 
                        high = "#D95F02", 
                        mid = "white", 
