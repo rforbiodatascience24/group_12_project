@@ -264,11 +264,11 @@ Unable to conclude if there is a similarity between people with PCOS, and what t
 # | eval: true
 
 p_age_hair <- body_measurements |> 
-  ggplot(aes(x=hair_growth,
-             fill = PCOS_diagnosis))+
+  ggplot(aes(x = hair_growth,
+             fill = PCOS_diagnosis)) +
   geom_bar(position = position_dodge2(preserve = "single"), width = 0.8,
-           alpha = 0.8)+
-  facet_wrap(~ age_group)+
+           alpha = 0.8) +
+  facet_wrap(~ age_group) +
   labs(x = "Hair growth (yes/no)", 
        y = "Count",
        title = "Bar plot of hair growth in different age groups stratisfied for PCOS diagnosis",
@@ -299,11 +299,11 @@ An increase in hair growth can not be seen in people with PCOS diagnosis. People
 
 #bar plot 
 p_age_pimple <- body_measurements |> 
-  ggplot(aes(x=pimples,
-             fill = PCOS_diagnosis))+
+  ggplot(aes(x = pimples,
+             fill = PCOS_diagnosis)) +
   geom_bar(position = position_dodge2(preserve = "single"), width = 0.8,
-           alpha = 0.8)+
-  facet_wrap(~ age_group)+
+           alpha = 0.8) +
+  facet_wrap(~ age_group) +
   labs(x = "Pimples (yes/no)", 
        y = "Count",
        title = "Bar plot of pimples in different age groups stratisfied for PCOS diagnosis",

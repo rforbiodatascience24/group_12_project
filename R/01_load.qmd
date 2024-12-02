@@ -41,12 +41,14 @@ path_to_xlsx_file <- "../data/_raw/PCOS_data_without_infertility.xlsx"
 sheet_names <- excel_sheets(path_to_xlsx_file)
 
 # load file of interest by sheet name
-PCOS_data_xlsx <- read_excel(path_to_xlsx_file, sheet = "Full_new")
+PCOS_data_xlsx <- read_excel(path_to_xlsx_file,
+                             sheet = "Full_new")
 
 ### quality check
 print(head(PCOS_data_xlsx))
 
-print(paste("Xlsx file saved at:", path_to_xlsx_file))
+print(paste("Xlsx file saved at:",
+            path_to_xlsx_file))
 
 ```
 
@@ -60,11 +62,16 @@ print(paste("Xlsx file saved at:", path_to_xlsx_file))
 path_to_tsv_file <- "../data/PCOS_data_without_infertility.tsv"
 
 # read sheet of interest by sheet name
-PCOS_data_tsv <- read_excel(path_to_xlsx_file, sheet = "Full_new")
+PCOS_data_tsv <- read_excel(path_to_xlsx_file,
+                            sheet = "Full_new")
 
 # save the data to TSV format
-write.table(PCOS_data_tsv, file = path_to_tsv_file, sep = "\t", row.names = FALSE, quote = FALSE)
+write.table(PCOS_data_tsv, file = path_to_tsv_file,
+            sep = "\t",
+            row.names = FALSE,
+            quote = FALSE)
 
 # quality check
-print(paste("TSV file saved at:", path_to_tsv_file))
+print(paste("TSV file saved at:",
+            path_to_tsv_file))
 ```

@@ -125,7 +125,7 @@ age_plot <- body_measurements |>
        title = "Histogram of age distribution stratified for PCOS diagnosis",
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
-  theme_light()+
+  theme_light() +
   theme(title = element_text(size = 8),
         legend.position = "bottom")
 
@@ -160,7 +160,7 @@ BMI_bar <- body_measurements |>
        title = "Bar chart over BMI groups stratified for PCOS diagnosis",
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
-  theme_light()+
+  theme_light() +
   theme(title = element_text(size = 8),
         legend.position = "bottom")
 
@@ -194,7 +194,7 @@ blood_type_plot <- body_measurements |>
        title = "Bar chart of blood groups stratified for PCOS diagnosis",
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
-  theme_light()+
+  theme_light() +
   theme(title = element_text(size = 8),
         legend.position = "bottom")
 
@@ -228,7 +228,7 @@ period_plot <- body_measurements |>
        title = "Density plot of period lengths",
        fill = "PCOS diagnosis") +
   scale_fill_brewer(palette = "Set2") +
-  theme_light()+
+  theme_light() +
   theme(title = element_text(size = 8),
         legend.position = "bottom")
 

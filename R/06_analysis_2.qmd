@@ -49,13 +49,13 @@ box_AMH <- blood_measurements |>
   ggplot(mapping = aes(x = PCOS_diagnosis,
                        y = AMH,
                        fill = PCOS_diagnosis)) + 
-  geom_boxplot(outliers = FALSE)+
+  geom_boxplot(outliers = FALSE) +
   labs(x = "PCOS diagnosis", 
        y = "AMH level",
        title = "Boxplot of AMH level and PCOS diagnosis",
-       fill = "PCOS diagnosis")+
-  scale_fill_brewer(palette = "Set2")+
-  theme_light()+
+       fill = "PCOS diagnosis") +
+  scale_fill_brewer(palette = "Set2") +
+  theme_light() +
   theme(title = element_text(size = 8),
         legend.position = "bottom")
 
@@ -78,7 +78,7 @@ The box plot shows elevated AMH level for people with PCOS diagnosis compared to
 
 # Creating density plot
 PRL_density <- blood_measurements |> 
-  ggplot(mapping = aes(x = PCOS_diagnosis, y=PRL, fill = PCOS_diagnosis)) + 
+  ggplot(mapping = aes(x = PCOS_diagnosis, y = PRL, fill = PCOS_diagnosis)) + 
   geom_violin(alpha = 0.90) +
   geom_point(position = "jitter",
              alpha = 0.2) +
@@ -107,7 +107,7 @@ The density plot shows a similar distribution of PRL values and PCOS diagnosis.
 ```{r}
 # Make a correlation table of the variables
 cor_table <- blood_measurements |>  
-  select(hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, TSH, AMH, PRL, vitaminD3, PRG, RBS)|> 
+  select(hemaglobin, betaHCG_1, betaHCG_2, FSH, LH, TSH, AMH, PRL, vitaminD3, PRG, RBS) |> 
   correlate(diagonal = 1)
 
 melted_table <- cor_table |> 
@@ -115,35 +115,33 @@ melted_table <- cor_table |>
 
 # Order the axis
 melted_table <- melted_table |> 
-  mutate(
-    term = factor(term, levels = cor_table$term),
-    variable = factor(variable, levels = cor_table$term)
-  )
+  mutate(term = factor(term, levels = cor_table$term),
+         variable = factor(variable, levels = cor_table$term))
 
 cor_blood_plot <- ggplot(data = melted_table, 
-       mapping = aes(x = term, 
-                     y = variable, 
-                     fill = value)) + 
+                         mapping = aes(x = term, 
+                                       y = variable, 
+                                       fill = value)) + 
   geom_tile() +
   scale_y_discrete(limits = rev(levels(melted_table$variable))) +
   theme_light() + 
- theme(axis.text.x = element_text(angle = 45, 
-                                  vjust = 1, 
-                                  size = 7, 
-                                  hjust = 1),
-       axis.text.y = element_text(size = 7),
-       legend.position = "bottom")+
- coord_fixed()+
+  theme(axis.text.x = element_text(angle = 45, 
+                                   vjust = 1, 
+                                   size = 7, 
+                                   hjust = 1),
+        axis.text.y = element_text(size = 7),
+       legend.position = "bottom") +
+ coord_fixed() +
   scale_fill_gradient2(low = "#1B9E77", 
                        high = "#D95F02", 
                        mid = "white", 
                        midpoint = 0, 
                        limit = c(-1,1), 
-                       space = "Lab")+
+                       space = "Lab") +
   labs(x = "", 
        y = "", 
        fill = "Correlation",
-       title = "Correlationplot of the blood values")+
+       title = "Correlationplot of the blood values") +
   theme(title = element_text(size = 8))
 
 
