@@ -128,9 +128,9 @@ PCOS |>
 
 <div>
 
-|                            |                                |
-|----------------------------|--------------------------------|
-| ![](images/04_BMI_bar.png) | ![](images/04_period_dens.png) |
+|                                |                                    |
+|--------------------------------|------------------------------------|
+| ![](../results/04_BMI_bar.png) | ![](../results/04_period_dens.png) |
 
 </div>
 
@@ -143,46 +143,63 @@ PCOS |>
 Follicle number and PCOS diagnosis:
 :::
 
+::: {style="font-size: 0.5em"}
+-   Regression showed significance
+:::
+
 </div>
 
 ::: columns
 ::: {.column width="50%"}
-![](images/05_follicle_L_box.png){style=".smaller"}
+![](../results/05_follicle_R_box.png)
 :::
 
 ::: {.column width="50%"}
-![](images/05_follicle_R_box.png){style=".smaller"}
+![](../results/05_follicle_correlation.png)
 :::
 :::
 :::
 
 ## PCA of body measurements
 
-::: {style="font-size: 0.8em"}
+::: {style=".smaller, font-size: 0.8em"}
 <div>
 
 ::: {style="font-size: 0.8em"}
-Slight divergance of PCOS and non-PCOS in body measurements.
+Slight divergence of PCOS and non-PCOS in body measurements.
 :::
 
 </div>
 
-|                                           |                                                       |
-|-------------------------------|-----------------------------------------|
-| ![](images/07_body_PCA.png){width="15cm"} | ![](images/07_rotation_matrix_body.png){width="12cm"} |
+::: columns
+::: {.column width="50%"}
+![](../results/07_body_PCA.png)
+:::
+
+::: {.column width="50%"}
+![](../results/07_rotation_matrix_body.png)
+:::
+:::
 :::
 
 ## Blood measurement data analysis
 
-<div>
+::: {style=".smaller, font-size: 0.8em"}
 
-|                                          |                                                 |
-|---------------------------------|---------------------------------------|
-| ![](images/06_box_AMH.png){width="14cm"} | ![](images/06_cor_blood_plot.png){width="12cm"} |
+::: columns
+::: {.column width="50%"}
+![](../results/06_box_AMH.png)
+:::
 
-</div>
+::: {.column width="50%"}
+![](../results/06_cor_blood_plot.png)
+:::
+:::
+:::
 
 ## PCA of blood measurements
+
+<div>
 
 <div>
 
@@ -190,9 +207,17 @@ Slight divergance of PCOS and non-PCOS in body measurements.
 No diverging of PCOS diagnosed individuals compared to non-PCOS diagnosed individuals.
 :::
 
-|                                            |                                                           |
-|------------------------------|------------------------------------------|
-| ![](images/07_blood_PCA.png){width="15cm"} | ![](images/07_explained_variance_blood.png){width="12cm"} |
+</div>
+
+::: columns
+::: {.column width="50%"}
+![](../results/07_blood_PCA.png)
+:::
+
+::: {.column width="50%"}
+![](../results/07_explained_variance_blood.png)
+:::
+:::
 
 </div>
 
