@@ -64,8 +64,7 @@ pca_fit <- blood_measurements_no_na |>
 # Add PCOS_diagnosis to the data and plot it
 blood_PCA <- pca_fit |> 
   augment(blood_measurements_no_na) |>
-  ggplot(aes(.fittedPC1, 
-             .fittedPC2, 
+  ggplot(aes(.fittedPC1, .fittedPC2, 
              color = PCOS_diagnosis)) +
   labs(title = "PCA of blood data stratified by PCOS diagnosis",
        x = "Principal component 1",
@@ -73,8 +72,8 @@ blood_PCA <- pca_fit |>
        color = "PCOS diagnosis") + 
   geom_point(size = 1.5, 
              alpha = 0.5) +
-  theme_minimal()+
-  theme(legend.position = "bottom")+
+  theme_minimal() +
+  theme(legend.position = "bottom") +
   xlim(-1, 1) +  
   ylim(-2.5, 5)
 
@@ -106,8 +105,7 @@ pca_fit |>
 arrow_style <- arrow(angle = 20, 
                      ends = "first", 
                      type = "closed", 
-                     length = grid::unit(8, "pt")
-                     )
+                     length = grid::unit(8, "pt"))
 
 # plot rotation matrix
 rotation_matrix_blood <- pca_fit |> 
@@ -253,17 +251,13 @@ blood_measurements_no_na <- na.omit(blood_measurements)
 # PCA plot for numeric columns and scale the data
 pca_fit <- blood_measurements_no_na |> 
   select(where(is.numeric)) |>
-  select(-patient_ID, 
-         -vitaminD3, 
-         -RBS, 
-         -hemaglobin) |> 
+  select(-patient_ID, -vitaminD3, -RBS, -hemaglobin) |> 
   prcomp(scale = TRUE)
 
 # adding PCOS diagnosis to the data and plotting the PCA
 blood_not_hormes_PCA <- pca_fit |> 
   augment(blood_measurements_no_na) |>
-  ggplot(aes(.fittedPC1, 
-             .fittedPC2, 
+  ggplot(aes(.fittedPC1, .fittedPC2, 
              color = PCOS_diagnosis)) +
   labs(x = "Principal component 1",
        y = "Principal component 2",
@@ -307,15 +301,14 @@ pca_fit_2 <- body_measurements_no_na |>
 # Add PCOS_diagnosis to the data and plot it
 body_PCA <- pca_fit_2 |> 
   augment(body_measurements_no_na) |>
-  ggplot(aes(.fittedPC1, 
-             .fittedPC2, 
+  ggplot(aes(.fittedPC1, .fittedPC2, 
              color = PCOS_diagnosis)) +
   labs(title = "PCA of body data stratified by PCOS diagnosis",
        x = "Principal component 1",
        y = "Principal component 2",
        color = "PCOS diagnosis") + 
   geom_point(size = 1.5, alpha = 0.5) +
-  theme_minimal()+
+  theme_minimal() +
   theme(legend.position = "bottom") 
 
 body_PCA
@@ -346,8 +339,7 @@ pca_fit_2 |>
 arrow_style <- arrow(angle = 20, 
                      ends = "first", 
                      type = "closed", 
-                     length = grid::unit(8, "pt")
-                     )
+                     length = grid::unit(8, "pt"))
 
 # plot rotation matrix
 rotation_matrix_body <- pca_fit_2 |> 
@@ -355,11 +347,10 @@ rotation_matrix_body <- pca_fit_2 |>
   pivot_wider(names_from = "PC", 
               names_prefix = "PC", 
               values_from = "value") |> 
-  ggplot(aes(PC1, 
-             PC2)) +
+  ggplot(aes(PC1, PC2)) +
   labs(title = "Rotation matrix",
        x = "Principal component 1",
-       y = "Principal component 2")+
+       y = "Principal component 2") +
   geom_segment(xend = 0, 
                yend = 0, 
                arrow = arrow_style) +
@@ -412,13 +403,13 @@ explained_variance_body <- pca_fit_2 |>
                 y = percent+0.01), 
                 color = "black", 
                 size = 2.5) +
-    scale_x_continuous(breaks = 1:18) +
+  scale_x_continuous(breaks = 1:18) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.01)),
                      labels = scales::percent_format(),
                       sec.axis = sec_axis(trans = ~.*transformation_co, 
-                        name = "% Cumulative Variance Explained",
-                        labels = scales::percent_format())) +
-  theme_minimal_hgrid(12)+
+                                          name = "% Cumulative Variance Explained",
+                                          labels = scales::percent_format())) +
+  theme_minimal_hgrid(12) +
   labs(y = "% Variance Explaining each PC",
        x = "Principal Components (PC)",
        title = "Explained variance by Principal Components (PC) for body measurments")
@@ -445,17 +436,13 @@ From the rotation matrix plot, follicles seems to be important. Therefore we wil
 # PCA plot for all numeric columns and scale the data
 pca_fit_3 <- body_measurements_no_na |> 
   select(where(is.numeric)) |>
-  select(follicle_no_R, 
-         follicle_no_L, 
-         avg_fsize_R, 
-         avg_fsize_L) |> 
+  select(follicle_no_R, follicle_no_L, avg_fsize_R, avg_fsize_L) |> 
   prcomp(scale = TRUE)
 
 # Add PCOS_diagnosis to the data and plot it
 follicle_PCA <- pca_fit_3 |> 
   augment(body_measurements_no_na) |>
-  ggplot(aes(.fittedPC1, 
-             .fittedPC2, 
+  ggplot(aes(.fittedPC1, .fittedPC2, 
              color = PCOS_diagnosis)) +
   labs(title = "PCA of follicle number and size stratified by PCOS diagnosis",
        x = "Principal component 1",
@@ -493,8 +480,7 @@ pca_fit_4 <- body_measurements_no_na |>
 # Add PCOS_diagnosis to the data and plot it
 obs_PCA <- pca_fit_4 |> 
   augment(body_measurements_no_na) |>
-  ggplot(aes(.fittedPC1, 
-             .fittedPC2, 
+  ggplot(aes(.fittedPC1, .fittedPC2, 
              color = PCOS_diagnosis)) +
   labs(title = "PCA of obisity assosiated factors stratified by PCOS diagnosis",
        x = "Principal component 1",

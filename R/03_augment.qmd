@@ -36,8 +36,8 @@ blood_measurements <- read_tsv(file = "../data/PCOS_blood_measurements.tsv")
 
 # Going from inches to cm + new hip/waist ratio
 body_measurements <- body_measurements |> 
-  mutate(hip = hip * 2.54)|>
-  mutate(waist = waist * 2.54)|>
+  mutate(hip = hip * 2.54) |>
+  mutate(waist = waist * 2.54) |>
   mutate(waist_hip_ratio = round(waist_hip_ratio * 2.54, 1))
   
 ```
@@ -57,10 +57,8 @@ body_measurements <- body_measurements |>
     BMI <= 25 | BMI < 30 ~ "Overweight",
     BMI >= 30 ~ "Obesity")) |>
   mutate(BMI_class = factor(BMI_class,
-                            levels =  c("Underweight", 
-                                        "Normal weight",
-                                        "Overweight", 
-                                        "Obesity"))) |>
+                            levels =  c("Underweight", "Normal weight", 
+                                        "Overweight", "Obesity"))) |>
   relocate(BMI_class, .after = BMI)
 ```
 
@@ -81,13 +79,8 @@ body_measurements <- body_measurements |>
     age >= 40 & age < 45 ~ "[40;45[",
     age >= 45 ~ "[45",)) |>
   mutate(age_group = factor(age_group,
-                            levels =  c("]20",
-                                        "[20;25[", 
-                                        "[25;30[",
-                                        "[30;35[", 
-                                        "[35;40[",
-                                        "[40;45[",
-                                        "[45"))) |>
+                            levels =  c("]20", "[20;25[", "[25;30[", "[30;35[",
+                                        "[35;40[", "[40;45[", "[45"))) |>
   relocate(age_group, .after = age)
 ```
 
@@ -109,14 +102,8 @@ body_measurements <- body_measurements |>
     blood_type == 17 ~ "AB+",
     blood_type == 18 ~ "AB-")) |> 
   mutate(blood_type = factor(blood_type, 
-                             levels = c("A+", 
-                                        "A-", 
-                                        "B+",
-                                        "B-", 
-                                        "O+", 
-                                        "O-",
-                                        "AB+",
-                                        "AB-")))
+                             levels = c("A+", "A-", "B+", "B-", "O+", "O-",
+                                        "AB+", "AB-")))
 
 ```
 
@@ -132,8 +119,7 @@ body_measurements <- body_measurements |>
     cycle_RI == 2 ~ "regular",
     cycle_RI == 4 ~ "irregular")) |> 
   mutate(cycle_RI = factor(cycle_RI, 
-                           levels = c("irregular", 
-                                      "regular")))
+                           levels = c("irregular", "regular")))
 
 ```
 
@@ -160,7 +146,7 @@ blood_measurements <- blood_measurements |>
                                                      "Likely follicular stage", 
                                                      "Luteal stage",
                                                      "Luteal stage/possibly first or second trimester pregnancy",
-                                                     "First or second trimester pregnancy", 
+                                                     "First or second trimester pregnancy",
                                                      "Second trimester pregnancy",
                                                      "Second or third trimester pregnancy", 
                                                      "Third trimester pregnancy",
@@ -185,8 +171,7 @@ write_tsv(x = body_measurements,
 # joining the dataframes (for educational purposes)
 PCOS_merged <- inner_join(x = body_measurements,
                           y = blood_measurements,
-                          by = join_by(patient_ID, 
-                                       PCOS_diagnosis))
+                          by = join_by(patient_ID, PCOS_diagnosis))
 write_tsv(x = PCOS_merged,
           file = "../data/PCOS_merged.tsv")
 
