@@ -181,7 +181,7 @@ explained_variance_blood <- pca_fit |>
                      sec.axis = sec_axis(trans = ~.*transformation_co, 
                         name = "% Cumulative Variance Explained",
                         labels = scales::percent_format())) +
-  theme_minimal() +
+  theme_light() +
   labs(y = "% Variance Explaining each PC",
        x = "Principal Components (PC)",
        title = "Explained variance by Principal Components (PC)") +
