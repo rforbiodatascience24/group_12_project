@@ -244,7 +244,9 @@ ggsave(period_plot,
 
 The period length of people with PCOS diagnosis is more scattered then the lengths of people with no diagnosis.
 
-For easy summary of the data, the following can also be performed.
+### Summary table(s)
+
+For easy summary of the data, the function table1 can be performed.
 
 ```{r}
 # | echo: true
