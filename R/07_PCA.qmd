@@ -307,8 +307,10 @@ body_PCA <- pca_fit_2 |>
        x = "Principal component 1",
        y = "Principal component 2",
        color = "PCOS diagnosis") + 
-  geom_point(size = 1.5, alpha = 0.5) +
-  theme_minimal() +
+  geom_point(size = 1.5, 
+             alpha = 0.45) +
+  theme_light() +
+  scale_color_brewer(palette = "Set2") +
   theme(legend.position = "bottom") 
 
 body_PCA

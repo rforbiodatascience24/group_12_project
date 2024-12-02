@@ -93,7 +93,8 @@ p_follicle_L <- body_measurements |>
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_L)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
-               outlier.shape = NA) + 
+               outlier.shape = NA,
+               alpha = 0.45) + 
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) +
@@ -120,7 +121,8 @@ p_follicle_R <- body_measurements |>
   ggplot(aes(x = PCOS_diagnosis, 
              y = follicle_no_R)) + 
   geom_boxplot(aes(fill = PCOS_diagnosis), 
-               outlier.shape = NA) + 
+               outlier.shape = NA,
+               alpha = 0.45) + 
   geom_jitter(width = 0.2, 
               alpha = 0.2, 
               size = 1) + 
