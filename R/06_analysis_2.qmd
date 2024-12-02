@@ -133,7 +133,7 @@ cor_blood_plot <- ggplot(data = melted_table,
                                    hjust = 1),
         axis.text.y = element_text(size = 7),
        legend.position = "bottom") +
- coord_fixed() +
+  coord_fixed() +
   scale_fill_gradient2(low = "#1B9E77", 
                        high = "#D95F02", 
                        mid = "white", 
