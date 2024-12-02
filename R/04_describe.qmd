@@ -44,7 +44,7 @@ PCOS <- read_tsv(file = "../data/PCOS_merged.tsv")
 
 ## Data statistics
 
-Checking dimensions of metadata tible
+Checking dimensions of metadata tibble.
 
 ```{r}
 # | echo: true
