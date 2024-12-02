@@ -28,5 +28,7 @@ rmarkdown::render(input = '06_analysis_2.qmd',
                   output_dir = '../results')
 rmarkdown::render(input = '07_PCA.qmd',
                   output_dir = '../results')
+rmarkdown::render(input = '08_logistic_regression.qmd',
+                  output_dir = '../results')
 
 ```
