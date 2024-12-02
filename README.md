@@ -32,6 +32,10 @@ The dataset used for this analysis has been published on Kraggle and created by 
 
 **Variable *- unit***
 
+| Variable | PCOS_diagnosis | age    | weight | height | pulse | breaths_pr_min | hemaglobin | cycle_RI            | period_length | Col11 | Col12 | Col13 | Col14 | Col15 | Col16 | Col17 | Col18 | Col19 | Col20 | Col21 | Col22 | Col23 | Col24 | Col25 | Col26 | Col27 | Col28 | Col29 | Col30 | Col31 | Col32 | Col33 | Col34 | Col35 | Col36 | Col37 | Col38 |
+|-----|--------|----|-----|-----|----|-----|-------|-----|-----|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|-----------|
+| Unit     | (yes/no)       | (year) | (kg)   | (cm)   | (bpm) | (breaths/min)  | (g/dl)     | (regular/irregular) | (days)        |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+
 PCOS_diagnosis - *(yes/no)*
 
 age - *(years)*

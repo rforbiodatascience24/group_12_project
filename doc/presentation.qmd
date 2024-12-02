@@ -24,9 +24,9 @@ library(tidyverse)
 
 -   Documented symptoms are often; period pains, irregular periods, ovary related problems and hormone imbalance
 
--   Patients with PCOS often have problems with pregnancy and potential complication with/in pregnancy
+-   Patients with PCOS often have problems with fertility and potential pregnancy complications
 
--   However, it is still not verified what the cause of PCOS is.
+-   However, the cause of PCOS is still not verified.
 
 ### Aim
 
@@ -185,7 +185,6 @@ Slight divergence of PCOS and non-PCOS in body measurements.
 ## Blood measurement data analysis
 
 ::: {style=".smaller, font-size: 0.8em"}
-
 ::: columns
 ::: {.column width="50%"}
 ![](../results/06_box_AMH.png)
@@ -225,8 +224,10 @@ No diverging of PCOS diagnosed individuals compared to non-PCOS diagnosed indivi
 
 -   Distribution between women diagnosed with and without PCOS
 
--   PCA plots show few variables show relevance to diagnose PCOS (FSH & LH)
+-   PCA plots show few variables with relevance to PCOS diagnosis (FSH & LH)
 
 -   Body parameters show little clustering (BMI)
 
--   Not an optimal data set for significant conclutions
+-   Not an optimal data set for significant conclusions
+
+-   seje regressions pointer
