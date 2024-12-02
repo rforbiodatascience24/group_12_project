@@ -233,7 +233,7 @@ age_cycle_plot <- na.omit(body_measurements) |>
   ggplot(mapping = aes(x = age,
                        y = cycle_RI,
                        color = PCOS_diagnosis)) +
-  geom_violin(alpha = 0.90) +
+  geom_violin(alpha = 0.45) +
   geom_jitter(width = 0.2, 
               alpha = 0.8, 
               size = 1) +

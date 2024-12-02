@@ -81,7 +81,7 @@ The box plot shows elevated AMH level for people with PCOS diagnosis compared to
 # Creating density plot
 PRL_density <- blood_measurements |> 
   ggplot(mapping = aes(x = PCOS_diagnosis, y = PRL, fill = PCOS_diagnosis)) + 
-  geom_violin(alpha = 0.90) +
+  geom_violin(alpha = 0.45) +
   geom_point(position = "jitter",
              alpha = 0.2) +
   labs(x = "PCOS diagnosis (", 
